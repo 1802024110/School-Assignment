@@ -13,5 +13,8 @@ public class T1 {
         usb[2] = new KeyBoard();
         Computer computer = new Computer(usb);
         computer.powerOn();
+        if(1<=2){
+
+        }
     }
 }
