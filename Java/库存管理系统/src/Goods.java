@@ -41,7 +41,6 @@ public class Goods {
     public void setAmount(int amount) {
         this.amount = amount;
     }
-
     @Override
     public String toString() {
         return "Goods{" +

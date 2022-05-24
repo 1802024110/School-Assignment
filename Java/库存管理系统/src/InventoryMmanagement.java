@@ -1,15 +1,9 @@
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class InventoryMmanagement {
-    private Goods[] goods;
-    public InventoryMmanagement() {
-        String tip = "欢迎使用货物管理系统！\n" +
-                "1.添加货物\n" +
-                "2.所有货物\n" +
-                "3.删除货物";
-        System.out.println(tip);
-    add();
-    }
+    private Collection<Goods> goods = new ArrayList<Goods>();
     public void add() {
         System.out.println("确认添加货物?"+"\n"+"1.是"+"\n"+"2.否");
         Scanner sc = new Scanner(System.in);
@@ -24,11 +18,33 @@ public class InventoryMmanagement {
         System.out.println("请输入货物数量:");
         int num = sc.nextInt();
         Goods goods = new Goods(name, color, price, num);
-        System.out.println("添加成功！");
-
+        this.goods.add(goods);
+        System.out.println("添加成功,现有货物:");
+        for (Goods g : this.goods) {
+            System.out.println("商品名称:" + g.getName() + "\t商品颜色:" + g.getColor() + "\t商品价格:" + g.getPrice() + "\t商品数量:" + g.getAmount());
+        }
     }
 
-    public static void main(String[] args) {
-        InventoryMmanagement im = new InventoryMmanagement();
+    public void showAllGoods() {
+        System.out.println("现有货物:");
+        for (Goods g : this.goods) {
+            System.out.println("商品名称:" + g.getName() + "\t商品颜色:" + g.getColor() + "\t商品价格:" + g.getPrice() + "\t商品数量:" + g.getAmount());
+        }
+    }
+
+    public void deleteByNmae() {
+        System.out.println("输入要删除的商品名称:");
+        Scanner sc = new Scanner(System.in);
+        String name = sc.next();
+        for (Goods g : this.goods) {
+            if (g.getName().equals(name)) {
+                this.goods.remove(g);
+                System.out.println("删除成功");
+                return;
+            }
+        }
+        for (Goods g : this.goods) {
+            System.out.println("商品名称:" + g.getName() + "\t商品颜色:" + g.getColor() + "\t商品价格:" + g.getPrice() + "\t商品数量:" + g.getAmount());
+        }
     }
 }
