@@ -3,7 +3,7 @@ package computer;
 import computer.usb.Usb;
 
 public class Computer {
-    private Usb[] usb;
+    private final Usb[] usb;
 
     public Computer(Usb[] usb) {
     // 初始化usb设备

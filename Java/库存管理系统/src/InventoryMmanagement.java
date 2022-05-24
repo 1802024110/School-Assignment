@@ -3,7 +3,7 @@ import java.util.Collection;
 import java.util.Scanner;
 
 public class InventoryMmanagement {
-    private Collection<Goods> goods = new ArrayList<Goods>();
+    private final Collection<Goods> goods = new ArrayList<Goods>();
     public void add() {
         System.out.println("确认添加货物?"+"\n"+"1.是"+"\n"+"2.否");
         Scanner sc = new Scanner(System.in);

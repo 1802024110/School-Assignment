@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Java.iml" filepath="$PROJECT_DIR$/.idea/Java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pokerSim/pokerSim.iml" filepath="$PROJECT_DIR$/pokerSim/pokerSim.iml" />
       <module fileurl="file://$PROJECT_DIR$/库存管理系统/库存管理系统.iml" filepath="$PROJECT_DIR$/库存管理系统/库存管理系统.iml" />
       <module fileurl="file://$PROJECT_DIR$/文件管理器/文件管理器.iml" filepath="$PROJECT_DIR$/文件管理器/文件管理器.iml" />
       <module fileurl="file://$PROJECT_DIR$/模拟登录/模拟登录.iml" filepath="$PROJECT_DIR$/模拟登录/模拟登录.iml" />
