@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/GetStudentGrades/GetStudentGrades.iml" filepath="$PROJECT_DIR$/GetStudentGrades/GetStudentGrades.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Java.iml" filepath="$PROJECT_DIR$/.idea/Java.iml" />
       <module fileurl="file://$PROJECT_DIR$/pokerSim/pokerSim.iml" filepath="$PROJECT_DIR$/pokerSim/pokerSim.iml" />
       <module fileurl="file://$PROJECT_DIR$/库存管理系统/库存管理系统.iml" filepath="$PROJECT_DIR$/库存管理系统/库存管理系统.iml" />
