@@ -132,7 +132,9 @@ public class Request {
         Map<String, String> body = new HashMap<String, String>();
         body.put("courseOpenId","h6mmaruz6nnbo0pnmbk4q");
         request.setBody(body);
-        String content = request.post("https://mooc.icve.com.cn/study/ranking/getScoresRankingList");
+//        String content = request.post("https://mooc.icve.com.cn/study/ranking/getScoresRankingList");
+        String content = request.get("https://www.baidu.com/?tn=80035161_1_dg");
+        System.out.println(content);
 
 //        JSONObject json = new JSONObject(content);
         // TODO: 2020/3/24  这里可以把json转换成java对象
