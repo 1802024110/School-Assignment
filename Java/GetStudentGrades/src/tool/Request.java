@@ -133,8 +133,5 @@ public class Request {
         body.put("courseOpenId","h6mmaruz6nnbo0pnmbk4q");
         request.setBody(body);
         String content = request.post("https://mooc.icve.com.cn/study/ranking/getScoresRankingList");
-
-//        JSONObject json = new JSONObject(content);
-        // TODO: 2020/3/24  这里可以把json转换成java对象
     }
 }
