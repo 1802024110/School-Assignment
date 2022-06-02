@@ -18,5 +18,22 @@
             <artifactId>uber-jar</artifactId>
             <version>6.5.12</version>
         </dependency>
+<!--阿里家的JSON库-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.17</version>
+        </dependency>
+<!--Data注解,节省代码-->
     </dependencies>
 </project>
