@@ -1,21 +1,16 @@
-package tool;
+package tool.imp;
 
-import BasicObject.Student;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import tool.Request;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.HttpURLConnection;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
-public class Request {
+public class RequestImp implements Request {
     private Map<String,String> header;
     private String body="";
     public void setHeader(Map<String,String> header) {
@@ -129,48 +124,5 @@ public class Request {
             return content;
         }
         return content;
-    }
-    public static void main(String[] args) {
-        Request request = new Request();
-        Map<String,String> header = new HashMap<>();
-        header.put("Cookie","_bl_uid=X1lyn3Iyt6vgg9xU43jLg1RumIqe; token=xx2akiuy7ljik3mdfyrrw; ssxmod_itna=QqjxnDcDBGit0=G7+DXQcYx1rw72DiKP34D7A+DBd4h4iNDnD8x7YDvAI=Wiq=qh0m+5fetYa54fWCGpbaN4PbpEfWi4B3DEx06xhjixiiyDCeDIDWeDiDG4GmS4GtDpxG=Dj0FUZMUxi3Dbh=Di4D+7uQDmqG0DDU794G2D7t9Y7DT7M06FjUovkGqvG=DjLbD/4hWylraOcmZtCnoeWPuDB6CxBjMfwXUIeDHzLNlem+iQippE05bKAOPKihizihK3YEPCDedQGGGWAPHfDpuxD3ezigWeD===; ssxmod_itna2=QqjxnDcDBGit0=G7+DXQcYx1rw72DiKP34D7D8q1DoeGXim5GaKwIOs=2vw8CrQw0QeU+efy6xV4cAI+zqQbqSewtqSuphOMR7mHeqVKn6IxGIVpOKGFAZ=eR9r9P41TycMO8d=Sye2qkaFkaZwxPtrNqFGzyebek2phoxuizrGr79wIVPAIpgcDBaKb44nvxP+IKQe1CZP4XzW=Z6nwuA0FMnITrWmQSPLvyiyXVQLzaaW4SpaAxx7vU0bUA/HOAzTIU75rZPYwGc6BRKIIcKMGhWKCEH9SUQnEVisNA=m9qtWGqKdci+HKe1IxHKiYYAB9akKbF7Yvmwd8qpiRNSPAixDKq7oRYw8DaOQZ7qbOrsYmBqdIDDLxD2QhDD==; acw_tc=707c9fd816541531375183780e46aa6ce2d53e26bfafc932328c29ead30e1d; auth=01028303E55D6544DA08FE836BA9BF6D44DA080015390069006100380061006C0074006C006B007800700063007100790075006300790075006D003400710000012F00FFF9E29896CB82B476F4AFE83F80444E31FAD287D3; token=fun2akiucpdfxwdpuouz9a");
-        request.setHeader(header);
-        // 设置请求header
-        Map<String, String> body = new HashMap<String, String>();
-        body.put("courseOpenId","h6mmaruz6nnbo0pnmbk4q");
-        body.put("pageSize","1000");
-        request.setBody(body);
-        // 设置请求body
-        String content = request.post("https://mooc.icve.com.cn/study/ranking/getScoresRankingList");
-        JSONArray list = new JSONArray();
-        // 新建一个空的JSONArray对象来存所有的数据
-        try {
-            JSONObject json = new JSONObject(content);
-            list = json.getJSONArray("list");
-            // 将获得的所有数据存入list
-        }
-        catch (JSONException e) {
-            System.out.println("JSON解析失败");
-            System.exit(1);
-        }
-        Student[] students = new Student[list.length()];
-        for(int i = 0; i < list.length(); i++){
-            // 遍历list，将每一个数据存入students数组中
-            Student student = new Student();
-            try {
-                JSONObject json = list.getJSONObject(i);
-                student.setName(json.getString("stuName"));
-                student.setSchool(json.getString("schoolName"));
-                student.setTime(json.getString("processTimeLong"));
-                student.setResult(json.getInt("totalscore"));
-                students[i] = student;
-                // 将每一个数据存入students数组中
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        for (Student student : students) {
-            System.out.println(student.getName() + " " + student.getSchool() + " " + student.getTime() + " " + student.getResult());
-        }
     }
 }
