@@ -21,15 +21,19 @@ public class GetGrades {
         String content = request.post("https://mooc.icve.com.cn/study/ranking/getScoresRankingList");
         JSONObject student = JSON.parseObject(content);
         List<Student> students = new LinkedList<Student>();
-        for (int i = 0; i < student.getJSONArray("list").size(); i++) {
-            JSONObject jsonObject = student.getJSONArray("list").getJSONObject(i);
-            Student student1 = new Student();
-            student1.setName(jsonObject.getString("stuName"));
-            student1.setTime(jsonObject.getString("processTimeLong"));
-            student1.setResult(jsonObject.getInteger("totalscore"));
-            students.add(student1);
+        if (student == null){
+            System.out.println("Cookies失效，请重新获取");
+        }else {
+            for (int i = 0; i < student.getJSONArray("list").size(); i++) {
+                JSONObject jsonObject = student.getJSONArray("list").getJSONObject(i);
+                Student student1 = new Student();
+                student1.setName(jsonObject.getString("stuName"));
+                student1.setTime(jsonObject.getString("processTimeLong"));
+                student1.setResult(jsonObject.getInteger("totalscore"));
+                students.add(student1);
+            }
         }
-        ClassExcelImp classExcelImp = new ClassExcelImp("C:\\Users\\zy\\Desktop\\Porject\\School-Assignment\\Java\\GetStudentGrades\\src\\main\\resources\\2021学生信息.xlsx");
+        ClassExcelImp classExcelImp = new ClassExcelImp(System.getProperty("user.dir") + "\\GetStudentGrades\\src\\main\\resources\\2021学生信息.xlsx");
         while (true) {
             System.out.println("输入序号进行操作" +
                     "\n1.根据名字查询" +
@@ -43,15 +47,19 @@ public class GetGrades {
                     String name = scanner.next();
                     Student stu = classExcelImp.readStudentByName(name);
                     if (stu != null) {
-                        if (stu.getTime() != null) {
+                        if (stu.getTime() != null || students.size() == 0) {
+                            System.out.println("未写入成绩");
                             System.out.println(stu);
                         } else {
                             students.forEach(student1 -> {
                                 if (student1.getName().equals(name)) {
+                                    System.out.println("姓名：" + student1.getName() + " 时间：" + student1.getTime() + " 成绩：" + student1.getResult());
                                     System.out.println(student1);
                                 }
                             });
                         }
+                    }else {
+                        System.out.println("没有找到该学生");
                     }
                     break;
                 case 2:
@@ -62,8 +70,8 @@ public class GetGrades {
                     System.out.println("导出完成");
                     break;
                 default:
-                    System.out.println("退出");
-                    System.exit(0);
+                        System.out.println("退出");
+                        System.exit(0);
             }
         }
     }
