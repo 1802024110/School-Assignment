@@ -6,17 +6,12 @@ public interface ClassExcel {
     /**
      * 根据查询条件，读取学生信息
      */
-    Student[] readStudent(String[] query);
-    /**
-     * 根据查询条件，返回需要的学生信息
-     */
-     Student[] readStudent(String[] query, String[] queryValue);
+    Student readStudentByName( String value);
     /**
      * 将学生信息写入excel
      */
-    void writeStudentForExcel(Student[] students);
+    void writeStudentForExcel(Student students,String sheetName);
     /**
      * 将查询的学生信息写入excel
      */
-    void writeStudentForExcel(Student[] students, String[] query);
 }

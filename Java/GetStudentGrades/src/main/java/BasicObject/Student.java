@@ -24,7 +24,6 @@ public class Student {
     private String counselor;
     @ExcelProperty(value = "民族")
     private String ethnic;
-    @ExcelProperty(value = "")
     private String school;
     private String time;
     private int result;

@@ -1,18 +1,16 @@
 import BasicObject.Student;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import tool.imp.ClassExcelImp;
 import tool.imp.RequestImp;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GetGrades {
     public static void main(String[] args) {
-
         RequestImp request = new RequestImp();
         Map<String,String> header = new HashMap<>();
-        header.put("Cookie","_bl_uid=nvlwq3CC72q8zOrsOhRm6pUttm0e; token=qmgakmu0zzcmbo6anfy6q; ssxmod_itna=eqGx9DBDgA0=uDxl4iuitQG8ADOS=Wde88bk7Dl=74A5D8D6DQeGTb2+eb1e18einYPiDuGrrXaxojjq+WodIfOjKbt4B3DEx06+107i4GGfxBYDQxAYDGDDp8Dj4ibDY+tODjnz/Zl61KDpxGrDlKDRx074KYDWcFqPrik96P+4fYDnam1inKD9x0CDlpKmboD0aSEe0v114xDEmROK8YDvxDk=bHH34Gd0g5zmodNWmb5WY2tNhpRYWe4Gjirwam4qYbqoi0PTsGKKWGxw12tAqDWKeF7qYD==; ssxmod_itna2=eqGx9DBDgA0=uDxl4iuitQG8ADOS=Wde88bkD6hfcED0yGRD031oujXDu7QqnbAOqnB+bisq8nOIPeUnWwGiq0AWTh0KUn6W59mUQYcbFH=Scr8IvY/xPQPE/bNPKWmZDyqo6cdZcK7RciOugF1/7PGP+PsPF0Nqjn8DPgm8hWmZEcsqay11ATOq7nQ+zIF2omaLrxLjfptx/Kvsc5ao=qhGr3tprYLWrBmtrAALxgmB3S2Cbqjk=F1z=Tz233n17c2WOqTpO0UkFmaXrptnnjdhFuA62=QZa9bfEP=frpCwLXEWBbIwgPDjKG25ir=t2rK+b2YbYfqyOC/i5e3TPWaFeTRS50k+3SbVuqCji1GKFexADDwxrqAq7WNY3m=RbH4hjeuxj2KGDDjKDewD4D==; acw_tc=707c9fd516542274926013184e3f3d1b40d7671afa87633ed17505517dd456; auth=01025CDCFD7C1245DA08FE5C44C2DE1A45DA080015390069006100380061006C0074006C006B007800700063007100790075006300790075006D003400710000012F00FF359650D73B248F5E009876E3D6A6E0EB07083332; token=9cwakmuz45dycod1piywa");
+        header.put("Cookie","_bl_uid=nvlwq3CC72q8zOrsOhRm6pUttm0e; token=vmslaamuoq1md4gdhcmqw; acw_tc=2f624a6e16542441025001994e7e2c3c8c09942f9eace75e8bb56d1a3e96c8; ssxmod_itna=Wq+xuiitMDzxni8eG=w5iIyqDuR0rcQ7Qx05hqGzDAxn40iDtcB/DGqHqK59Dy=Dy7SHoPlixmqfeYT77Bb1pDCPGnDBIxQTexYYODt4DTD34DYDirKDLDmeD+CMPDdvk5s/g0D3qGrDlKDRx07l65DW1FiGCKCFoYse4D1KD5xeCKD9x0CDlcDzR2ODDyvhRh10OoIDm+ohxYGDCKDj1Ak7rYDUAKzRgaLMlGo8nGt7CuYAG0=onhxWliqKmDxBeePgYhxg7xPee+YbAqgDDcNMQhDD; ssxmod_itna2=Wq+xuiitMDzxni8eG=w5iIyqDuR0rcQ7DnFoK0=CDlh=GxjRkSl3didRBee2agl2u0XWg9ag5DC72oIU8D5ll2WGGz9uEKFeBl3kj5oQ08cN+DTow0w+jzAQF+yUZxnvT4KuVw4d+7wNsjSNQC33w0itS9qismqYa+orHYRt/mo6VCTN/+rNtVg6z+23/mw4bLraGAT0UDZ=Z+rERBOW52ZUVAay/YiE54bFqU6uy0Of1O45gngvx4+tCCqwkEI=4t8gFVLS80Eaw02Dy3NOqI3nCQGtNuEqOccG0g61mIEP1iU6bD7j9nhUBoQC5go0FWfZ70sYN3ixDjKDewq4D===; auth=010295D918293945DA08FE9541DD8A4145DA080015390069006100380061006C0074006C006B007800700063007100790075006300790075006D003400710000012F00FFC87DF3BB389E2F7348BBB77222D911EAE9252CB9; token=yc4laamu7jvhpjvlrfn8hg");
         request.setHeader(header);
         // 设置请求header
         Map<String, String> body = new HashMap<String, String>();
@@ -21,35 +19,52 @@ public class GetGrades {
         request.setBody(body);
         // 设置请求body
         String content = request.post("https://mooc.icve.com.cn/study/ranking/getScoresRankingList");
-        JSONArray list = new JSONArray();
-        // 新建一个空的JSONArray对象来存所有的数据
-        try {
-            JSONObject json = new JSONObject(content);
-            list = json.getJSONArray("list");
-            // 将获得的所有数据存入list
+        JSONObject student =  JSON.parseObject(content);
+        List<Student> students = new LinkedList<Student>();
+        for (int i = 0; i < student.getJSONArray("list").size(); i++) {
+            JSONObject jsonObject = student.getJSONArray("list").getJSONObject(i);
+            Student student1 = new Student();
+            student1.setName(jsonObject.getString("stuName"));
+            student1.setTime(jsonObject.getString("processTimeLong"));
+            student1.setResult(jsonObject.getInteger("totalscore"));
+            students.add(student1);
         }
-        catch (JSONException e) {
-            System.out.println("JSON解析失败");
-            System.exit(1);
-        }
-        Student[] students = new Student[list.length()];
-        for(int i = 0; i < list.length(); i++){
-            // 遍历list，将每一个数据存入students数组中
-            Student student = new Student();
-            try {
-                JSONObject json = list.getJSONObject(i);
-                student.setName(json.getString("stuName"));
-                student.setSchool(json.getString("schoolName"));
-                student.setTime(json.getString("processTimeLong"));
-                student.setResult(json.getInt("totalscore"));
-                students[i] = student;
-                // 将每一个数据存入students数组中
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
+        ClassExcelImp classExcelImp = new ClassExcelImp("C:\\Users\\zy\\Desktop\\Porject\\School-Assignment\\Java\\GetStudentGrades\\src\\main\\resources\\2021学生信息.xlsx");
+        while(true){
+            System.out.println("输入序号进行操作" +
+                    "\n1.根据名字查询"+
+                    "\n2.导出excel"+
+                    "\n3.退出");
+            Scanner scanner = new Scanner(System.in);
+            int num = scanner.nextInt();
+            switch (num){
+                case 1:
+                    System.out.println("请输入要查询的学生姓名");
+                    String name = scanner.next();
+                    Student stu = classExcelImp.readStudentByName(name);
+                    if (stu != null){
+                        if (stu.getTime() != null){
+                            System.out.println(stu.toString());
+                        }else {
+                            students.forEach(student1 -> {
+                                if (student1.getName().equals(name)){
+                                    System.out.println(student1.toString());
+                                }
+                            });
+                        }
+                    }
+                    break;
+                case 2:
+                    System.out.println("导出中，请不要关闭进程...");
+                    for (Student student1 : students) {
+                        classExcelImp.writeStudentForExcel(student1,"sheet1");
+                    }
+                    System.out.println("导出完成");
+                    break;
+                default:
+                    System.out.println("退出");
+                    System.exit(0);
             }
-        }
-        for (Student student : students) {
-            System.out.println(student.toString());
         }
     }
 }
