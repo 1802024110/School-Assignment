@@ -3,8 +3,11 @@ package tool;
 import java.util.Map;
 
 public interface Request {
-    public String get(String url);
-    public String post(String url);
-    public void setHeader(Map<String,String> header);
-    public void setBody(Map<String,String> body);
+    String get(String url);
+
+    String post(String url);
+
+    void setHeader(Map<String, String> header);
+
+    void setBody(Map<String, String> body);
 }
