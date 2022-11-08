@@ -44,3 +44,5 @@ class MyHelloWorld extends Base{
   use SayHello;
 }
 (new MyHelloWorld())->sayHello();
+
+https://www.runoob.com/php/php-magic-constant.html
