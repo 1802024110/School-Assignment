@@ -1,4 +1,6 @@
 <?php
+namespace 魔术常量;
+
 // 魔术常量是随着在代码中的位置改变而改变
 
 // __LINE__当前行号
@@ -24,13 +26,15 @@ class MyIsClass{
 }
 new MyIsClass();
 
-/** traits(__TRAIT__)
- *  
+/** traits(__TRAIT__)代码复用
+ * 是一种另类的组合式方法，他将Java中实现多个接口或继承可能的重复代码给进行组合
+ * 在编译时会将trait的部分代码复制粘贴到类的定义体中，但是不会处理引入导致的不兼容问题。
+ * 参考文章: https://zhuanlan.zhihu.com/p/31362082
  */
 
 Class Base{
   public function sayHello(){
-    var_dump("Hello World");
+    var_dump("Hello World\n");
   }
 }
 
@@ -45,4 +49,11 @@ class MyHelloWorld extends Base{
 }
 (new MyHelloWorld())->sayHello();
 
-https://www.runoob.com/php/php-magic-constant.html
+// __METHOD__
+function myIsFun2(){
+  var_dump("我所在的方法名字为:".__METHOD__."\n");
+}
+myIsFun2();
+
+// __NAMESPACE__
+var_dump("当前命名空间是".__NAMESPACE__."\n");
