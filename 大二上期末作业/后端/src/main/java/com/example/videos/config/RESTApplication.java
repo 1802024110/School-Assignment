@@ -1,6 +1,5 @@
 package com.example.videos.config;
 
-import com.example.videos.filter.MyRequestFilter;
 import jakarta.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -13,7 +12,11 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class RESTApplication extends ResourceConfig {
 
     public RESTApplication() {
+        // 注册控制器
         packages("com.example.videos.controller");
-        register(MyRequestFilter.class);
+        // 注册错误处理
+        packages("com.example.videos.exception");
+        // 注册过滤器
+        packages("com.example.videos.filter");
     }
 }
