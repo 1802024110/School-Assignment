@@ -32,7 +32,4 @@ public class RegularUtils {
         Matcher m = emailRegex.matcher(password);
         return m.matches();
     }
-    public static void main(String[] args) {
-        System.out.println(checkPassword("241"));
-    }
 }
