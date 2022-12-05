@@ -22,7 +22,9 @@ public class UserController {
             @FormParam("password") String password,
             @FormParam("code") String code,
             @FormParam("nickName") String nickname,
-            @FormParam("tel") String trl){
+            @FormParam("tel") String tel){
+        
+
 
         Map<String, String> params = new HashMap();
         params.put("access_token","_bl_uid");

@@ -37,7 +37,4 @@ public class R<T> {
         r.code = 0;
         return r;
     }
-
-
-
 }
