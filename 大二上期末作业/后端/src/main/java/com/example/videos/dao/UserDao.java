@@ -12,4 +12,8 @@ public interface UserDao {
      * 根据token查找用户
     * */
     User getUserByToken(String token);
+    /**
+     * 根据email查找用户
+     * */
+    User getUserByEmail(String email);
 }

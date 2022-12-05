@@ -4,6 +4,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.example.videos.common.R;
 import com.example.videos.dao.UserDao;
 import com.example.videos.dao.imp.UserDaoImp;
+import com.example.videos.entity.User;
 import com.example.videos.utils.EmailUtils;
 import com.example.videos.utils.ValidateCodeUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,7 +41,11 @@ public class PublicController {
     @GET
     @Path("checkEmail/{email}")
     @Produces(MediaType.APPLICATION_JSON)
-    public R checkEmail(@PathParam("email") String email){
-        return R.error("11邮箱已被使用");
+    public R<String> checkEmail(@PathParam("email") String email){
+        User user = userDao.getUserByEmail(email);
+        if (user == null) {
+            return R.success(null,"邮箱可用");
+        }
+        return R.error("邮箱已被使用");
     }
 }
