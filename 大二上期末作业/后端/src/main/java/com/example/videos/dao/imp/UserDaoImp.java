@@ -48,4 +48,15 @@ public class UserDaoImp implements UserDao {
            return null;
        }
     }
+
+    /**
+     * @param user 用户实体
+     */
+    @Override
+    public Integer insertUser(User user) {
+        String  sql = "INSERT INTO user(`silence`, `username`, `passworld`, `email`, `gender`, `avatar`, `sign`, `level`, `birthday`, `country`, `ip`, `focus_count`, `like_count`, `fans_count`, `background_img`, `token`, `refresh_token`, `tel`) \n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?,?, ?, ?)";
+        Integer result = jdbc.update(sql,user.getSilence(),user.getUsername(),user.getPassword(),user.getEmail(),user.getGender(),user.getAvatar(),user.getSign(),user.getLevel(),user.getBirthday(),user.getCountry(),user.getIp(),user.getFocusCount(),user.getLikeCount(),user.getFansCount(),user.getBackgroundImg(),user.getToken(),user.getRefresh_token(),user.getTel());
+        return result;
+    }
 }

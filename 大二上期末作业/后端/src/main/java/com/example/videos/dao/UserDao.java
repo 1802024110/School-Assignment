@@ -16,4 +16,10 @@ public interface UserDao {
      * 根据email查找用户
      * */
     User getUserByEmail(String email);
+
+    /**
+     * 添加用户
+     * @param user 用户实体
+     * */
+    Integer insertUser(User user);
 }

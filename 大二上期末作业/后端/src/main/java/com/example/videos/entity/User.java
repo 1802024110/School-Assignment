@@ -56,7 +56,7 @@ public class User {
   /**
    * 用户密码
    * */
-  private String passworld;
+  private String password;
   /**
    * 用户收藏数
    * */
@@ -81,4 +81,8 @@ public class User {
    * 用户刷新token
    * */
   private String refresh_token;
+  /**
+   * 用户电话号码
+   * */
+  private long tel;
 }

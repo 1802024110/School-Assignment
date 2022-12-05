@@ -23,7 +23,7 @@ public class EmailUtils {
     // 密码
     private static final String mail_smtp_password = "qycgbcuojhibchac";
     // debug模式
-    private static final Boolean debug = true;
+    private static final Boolean debug = false;
 
     static {
         try {

@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 public class RegularUtils {
     /**
      * 检查邮箱格式
+     * @Param string email 需要检查的邮箱
+     * @return Boolean true为符合标准
      * */
     public static boolean checkEmail(String email) {
         // 定义正则表达式
