@@ -41,6 +41,6 @@ public class PublicController {
     @Path("checkEmail/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public R checkEmail(@PathParam("email") String email){
-        return R.error("邮箱已被使用");
+        return R.error("11邮箱已被使用");
     }
 }
