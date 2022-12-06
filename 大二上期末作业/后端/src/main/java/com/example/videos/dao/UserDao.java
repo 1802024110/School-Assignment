@@ -9,10 +9,6 @@ public interface UserDao {
     * */
     void add(User user);
     /**
-     * 根据token查找用户
-    * */
-    User getUserByToken(String token);
-    /**
      * 根据email查找用户
      * */
     User getUserByEmail(String email);
@@ -24,10 +20,5 @@ public interface UserDao {
     Integer insertUser(User user);
 
     User findByEmailAndPassword(String email, String password);
-
-    Integer updateTokenAndRefreshTokenByEmail(String email, String token, String refreshToken);
-
     String getUserPasswordByEmail(String email);
-
-    User getUserByRefreshToken(String refreshToken);
 }

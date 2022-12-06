@@ -2,7 +2,9 @@ import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.videos.dao.UserDao;
+import com.example.videos.dao.VideoDao;
 import com.example.videos.dao.imp.UserDaoImp;
+import com.example.videos.dao.imp.VideoDaoImp;
 import com.example.videos.entity.User;
 import com.example.videos.service.UserService;
 import com.example.videos.service.UserServiceImp;
@@ -20,5 +22,9 @@ public class T1 {
     private static final String TOKEN_SECRET = "ZCfasfhuaUUHufguGuwu2020BQWE";
     @Test
     public void test(){
+        VideoDao videoDao = new VideoDaoImp();
+        User user = new User();
+        user.setId(2);
+        System.out.println(videoDao.getLikeVideosId(user));
     }
 }

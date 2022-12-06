@@ -21,19 +21,6 @@ public class UserDaoImp implements UserDao {
     public void add(User user) {
 
     }
-
-    /**
-     * 根据token查找用户
-     *
-     * @param token
-     */
-    @Override
-    public User getUserByToken(String token) {
-        String  sql = "select * from user where token = ?";
-        User user = jdbc.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class),token);
-        return user;
-    }
-
     /**
      * 根据email查找用户
      * @param email
@@ -56,10 +43,10 @@ public class UserDaoImp implements UserDao {
      */
     @Override
     public Integer insertUser(User user) {
-        String  sql = "INSERT INTO user(`silence`, `username`, `password`, `email`, `gender`, `avatar`, `sign`, `level`, `birthday`, `country`, `ip`, `focus_count`, `like_count`, `fans_count`, `background_img`, `token`, `refresh_token`, `tel`) \n" +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?,?, ?, ?)";
+        String  sql = "INSERT INTO user(`silence`, `username`, `password`, `email`, `gender`, `avatar`, `sign`, `level`, `birthday`, `country`, `ip`, `focus_count`, `like_count`, `fans_count`, `background_img`, `tel`) \n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?)";
         try{
-            Integer row = jdbc.update(sql,user.getSilence(),user.getUsername(),user.getPassword(),user.getEmail(),user.getGender(),user.getAvatar(),user.getSign(),user.getLevel(),user.getBirthday(),user.getCountry(),user.getIp(),user.getFocusCount(),user.getLikeCount(),user.getFansCount(),user.getBackgroundImg(),user.getToken(),user.getRefresh_token(),user.getTel());
+            Integer row = jdbc.update(sql,user.getSilence(),user.getUsername(),user.getPassword(),user.getEmail(),user.getGender(),user.getAvatar(),user.getSign(),user.getLevel(),user.getBirthday(),user.getCountry(),user.getIp(),user.getFocusCount(),user.getLikeCount(),user.getFansCount(),user.getBackgroundImg(),user.getTel());
             return row;
             // 已经存在邮箱的情况下会有数据完整性报错，表示已经存在该邮箱或手机号。
         }catch (DataIntegrityViolationException e){
@@ -87,24 +74,6 @@ public class UserDaoImp implements UserDao {
             return null;
         }
     }
-
-    /**
-     * @param email
-     * @param token
-     * @param refreshToken
-     */
-    @Override
-    public Integer updateTokenAndRefreshTokenByEmail(String email, String token, String refreshToken) {
-        try {
-            String sql = "update user set token = ?, refresh_token = ? where email = ?";
-            Integer row = jdbc.update(sql, token,refreshToken,email);
-            return row;
-        }catch (Exception e){
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
     /**
      * @param email
      * @return
@@ -121,23 +90,6 @@ public class UserDaoImp implements UserDao {
         }catch (EmptyResultDataAccessException e){
             // 为空就返回null
             return "";
-        }
-    }
-
-    /**
-     * @param refreshToken
-     * @return
-     */
-    @Override
-    public User getUserByRefreshToken(String refreshToken) {
-        try{
-            String sql = "select * from user where refresh_token = ?";
-            User user = jdbc.queryForObject(sql,new BeanPropertyRowMapper<User>(User.class),refreshToken);
-            return user;
-            // 捕获为空的异常
-        }catch (EmptyResultDataAccessException e){
-            // 为空就返回null
-            return null;
         }
     }
 }

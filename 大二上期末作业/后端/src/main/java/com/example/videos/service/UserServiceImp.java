@@ -1,5 +1,6 @@
 package com.example.videos.service;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.videos.dao.UserDao;
 import com.example.videos.dao.imp.UserDaoImp;
 import com.example.videos.entity.User;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserServiceImp implements UserService {
-    private UserDao userDao = new UserDaoImp();
+    private final UserDao userDao = new UserDaoImp();
     /**
      * @param user
      * @return
@@ -19,10 +20,7 @@ public class UserServiceImp implements UserService {
     @Override
     public Boolean saveUser(User user) {
         Integer row = userDao.insertUser(user);
-        if (row != 0) {
-            return true;
-        }
-        return false;
+        return row != 0;
     }
 
     /**
@@ -38,20 +36,19 @@ public class UserServiceImp implements UserService {
     }
 
     /**
+     * 根据邮箱查找用户
+     *
      * @param email
-     * @param token
-     * @param refreshToken
-     * @return
      */
     @Override
-    public Boolean updateTokenAndRefreshTokenByEmail(String email, String token, String refreshToken) {
-        Integer row =  userDao.updateTokenAndRefreshTokenByEmail(email, token,refreshToken);
-        if (row != 0) {
-            return true;
-        }else {
-            return false;
+    public User getUserByEmail(String email) {
+        User user = userDao.getUserByEmail(email);
+        if (user != null){
+            return user;
         }
+        return null;
     }
+
 
     /**
      * @param email
@@ -72,23 +69,66 @@ public class UserServiceImp implements UserService {
     }
 
     /**
-     * 刷新token
-     * @param refreshToken
+     * @param token
+     * @return
      */
     @Override
-    public Map<String, String> refreshToken(String refreshToken) {
-        User user = userDao.getUserByRefreshToken(refreshToken);
-        if (user != null){
-            String newToken = TokenUtils.token(user.getEmail(),user.getPassword());
-            String newRefreshToken = TokenUtils.refresh_token();
-            Integer row = userDao.updateTokenAndRefreshTokenByEmail(user.getEmail(),newToken,newRefreshToken);
-            if (row != null){
-                Map<String,String> data = new HashMap();
-                data.put("token",newToken);
-                data.put("refresh_token",newRefreshToken);
-                data.put("expires_in",TimeUtil.getTokenExpression());
-                return data;
-            }
+    public Map<String, Object> createTokenMap(String token) {
+        Boolean result = TokenUtils.verify(token);
+        if (result){
+            DecodedJWT tokenJwt = TokenUtils.convert_token(token);
+            String email = tokenJwt.getClaim("email").toString();
+            String new_token = TokenUtils.token(email);
+            String new_refresh_token = TokenUtils.refresh_token(email);
+            Map<String, Object> params = new HashMap();
+            params.put("access_token",new_token);
+            // 过期时间
+            params.put("expires_in", TimeUtil.getTokenExpression());
+            params.put("refresh_token",new_refresh_token);
+            params.put("redirectUrl","还木有哦");
+            return params;
+        }
+        return null;
+    }
+
+    /**
+     * @param refresh_token
+     * @return
+     */
+    @Override
+    public Map<String, Object> createreRreshTokenMap(String refresh_token) {
+        Boolean result = TokenUtils.verify_refresh(refresh_token);
+        if (result){
+            DecodedJWT tokenJwt = TokenUtils.convert_refresh_token(refresh_token);
+            String email = tokenJwt.getClaim("email").toString();
+            String new_token = TokenUtils.token(email);
+            String new_refresh_token = TokenUtils.refresh_token(email);
+            Map<String, Object> params = new HashMap();
+            params.put("access_token",new_token);
+            // 过期时间
+            params.put("expires_in", TimeUtil.getTokenExpression());
+            params.put("refresh_token",new_refresh_token);
+            params.put("redirectUrl","还木有哦");
+            return params;
+        }
+        return null;
+    }
+
+    /**
+     * 根据token获取用户信息
+     *
+     * @param token
+     */
+    @Override
+    public User getUserByToken(String token) {
+        Boolean result = TokenUtils.verify(token);
+        if (result){
+            DecodedJWT tokenJwt = TokenUtils.convert_refresh_token(token);
+            System.out.println(tokenJwt);
+            String email = tokenJwt.getClaim("email").toString();
+            System.out.println(email);
+            User user =  userDao.getUserByEmail(email);
+            return user;
         }
         return null;
     }

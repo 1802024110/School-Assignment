@@ -18,7 +18,7 @@ import jakarta.ws.rs.core.MediaType;
 
 @Path("public")
 public class PublicController {
-    private UserDao userDao = new UserDaoImp();
+    private final UserDao userDao = new UserDaoImp();
     @GET
     @Path("getCode/{email}")
     @Produces(MediaType.APPLICATION_JSON)

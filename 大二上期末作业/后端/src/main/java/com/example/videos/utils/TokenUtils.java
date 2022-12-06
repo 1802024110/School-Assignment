@@ -12,6 +12,7 @@ import java.util.Random;
 
 /**
  * @desc   使用token验证用户是否登录
+ * 参考文章: https://javaguide.cn/system-design/security/jwt-intro.html#%E4%BB%80%E4%B9%88%E6%98%AF-jwt
  **/
 public class TokenUtils {
     //设置过期时间,毫秒
@@ -23,7 +24,7 @@ public class TokenUtils {
 
     private static final String REFRESH_TOKEN_SECRET = "218eafd1fdf990d5a52319d1f9664085";
 
-    public static String token (String username,String password){
+    public static String token (String email){
 
         String token = "";
         try {
@@ -38,8 +39,8 @@ public class TokenUtils {
             //携带username，password信息，生成签名
             token = JWT.create()
                     .withHeader(header)
-                    .withClaim("username",username)
-                    .withClaim("password",password).withExpiresAt(date)
+                    .withClaim("email",email)
+                    .withClaim("expiration_time",date)
                     .sign(algorithm);
         }catch (Exception e){
             e.printStackTrace();
@@ -48,7 +49,7 @@ public class TokenUtils {
         return token;
     }
     // 刷新令牌的令牌，把系统时间当作了盐。
-    public static String refresh_token(){
+    public static String refresh_token(String email){
         String token = "";
         try {
             //过期时间
@@ -62,7 +63,8 @@ public class TokenUtils {
             //携带username，password信息，生成签名
             token = JWT.create()
                     .withHeader(header)
-                    .withClaim("salt", new Random().nextDouble()).withExpiresAt(date)
+                    .withClaim("email", email)
+                    .withClaim("expiration_time", date)
                     .sign(algorithm);
         }catch (Exception e){
             e.printStackTrace();
@@ -100,5 +102,19 @@ public class TokenUtils {
             //e.printStackTrace();
             return  false;
         }
+    }
+
+    public static DecodedJWT convert_token(String token){
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET)).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(token);
+        return decodedJWT;
+    }
+
+    public static DecodedJWT convert_refresh_token(String refresh_token){
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(REFRESH_TOKEN_SECRET)).build();
+        DecodedJWT decodedJWT = jwtVerifier.verify(refresh_token);
+        // TODO 这里解析出现了问题
+        System.out.println(decodedJWT);
+        return decodedJWT;
     }
 }

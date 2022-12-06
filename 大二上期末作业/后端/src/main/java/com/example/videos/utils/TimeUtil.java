@@ -16,7 +16,7 @@ public class TimeUtil {
     /**
      * 获得token过期时间
      * */
-    public static String getTokenExpression(){
-        return TimeUtil.MillisecondsToDate(System.currentTimeMillis() + TokenUtils.EXPIRE_DATE);
+    public static long getTokenExpression(){
+        return System.currentTimeMillis() + TokenUtils.EXPIRE_DATE;
     }
 }

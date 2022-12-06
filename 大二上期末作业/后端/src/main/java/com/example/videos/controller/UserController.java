@@ -1,24 +1,20 @@
 package com.example.videos.controller;
 
 import com.example.videos.common.R;
-import com.example.videos.dao.UserDao;
-import com.example.videos.dao.imp.UserDaoImp;
 import com.example.videos.entity.User;
-import com.example.videos.note.UserLogger;
+import com.example.videos.note.AuthCheck;
 import com.example.videos.service.UserService;
 import com.example.videos.service.UserServiceImp;
 import com.example.videos.utils.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.ws.rs.FormParam;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,7 +25,7 @@ import java.util.Map;
 @Slf4j
 @Produces(MediaType.APPLICATION_JSON)
 public class UserController {
-    private UserService userService = new UserServiceImp();
+    private final UserService userService = new UserServiceImp();
 
     /**
      * 注册
@@ -62,21 +58,11 @@ public class UserController {
         password = StringUtils.encryptionPasswd(password);
         user.setPassword(password);
         user.setIp(RequestUtil.getIP(req));
-        String token = TokenUtils.token(email,password);
-        String refresh_token = TokenUtils.refresh_token();
-        user.setToken(token);
-        user.setRefresh_token(refresh_token);
+        String token = TokenUtils.token(email);
 
         // 保存用户
         if (userService.saveUser(user)){
-
-            // 生成返回体
-            Map<String, String> params = new HashMap();
-            params.put("access_token",token);
-            // 过期时间
-            params.put("expires_in", TimeUtil.getTokenExpression());
-            params.put("refresh_token",refresh_token);
-            params.put("redirectUrl","还木有哦");
+            Map<String,Object> params = userService.createTokenMap(token);
             return R.success(params);
         }
         return R.error("注册失败");
@@ -86,7 +72,7 @@ public class UserController {
      * */
     @POST
     @Path("oauth/access_token")
-    public R<Map<String,String>> login(
+    public R<Map<String,Object>> login(
             @FormParam("email") String email,
             @FormParam("password") String password
     ){
@@ -100,25 +86,16 @@ public class UserController {
         User user =  userService.login(email, password);
 
         if(user != null){
-            // 生成新的token和refresh_token
-            String token = TokenUtils.token(email, password);
-            String refresh_token = TokenUtils.refresh_token();
-            user.setToken(token);
-            user.setRefresh_token(refresh_token);
-
-            // 保存新的token和refresh_token
-            Boolean update = userService.updateTokenAndRefreshTokenByEmail(email,token,refresh_token);
-
-            // 更新成功
-            if (update) {
-                Map<String, String> params = new HashMap();
-                params.put("access_token",token);
-                // 过期时间
-                params.put("expires_in", TimeUtil.getTokenExpression());
-                params.put("refresh_token",refresh_token);
-                params.put("redirectUrl","还木有哦");
-                return R.success(params);
-            }
+            // 生成token和refresh_token
+            String token = TokenUtils.token(email);
+            String refresh_token = TokenUtils.refresh_token(email);
+            Map<String, Object> params = new HashMap();
+            params.put("access_token",token);
+            // 过期时间
+            params.put("expires_in", TimeUtil.getTokenExpression());
+            params.put("refresh_token",refresh_token);
+            params.put("redirectUrl","还木有哦");
+            return R.success(params);
         }
         return R.error("用户名或密码错误");
     }
@@ -131,10 +108,38 @@ public class UserController {
     public R<Map> refreshToken(
             @FormParam("refresh_token") String refresh_token
     ) {
-        Map data = userService.refreshToken(refresh_token);
-        if (data != null) {
-            return R.success(data,"刷新成功，refresh_token有效期7天");
+        Boolean checkToken = TokenUtils.verify_refresh(refresh_token);
+
+        if(checkToken){
+            Map<String, Object> params = userService.createreRreshTokenMap(refresh_token);
+            return R.success(params);
         }
         return R.error("刷新失败");
+    }
+
+    /**
+     * 获得用户的所有基本信息
+     * */
+    @GET
+    @Path("info")
+    @AuthCheck
+    public R<Map> getUserInfo(@Context HttpServletRequest request){
+        String token = request.getHeader("Authorization");
+        User user = userService.getUserByToken(token);
+        if (user != null){
+            return R.success(user.getPublicInfo(),"用户信息获取成功");
+        }
+        return R.error("用户信息获取失败");
+    }
+
+    /**
+     * 获取用户投稿的视频
+     * */
+    @GET
+    @Path("contribute")
+    @AuthCheck
+    public R<List<Integer>> getSubmitVideos(@Context HttpServletRequest request){
+        String token = request.getHeader("Authorization");
+        return null;
     }
 }

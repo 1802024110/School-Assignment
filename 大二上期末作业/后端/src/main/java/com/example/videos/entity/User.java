@@ -1,11 +1,16 @@
 package com.example.videos.entity;
 
+import com.example.videos.utils.OtherUtil;
 import lombok.Data;
 
+import java.lang.reflect.Field;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 public class User {
+  private long id;
 
   /**
    * 账号状态
@@ -85,4 +90,18 @@ public class User {
    * 用户电话号码
    * */
   private long tel;
+
+  /**
+   * 获得公开信息
+  * */
+
+  public Map<String, Object> getPublicInfo() {
+    Map<String, Object> info = OtherUtil.objectToMap(this);
+    // 移除掉敏感信息
+    info.remove("token");
+    info.remove("refresh_token");
+    info.remove("password");
+    info.remove("id");
+    return info;
+  }
 }
