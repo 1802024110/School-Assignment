@@ -29,4 +29,5 @@ public interface UserDao {
 
     String getUserPasswordByEmail(String email);
 
+    User getUserByRefreshToken(String refreshToken);
 }

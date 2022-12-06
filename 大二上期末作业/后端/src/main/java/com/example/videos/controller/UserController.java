@@ -31,6 +31,9 @@ import java.util.Map;
 public class UserController {
     private UserService userService = new UserServiceImp();
 
+    /**
+     * 注册
+    * */
     @POST
     @Path("register")
     public R<Map> register(
@@ -71,14 +74,16 @@ public class UserController {
             Map<String, String> params = new HashMap();
             params.put("access_token",token);
             // 过期时间
-            String expires_in = TimeUtil.MillisecondsToDate(System.currentTimeMillis() + 60000 * 60 * 2);
-            params.put("expires_in", expires_in);
+            params.put("expires_in", TimeUtil.getTokenExpression());
             params.put("refresh_token",refresh_token);
             params.put("redirectUrl","还木有哦");
             return R.success(params);
         }
         return R.error("注册失败");
     }
+    /**
+     * 登录
+     * */
     @POST
     @Path("oauth/access_token")
     public R<Map<String,String>> login(
@@ -109,8 +114,7 @@ public class UserController {
                 Map<String, String> params = new HashMap();
                 params.put("access_token",token);
                 // 过期时间
-                String expires_in = TimeUtil.MillisecondsToDate(System.currentTimeMillis() + 60000 * 60 * 2);
-                params.put("expires_in", expires_in);
+                params.put("expires_in", TimeUtil.getTokenExpression());
                 params.put("refresh_token",refresh_token);
                 params.put("redirectUrl","还木有哦");
                 return R.success(params);
@@ -119,4 +123,18 @@ public class UserController {
         return R.error("用户名或密码错误");
     }
 
+    /**
+    * 刷新令牌
+    * */
+    @POST
+    @Path("/oauth/refresh_token")
+    public R<Map> refreshToken(
+            @FormParam("refresh_token") String refresh_token
+    ) {
+        Map data = userService.refreshToken(refresh_token);
+        if (data != null) {
+            return R.success(data,"刷新成功，refresh_token有效期7天");
+        }
+        return R.error("刷新失败");
+    }
 }

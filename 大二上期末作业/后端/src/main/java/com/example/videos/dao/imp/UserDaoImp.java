@@ -123,4 +123,21 @@ public class UserDaoImp implements UserDao {
             return "";
         }
     }
+
+    /**
+     * @param refreshToken
+     * @return
+     */
+    @Override
+    public User getUserByRefreshToken(String refreshToken) {
+        try{
+            String sql = "select * from user where refresh_token = ?";
+            User user = jdbc.queryForObject(sql,new BeanPropertyRowMapper<User>(User.class),refreshToken);
+            return user;
+            // 捕获为空的异常
+        }catch (EmptyResultDataAccessException e){
+            // 为空就返回null
+            return null;
+        }
+    }
 }

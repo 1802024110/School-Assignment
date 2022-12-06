@@ -4,6 +4,11 @@ import com.example.videos.dao.UserDao;
 import com.example.videos.dao.imp.UserDaoImp;
 import com.example.videos.entity.User;
 import com.example.videos.utils.StringUtils;
+import com.example.videos.utils.TimeUtil;
+import com.example.videos.utils.TokenUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserServiceImp implements UserService {
     private UserDao userDao = new UserDaoImp();
@@ -62,6 +67,28 @@ public class UserServiceImp implements UserService {
         if (result){
             User user = userDao.getUserByEmail(email);
             return user;
+        }
+        return null;
+    }
+
+    /**
+     * 刷新token
+     * @param refreshToken
+     */
+    @Override
+    public Map<String, String> refreshToken(String refreshToken) {
+        User user = userDao.getUserByRefreshToken(refreshToken);
+        if (user != null){
+            String newToken = TokenUtils.token(user.getEmail(),user.getPassword());
+            String newRefreshToken = TokenUtils.refresh_token();
+            Integer row = userDao.updateTokenAndRefreshTokenByEmail(user.getEmail(),newToken,newRefreshToken);
+            if (row != null){
+                Map<String,String> data = new HashMap();
+                data.put("token",newToken);
+                data.put("refresh_token",newRefreshToken);
+                data.put("expires_in",TimeUtil.getTokenExpression());
+                return data;
+            }
         }
         return null;
     }

@@ -15,10 +15,11 @@ import java.util.Random;
  **/
 public class TokenUtils {
     //设置过期时间,毫秒
-    private static final long EXPIRE_DATE=60000*60*2;
+    public static final long EXPIRE_DATE=60000*60*2;
     //token秘钥
     private static final String TOKEN_SECRET = "b9f86abbca81ab98a516864389edc731";
-    private static final long REFRESH_EXPIRE_DATE=60000*60*24;
+    // 7天刷新令牌过期
+    private static final long REFRESH_EXPIRE_DATE=60000*60*24*7;
 
     private static final String REFRESH_TOKEN_SECRET = "218eafd1fdf990d5a52319d1f9664085";
 

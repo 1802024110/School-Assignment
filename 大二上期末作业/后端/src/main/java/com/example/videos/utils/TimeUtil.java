@@ -12,4 +12,11 @@ public class TimeUtil {
         date.setTime(millis);
         return new SimpleDateFormat("yyyy-MM-dd HH:ss:mm").format(date);
     }
+
+    /**
+     * 获得token过期时间
+     * */
+    public static String getTokenExpression(){
+        return TimeUtil.MillisecondsToDate(System.currentTimeMillis() + TokenUtils.EXPIRE_DATE);
+    }
 }
