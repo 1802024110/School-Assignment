@@ -123,11 +123,9 @@ public class UserServiceImp implements UserService {
     public User getUserByToken(String token) {
         Boolean result = TokenUtils.verify(token);
         if (result){
-            DecodedJWT tokenJwt = TokenUtils.convert_refresh_token(token);
-            System.out.println(tokenJwt);
-            String email = tokenJwt.getClaim("email").toString();
-            System.out.println(email);
-            User user =  userDao.getUserByEmail(email);
+            DecodedJWT tokenJwt = TokenUtils.convert_token(token);
+            String email = tokenJwt.getClaim("email").asString();
+            User user = userDao.getUserByEmail(email);
             return user;
         }
         return null;

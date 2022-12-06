@@ -22,9 +22,8 @@ public class T1 {
     private static final String TOKEN_SECRET = "ZCfasfhuaUUHufguGuwu2020BQWE";
     @Test
     public void test(){
-        VideoDao videoDao = new VideoDaoImp();
-        User user = new User();
-        user.setId(2);
-        System.out.println(videoDao.getLikeVideosId(user));
+        UserDao userDao = new UserDaoImp();
+        User user = userDao.getUserByEmail("1802024110@qq.com");
+        System.out.println(user);
     }
 }

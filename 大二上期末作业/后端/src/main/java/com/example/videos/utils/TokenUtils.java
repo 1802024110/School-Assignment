@@ -113,8 +113,6 @@ public class TokenUtils {
     public static DecodedJWT convert_refresh_token(String refresh_token){
         JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(REFRESH_TOKEN_SECRET)).build();
         DecodedJWT decodedJWT = jwtVerifier.verify(refresh_token);
-        // TODO 这里解析出现了问题
-        System.out.println(decodedJWT);
         return decodedJWT;
     }
 }
