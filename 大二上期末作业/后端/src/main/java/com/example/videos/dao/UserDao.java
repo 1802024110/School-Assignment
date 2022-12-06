@@ -22,4 +22,11 @@ public interface UserDao {
      * @param user 用户实体
      * */
     Integer insertUser(User user);
+
+    User findByEmailAndPassword(String email, String password);
+
+    Integer updateTokenAndRefreshTokenByEmail(String email, String token, String refreshToken);
+
+    String getUserPasswordByEmail(String email);
+
 }

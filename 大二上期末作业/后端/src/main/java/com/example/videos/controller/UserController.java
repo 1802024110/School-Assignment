@@ -52,6 +52,7 @@ public class UserController {
             return R.error("验证码不正确");
         }
 
+        // 创建新用户对象
         User user = new User();
         user.setEmail(email);
         user.setUsername(userName);
@@ -59,15 +60,18 @@ public class UserController {
         user.setPassword(password);
         user.setIp(RequestUtil.getIP(req));
         String token = TokenUtils.token(email,password);
-        // 刷新令牌的令牌，把系统时间当作了盐。
-        String refresh_token = TokenUtils.token(email+System.currentTimeMillis(),password);
+        String refresh_token = TokenUtils.refresh_token();
         user.setToken(token);
         user.setRefresh_token(refresh_token);
+
+        // 保存用户
         if (userService.saveUser(user)){
+
+            // 生成返回体
             Map<String, String> params = new HashMap();
             params.put("access_token",token);
             // 过期时间
-            String expires_in = TimeUtil.MillisecondsToDate(System.currentTimeMillis() + 60000 * 60 * 24);
+            String expires_in = TimeUtil.MillisecondsToDate(System.currentTimeMillis() + 60000 * 60 * 2);
             params.put("expires_in", expires_in);
             params.put("refresh_token",refresh_token);
             params.put("redirectUrl","还木有哦");
@@ -75,4 +79,44 @@ public class UserController {
         }
         return R.error("注册失败");
     }
+    @POST
+    @Path("oauth/access_token")
+    public R<Map<String,String>> login(
+            @FormParam("email") String email,
+            @FormParam("password") String password
+    ){
+        // 检查邮箱和密码格式
+        Boolean checkEmail = RegularUtils.checkEmail(email);
+        Boolean checkPassword = RegularUtils.checkPassword(password);
+        if(!checkEmail || !checkPassword){
+            return R.error("邮箱或密码不符合格式");
+        }
+
+        User user =  userService.login(email, password);
+
+        if(user != null){
+            // 生成新的token和refresh_token
+            String token = TokenUtils.token(email, password);
+            String refresh_token = TokenUtils.refresh_token();
+            user.setToken(token);
+            user.setRefresh_token(refresh_token);
+
+            // 保存新的token和refresh_token
+            Boolean update = userService.updateTokenAndRefreshTokenByEmail(email,token,refresh_token);
+
+            // 更新成功
+            if (update) {
+                Map<String, String> params = new HashMap();
+                params.put("access_token",token);
+                // 过期时间
+                String expires_in = TimeUtil.MillisecondsToDate(System.currentTimeMillis() + 60000 * 60 * 2);
+                params.put("expires_in", expires_in);
+                params.put("refresh_token",refresh_token);
+                params.put("redirectUrl","还木有哦");
+                return R.success(params);
+            }
+        }
+        return R.error("用户名或密码错误");
+    }
+
 }
