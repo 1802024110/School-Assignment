@@ -1,6 +1,7 @@
 package com.example.videos.service;
 
 import com.example.videos.entity.User;
+import com.example.videos.entity.Video;
 
 import java.util.List;
 import java.util.Map;
@@ -27,5 +28,7 @@ public interface UserService {
      * */
     User getUserByToken(String token);
 
-    List<Integer> getUserSubmitVideos(String token);
+    List<Video> getUserSubmitVideos(String token);
+
+    List<Video> getUserLikeVideos(String token);
 }

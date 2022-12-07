@@ -1,7 +1,10 @@
 package com.example.videos.dao;
 
 import com.example.videos.entity.User;
+import com.example.videos.entity.Video;
 import org.jvnet.hk2.annotations.Service;
+
+import java.util.List;
 
 public interface UserDao {
     /**
@@ -31,4 +34,13 @@ public interface UserDao {
      * 根据邮箱找用户id
      * */
     Integer getUserIdByEmail(String email);
+    /**
+     * 根据用户id获取提交的视频
+     * */
+
+    List<Video> getSubmitVideosByUserId(Integer userId);
+    /**
+     * 根据用户id获取用户喜欢的视频id列表
+     * */
+    List<Integer> getLikeVideosByUserId(Integer userId);
 }

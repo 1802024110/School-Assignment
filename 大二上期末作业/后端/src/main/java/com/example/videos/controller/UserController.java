@@ -2,9 +2,10 @@ package com.example.videos.controller;
 
 import com.example.videos.common.R;
 import com.example.videos.entity.User;
+import com.example.videos.entity.Video;
 import com.example.videos.note.AuthCheck;
 import com.example.videos.service.UserService;
-import com.example.videos.service.UserServiceImp;
+import com.example.videos.service.imp.UserServiceImp;
 import com.example.videos.utils.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -138,9 +139,17 @@ public class UserController {
     @GET
     @Path("contribute")
     @AuthCheck
-    public R<List<Integer>> getSubmitVideos(@Context HttpServletRequest request){
+    public R<List<Video>> getSubmitVideos(@Context HttpServletRequest request){
         String token = request.getHeader("Authorization");
-        userService.getUserSubmitVideos(token);
-        return R.error("获取失败");
+        List<Video> videos = userService.getUserSubmitVideos(token);
+        return R.success(videos);
+    }
+    @GET
+    @Path("likeVideo")
+    @AuthCheck
+    public R<List<Video>> getLikeVideos(@Context HttpServletRequest request){
+        String token = request.getHeader("Authorization");
+        List<Video> videos = userService.getUserLikeVideos(token);
+        return R.success(videos);
     }
 }

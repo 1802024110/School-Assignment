@@ -2,12 +2,23 @@ package com.example.videos.dao.imp;
 
 import com.example.videos.dao.UserDao;
 import com.example.videos.entity.User;
+import com.example.videos.entity.Video;
+import com.example.videos.mapper.VideoRowMapper;
 import com.example.videos.utils.JDBCUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 用户的数据库实现
  * 参考文章: https://www.cnblogs.com/gongxr/p/8053010.html
@@ -111,5 +122,23 @@ public class UserDaoImp implements UserDao {
         catch (EmptyResultDataAccessException e){
             return null;
         }
+    }
+
+    @Override
+    public List<Video> getSubmitVideosByUserId(Integer userId) {
+        String sql = "SELECT * FROM video WHERE upload_user=?";
+        List<Video> videos = jdbc.query(sql,new VideoRowMapper(),userId);;
+        return videos;
+    }
+
+    /**
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Integer> getLikeVideosByUserId(Integer userId) {
+        String sql = "SELECT video_id FROM user_video_like WHERE user_id = ?";
+        List<Integer> videos = jdbc.queryForList(sql,Integer.class,userId);
+        return videos;
     }
 }

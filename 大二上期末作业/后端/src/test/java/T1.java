@@ -1,20 +1,8 @@
-import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.example.videos.dao.UserDao;
-import com.example.videos.dao.VideoDao;
 import com.example.videos.dao.imp.UserDaoImp;
-import com.example.videos.dao.imp.VideoDaoImp;
-import com.example.videos.entity.User;
-import com.example.videos.service.UserService;
-import com.example.videos.service.UserServiceImp;
-import com.example.videos.utils.TimeUtil;
 import org.junit.jupiter.api.Test;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class T1 {
     private static final long EXPIRE_DATE=60000*60*2;
@@ -23,7 +11,7 @@ public class T1 {
     @Test
     public void test(){
         UserDao userDao = new UserDaoImp();
-        Integer user = userDao.getUserIdByEmail("180202410@qq.com");
+        List<Integer> user = userDao.getLikeVideosByUserId(1);
         System.out.println(user);
     }
 }

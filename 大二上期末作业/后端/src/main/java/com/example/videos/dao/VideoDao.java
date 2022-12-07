@@ -1,17 +1,16 @@
 package com.example.videos.dao;
 
 import com.example.videos.entity.User;
+import com.example.videos.entity.Video;
 
 import java.util.List;
 import java.util.Map;
 
 public interface VideoDao {
     /**
-     * 用户投稿的视频id
+     * 根据视频id获得视频
      * */
-    List<Integer> getUserVideosId(User user);
-    /**
-     * 用户喜欢的视频id
-     * */
-    List<Integer> getLikeVideosId(User user);
+    Video getVideoById(Integer id);
+
+    List<Video> getVideoByKey(String keyword, Integer page);
 }
