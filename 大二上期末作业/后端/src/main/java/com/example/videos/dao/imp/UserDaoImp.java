@@ -8,6 +8,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+/**
+ * 用户的数据库实现
+ * 参考文章: https://www.cnblogs.com/gongxr/p/8053010.html
+ * */
 @Slf4j
 public class UserDaoImp implements UserDao {
     private final JdbcTemplate jdbc = new JdbcTemplate(JDBCUtils.getDataSource());
@@ -81,7 +85,6 @@ public class UserDaoImp implements UserDao {
     @Override
     public String getUserPasswordByEmail(String email) {
         try{
-
         String sql = "select * from user where email = ?";
         User user = jdbc.queryForObject(sql,new BeanPropertyRowMapper<User>(User.class),email);
         String encryptionPasswd = user.getPassword();
@@ -90,6 +93,23 @@ public class UserDaoImp implements UserDao {
         }catch (EmptyResultDataAccessException e){
             // 为空就返回null
             return "";
+        }
+    }
+
+    /**
+     * @param email
+     * @return
+     */
+    @Override
+    public Integer getUserIdByEmail(String email) {
+        try {
+            String sql = "select id from user where email = ?";
+            Integer userId = jdbc.queryForObject(sql,Integer.class,email);
+            return userId;
+        }
+        // 捕获返回为空的情况
+        catch (EmptyResultDataAccessException e){
+            return null;
         }
     }
 }

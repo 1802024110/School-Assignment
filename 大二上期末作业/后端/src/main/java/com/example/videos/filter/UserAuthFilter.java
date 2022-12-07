@@ -4,6 +4,7 @@ import com.example.videos.common.R;
 import com.example.videos.dao.UserDao;
 import com.example.videos.dao.imp.UserDaoImp;
 import com.example.videos.note.AuthCheck;
+import com.example.videos.utils.TokenUtils;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
@@ -22,6 +23,11 @@ public class UserAuthFilter implements  ContainerResponseFilter {
     public void filter(final ContainerRequestContext requestContext, final ContainerResponseContext responseContext) throws IOException {
         String token = requestContext.getHeaderString("Authorization");
         if (token.equals("")) {
+            responseContext.setEntity(R.error("身份验证错误"));
+        }
+        // 在过滤器这里就完成token验证
+        Boolean result = TokenUtils.verify(token);
+        if (!result){
             responseContext.setEntity(R.error("身份验证错误"));
         }
     }

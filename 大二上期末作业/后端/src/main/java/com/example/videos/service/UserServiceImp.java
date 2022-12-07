@@ -9,6 +9,7 @@ import com.example.videos.utils.TimeUtil;
 import com.example.videos.utils.TokenUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserServiceImp implements UserService {
@@ -121,6 +122,7 @@ public class UserServiceImp implements UserService {
      */
     @Override
     public User getUserByToken(String token) {
+        // 冗余的验证一遍，以防不测
         Boolean result = TokenUtils.verify(token);
         if (result){
             DecodedJWT tokenJwt = TokenUtils.convert_token(token);
@@ -128,6 +130,18 @@ public class UserServiceImp implements UserService {
             User user = userDao.getUserByEmail(email);
             return user;
         }
+        return null;
+    }
+
+    /**
+     * @param token
+     * @return
+     */
+    @Override
+    public List<Integer> getUserSubmitVideos(String token) {
+        DecodedJWT tokenJwt = TokenUtils.convert_token(token);
+        String email = tokenJwt.getClaim("email").asString();
+        Integer userId = userDao.getUserIdByEmail(email);
         return null;
     }
 }

@@ -140,6 +140,7 @@ public class UserController {
     @AuthCheck
     public R<List<Integer>> getSubmitVideos(@Context HttpServletRequest request){
         String token = request.getHeader("Authorization");
-        return null;
+        userService.getUserSubmitVideos(token);
+        return R.error("获取失败");
     }
 }

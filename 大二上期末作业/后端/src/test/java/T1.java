@@ -23,7 +23,7 @@ public class T1 {
     @Test
     public void test(){
         UserDao userDao = new UserDaoImp();
-        User user = userDao.getUserByEmail("1802024110@qq.com");
+        Integer user = userDao.getUserIdByEmail("180202410@qq.com");
         System.out.println(user);
     }
 }

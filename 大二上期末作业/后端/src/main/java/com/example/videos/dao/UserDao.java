@@ -19,6 +19,16 @@ public interface UserDao {
      * */
     Integer insertUser(User user);
 
+    /**
+     * 根据账号密码找用户
+     * */
     User findByEmailAndPassword(String email, String password);
+    /**
+    * 根据邮箱找密码
+    * */
     String getUserPasswordByEmail(String email);
+    /**
+     * 根据邮箱找用户id
+     * */
+    Integer getUserIdByEmail(String email);
 }
