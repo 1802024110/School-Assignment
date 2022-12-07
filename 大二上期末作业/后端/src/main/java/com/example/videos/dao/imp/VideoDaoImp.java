@@ -33,6 +33,23 @@ public class VideoDaoImp implements VideoDao {
      */
     @Override
     public List<Video> getVideoByKey(String keyword, Integer page) {
+        /*
+
+SELECT *
+FROM (
+    SELECT *
+    FROM table_name
+    WHERE id > (SELECT id FROM table_name WHERE name = 'John')
+        AND id < (SELECT MIN(id) FROM table_name WHERE id > (SELECT id FROM table_name WHERE name = 'John'))
+    LIMIT 100
+)
+OFFSET 200;
+
+
+
+
+
+         */
         String sql = "";
         return null;
     }
