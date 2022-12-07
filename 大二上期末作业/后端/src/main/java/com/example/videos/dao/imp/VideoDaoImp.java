@@ -17,7 +17,7 @@ public class VideoDaoImp implements VideoDao {
      */
     @Override
     public List<Integer> getUserVideosId(User user) {
-        String sql = "SELECT video_id FROM video_ownership WHERE user_id=?";
+        String sql = "SELECT video_id FROM video_user WHERE user_id=?";
         List<Integer> ids =  jdbc.queryForList(sql,Integer.class,user.getId());
         return ids;
     }
