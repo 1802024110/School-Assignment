@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.MediaType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Map;
 
 @Path("video")
 @Slf4j
@@ -29,8 +30,17 @@ public class VideoController {
     @GET
     @Path("search/{keyword}/{page}")
     @AuthCheck
-    public R<List<Video>> getVideoByKey(@PathParam("keyword") String keyword, @PathParam("page") Integer page) {
-         List<Video> videos = videoService.getVideoByKey(keyword,page);
+    public R<Map<String,Object>> getVideoByKey(@PathParam("keyword") String keyword, @PathParam("page") Integer page) {
+        Map<String,Object> videos = videoService.getVideoByKey(keyword,page);
+        return R.success(videos);
+    }
+
+    @GET
+    @Path("recommended/{page}")
+    @AuthCheck
+    public R<Map<String,Object>> getVideoRecommended(@Context HttpServletRequest request,@PathParam("page") Integer page){
+        String token = request.getHeader("Authorization");
+        Map<String,Object> videos = videoService.getVideoRecommended(token,page);
         return R.success(videos);
     }
 }

@@ -10,7 +10,9 @@ import com.example.videos.service.VideoService;
 import com.example.videos.utils.TokenUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class VideoServiceImp implements VideoService {
     private final UserDao userDao = new UserDaoImp();
@@ -31,9 +33,34 @@ public class VideoServiceImp implements VideoService {
      * @return
      */
     @Override
-    public List<Video> getVideoByKey(String keyword, Integer page) {
+    public Map<String,Object> getVideoByKey(String keyword, Integer page) {
         List<Video> videos = videoDao.getVideoByKey(keyword, page);
-        Integer count = videos.getVideoCountByKey(keyword);
+        Integer count = videoDao.getVideoCountByKey(keyword);
+        Map<String,Object> reusetMap = new HashMap<String, Object>();
+        reusetMap.put("data", videos);
+        reusetMap.put("total", count);
+        reusetMap.put("limit", count!=0?count/10:0);
+        return reusetMap;
+    }
+
+    /**
+     * @param page
+     * @return
+     */
+    @Override
+    public Map<String, Object> getVideoRecommended(String token,Integer page) {
+        DecodedJWT tokenJwt = TokenUtils.convert_token(token);
+        String email = tokenJwt.getClaim("email").asString();
+        // 获得当前用户的id
+        Integer userId = userDao.getUserIdByEmail(email);
+        // 获得用户喜欢的类型列表
+        List<Integer> styles = videoDao.getUserLikeStyles(userId);
+        // 获得类型列表的具体视频
+        List<Video> videos = videoDao.getStyleVideos(styles,0);
+        Map<String,Object> reusetMap =new HashMap<>();
+        reusetMap.put("total", count);
+        reusetMap.put("limit", count!=0?count/10:);
+        reusetMap.put("data", videos);
         return null;
     }
 }

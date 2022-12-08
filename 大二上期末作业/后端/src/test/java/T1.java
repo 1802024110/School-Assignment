@@ -1,7 +1,11 @@
 import com.example.videos.dao.UserDao;
+import com.example.videos.dao.VideoDao;
 import com.example.videos.dao.imp.UserDaoImp;
+import com.example.videos.dao.imp.VideoDaoImp;
+import com.example.videos.entity.Video;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class T1 {
@@ -10,8 +14,14 @@ public class T1 {
     private static final String TOKEN_SECRET = "ZCfasfhuaUUHufguGuwu2020BQWE";
     @Test
     public void test(){
-        UserDao userDao = new UserDaoImp();
-        List<Integer> user = userDao.getLikeVideosByUserId(1);
-        System.out.println(user);
+        VideoDao videoDao = new VideoDaoImp();
+//        List<Video> videos = videoDao.getVideoByKey("视频",1);
+//        System.out.println(videos);
+//        List<Integer> videoStyles = videoDao.getUserLikeStyles(1);
+//        System.out.println(videoStyles);
+        List<Integer> videoStyles = Arrays.asList(1, 2, 3, 4, 5);
+
+        List<Video> videos = videoDao.getStyleVideos(videoStyles,0);
+        System.out.println(videos);
     }
 }

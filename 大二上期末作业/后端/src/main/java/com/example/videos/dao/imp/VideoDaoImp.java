@@ -8,7 +8,10 @@ import com.example.videos.utils.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class VideoDaoImp implements VideoDao {
     private final JdbcTemplate jdbc = new JdbcTemplate(JDBCUtils.getDataSource());
@@ -33,24 +36,56 @@ public class VideoDaoImp implements VideoDao {
      */
     @Override
     public List<Video> getVideoByKey(String keyword, Integer page) {
-        /*
-
-SELECT *
-FROM (
-    SELECT *
-    FROM table_name
-    WHERE id > (SELECT id FROM table_name WHERE name = 'John')
-        AND id < (SELECT MIN(id) FROM table_name WHERE id > (SELECT id FROM table_name WHERE name = 'John'))
-    LIMIT 100
-)
-OFFSET 200;
-
-
-
-
-
-         */
-        String sql = "";
-        return null;
+        String sql = "SELECT *\n" +
+                "FROM video\n" +
+                "WHERE title LIKE ?\n" +
+                "LIMIT 10 OFFSET ?";
+        // 将keyword中的?进行双重转义
+        keyword = keyword.replace("?", "\\?");
+        // 查询 title 中包含 keyword 的前 10 条记录
+        List<Video> videos = jdbc.query(sql, new VideoRowMapper(), "%" + keyword + "%", page*10);
+        return videos;
     }
+
+    /**
+     * @param keyword
+     * @return
+     */
+    @Override
+    public Integer getVideoCountByKey(String keyword) {
+        String sql = "SELECT COUNT(id) FROM video WHERE title LIKE ?";
+        keyword = keyword.replace("?", "\\?");
+        Integer videoCount = jdbc.queryForObject(sql,Integer.class, "%"+keyword+"%");
+        return videoCount;
+    }
+
+    /**
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<Integer> getUserLikeStyles(Integer userId) {
+        String sql = "SELECT video_id FROM user_video_like WHERE user_id = ?";
+        List<Integer> likeStyles = jdbc.queryForList(sql,Integer.class,userId);
+        return likeStyles;
+    }
+
+    /**
+     * @param video_style
+     * @param page
+     * @return
+     */
+    @Override
+    public List<Video> getStyleVideos(List<Integer> video_style, Integer page) {
+        String sql = "SELECT * FROM video WHERE video_style IN (?) LIMIT 10 OFFSET ?";
+
+        // 将类似数组转为字符串
+        String styleStr = video_style.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(","));
+
+        List<Video> videos = jdbc.query(sql, new VideoRowMapper(),styleStr,page*10);
+
+        return videos;
+}
 }
