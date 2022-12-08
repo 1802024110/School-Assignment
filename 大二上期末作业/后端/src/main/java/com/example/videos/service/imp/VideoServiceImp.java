@@ -57,10 +57,11 @@ public class VideoServiceImp implements VideoService {
         List<Integer> styles = videoDao.getUserLikeStyles(userId);
         // 获得类型列表的具体视频
         List<Video> videos = videoDao.getStyleVideos(styles,0);
+        Integer count = videoDao.getVideoCountByStyles(styles);
         Map<String,Object> reusetMap =new HashMap<>();
         reusetMap.put("total", count);
-        reusetMap.put("limit", count!=0?count/10:);
+        reusetMap.put("limit", count!=0?count/10:0);
         reusetMap.put("data", videos);
-        return null;
+        return reusetMap;
     }
 }

@@ -28,4 +28,5 @@ public interface VideoDao {
      * */
     List<Video> getStyleVideos(List<Integer> video_style,Integer page);
 
+    Integer getVideoCountByStyles(List<Integer> styles);
 }

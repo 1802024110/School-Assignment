@@ -20,8 +20,11 @@ public class T1 {
 //        List<Integer> videoStyles = videoDao.getUserLikeStyles(1);
 //        System.out.println(videoStyles);
         List<Integer> videoStyles = Arrays.asList(1, 2, 3, 4, 5);
-
+//
         List<Video> videos = videoDao.getStyleVideos(videoStyles,0);
-        System.out.println(videos);
+        //System.out.println(videos);
+        //
+        //Integer count = videoDao.getVideoCountByStyles(videoStyles);
+        //System.out.println(count);
     }
 }

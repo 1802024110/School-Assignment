@@ -8,6 +8,7 @@ import com.example.videos.utils.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.sql.PreparedStatement;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -77,15 +78,35 @@ public class VideoDaoImp implements VideoDao {
      */
     @Override
     public List<Video> getStyleVideos(List<Integer> video_style, Integer page) {
+        List<Integer> videoStyles = Arrays.asList(1, 2, 3, 4, 5);
+
         String sql = "SELECT * FROM video WHERE video_style IN (?) LIMIT 10 OFFSET ?";
 
+
         // 将类似数组转为字符串
-        String styleStr = video_style.stream()
+        String styleStr = videoStyles.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(","));
+        List<Video> videos = jdbc.query(sql, new VideoRowMapper(),styleStr,0);
+        System.out.println(videos);
+        return videos;
+}
+
+    /**
+     * @param styles
+     * @return
+     */
+    @Override
+    public Integer getVideoCountByStyles(List<Integer> styles) {
+        String sql = "SELECT count(id) FROM video WHERE video_style IN (?)";
+
+        // 将类似数组转为字符串
+        String styleStr = styles.stream()
                 .map(Object::toString)
                 .collect(Collectors.joining(","));
 
-        List<Video> videos = jdbc.query(sql, new VideoRowMapper(),styleStr,page*10);
+        Integer videoCount = jdbc.queryForObject(sql,Integer.class,styleStr);
 
-        return videos;
-}
+        return videoCount;
+    }
 }
