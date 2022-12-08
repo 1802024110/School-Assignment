@@ -7,6 +7,8 @@ import com.example.videos.mapper.VideoRowMapper;
 import com.example.videos.utils.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.sql.PreparedStatement;
 import java.util.Arrays;
@@ -16,7 +18,8 @@ import java.util.stream.Collectors;
 
 public class VideoDaoImp implements VideoDao {
     private final JdbcTemplate jdbc = new JdbcTemplate(JDBCUtils.getDataSource());
-
+    // 创建一个 NamedParameterJdbcTemplate 来执行查询
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbc);
 
     /**
      * 根据视频id获得视频
@@ -77,20 +80,23 @@ public class VideoDaoImp implements VideoDao {
      * @return
      */
     @Override
+    // 根据指定的样式和页码获取视频列表
     public List<Video> getStyleVideos(List<Integer> video_style, Integer page) {
-        List<Integer> videoStyles = Arrays.asList(1, 2, 3, 4, 5);
+        // 创建要执行的 SQL 查询语句
+        String sql = "SELECT * FROM video WHERE video_style IN (:styleStyle) LIMIT 10 OFFSET :page";
 
-        String sql = "SELECT * FROM video WHERE video_style IN (?) LIMIT 10 OFFSET ?";
+        // 创建一个 MapSqlParameterSource 来保存查询参数值
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("styleStyle",video_style);
+        parameterSource.addValue("page",page*10);
 
+        // 执行查询，将结果集映射到 Video 对象列表
+        List<Video> videos = namedParameterJdbcTemplate.query(sql,parameterSource,new VideoRowMapper());
 
-        // 将类似数组转为字符串
-        String styleStr = videoStyles.stream()
-                .map(Object::toString)
-                .collect(Collectors.joining(","));
-        List<Video> videos = jdbc.query(sql, new VideoRowMapper(),styleStr,0);
-        System.out.println(videos);
+        // 返回视频列表
         return videos;
-}
+    }
+
 
     /**
      * @param styles
@@ -98,14 +104,13 @@ public class VideoDaoImp implements VideoDao {
      */
     @Override
     public Integer getVideoCountByStyles(List<Integer> styles) {
-        String sql = "SELECT count(id) FROM video WHERE video_style IN (?)";
+        String sql = "SELECT count(id) FROM video WHERE video_style IN (:styles)";
 
-        // 将类似数组转为字符串
-        String styleStr = styles.stream()
-                .map(Object::toString)
-                .collect(Collectors.joining(","));
+        // 创建一个 MapSqlParameterSource 来保存查询参数值
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("styles",styles);
 
-        Integer videoCount = jdbc.queryForObject(sql,Integer.class,styleStr);
+        Integer videoCount = namedParameterJdbcTemplate.queryForObject(sql,parameterSource,Integer.class);
 
         return videoCount;
     }
