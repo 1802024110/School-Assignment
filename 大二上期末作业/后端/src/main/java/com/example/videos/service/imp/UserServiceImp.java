@@ -165,7 +165,6 @@ public class UserServiceImp implements UserService {
         // 读取用户喜欢的视频列表id
         List<Integer> videoIds = userDao.getLikeVideosByUserId(userId);
         List<Video> videos = new ArrayList();
-        System.out.println(videoIds);
         videoIds.forEach(id->videos.add(videoDao.getVideoById(id)));
         return videos;
     }

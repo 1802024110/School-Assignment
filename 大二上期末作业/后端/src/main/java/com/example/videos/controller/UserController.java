@@ -104,7 +104,7 @@ public class UserController {
     /**
     * 刷新令牌
     * */
-    @POST
+    @PUT
     @Path("/oauth/refresh_token")
     public R<Map> refreshToken(
             @FormParam("refresh_token") String refresh_token

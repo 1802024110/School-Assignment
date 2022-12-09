@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import java.sql.ResultSet;
@@ -26,6 +27,7 @@ import java.util.Map;
 @Slf4j
 public class UserDaoImp implements UserDao {
     private final JdbcTemplate jdbc = new JdbcTemplate(JDBCUtils.getDataSource());
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbc);
 
     /**
      * 添加用户
@@ -137,7 +139,9 @@ public class UserDaoImp implements UserDao {
      */
     @Override
     public List<Integer> getLikeVideosByUserId(Integer userId) {
-        String sql = "SELECT video_id FROM user_video_like WHERE user_id = ?";
+        String sql = "SELECT video_id\n" +
+                "FROM user_video_like\n" +
+                "WHERE video_id IN (SELECT id FROM video) AND user_id=?";
         List<Integer> videos = jdbc.queryForList(sql,Integer.class,userId);
         return videos;
     }

@@ -24,9 +24,14 @@ public interface VideoDao {
 
     /**
      * 根据视频类型获取视频
-     * @param video_style
      * */
     List<Video> getStyleVideos(List<Integer> video_style,Integer page);
-
+    /**
+     * 根据视频类型列表获得该类型视频的总数
+     * */
     Integer getVideoCountByStyles(List<Integer> styles);
+    /**
+     * 随机返回10个状态为正常的视频
+     * */
+    List<Video> getRandomVideos();
 }

@@ -64,4 +64,12 @@ public class VideoServiceImp implements VideoService {
         reusetMap.put("data", videos);
         return reusetMap;
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<Video> getRandomVideos() {
+        return videoDao.getRandomVideos();
+    }
 }

@@ -5,20 +5,23 @@ import com.example.videos.entity.User;
 import com.example.videos.entity.Video;
 import com.example.videos.mapper.VideoRowMapper;
 import com.example.videos.utils.JDBCUtils;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class VideoDaoImp implements VideoDao {
+    // 错误的用法，没有防sql注入
     private final JdbcTemplate jdbc = new JdbcTemplate(JDBCUtils.getDataSource());
-    // 创建一个 NamedParameterJdbcTemplate 来执行查询
+    // 创建一个 NamedParameterJdbcTemplate 来执行查询，可以防sql注入
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbc);
 
     /**
@@ -28,9 +31,14 @@ public class VideoDaoImp implements VideoDao {
      */
     @Override
     public Video getVideoById(Integer id) {
-        String sql = "SELECT id,update_time,`status`,title,cover,is_top,upload_user,`describe`,video_style,play_url FROM video WHERE id = ?";
-        Video video = jdbc.queryForObject(sql,new VideoRowMapper(),id);
-        return video;
+        try {
+
+            String sql = "SELECT id,update_time,`status`,title,cover,is_top,upload_user,`describe`,video_style,play_url FROM video WHERE id = ?";
+            Video video = jdbc.queryForObject(sql,new VideoRowMapper(),id);
+            return video;
+        } catch (EmptyResultDataAccessException e) {
+            return  null;
+        }
     }
 
     /**
@@ -114,4 +122,18 @@ public class VideoDaoImp implements VideoDao {
 
         return videoCount;
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<Video> getRandomVideos() {
+        // 使用 SQL 语句获取结果
+        String sql = "SELECT * FROM video WHERE status = '正常' ORDER BY RAND() LIMIT 10";
+        // 将结果封装为 Video 对象的 List 集合
+        List<Video> videos = namedParameterJdbcTemplate.query(sql,new VideoRowMapper());
+        // 返回视频列表
+        return videos;
+    }
+
 }

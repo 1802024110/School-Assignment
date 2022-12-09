@@ -11,4 +11,6 @@ public interface VideoService {
     Map<String,Object> getVideoByKey(String keyword, Integer page);
 
     Map<String, Object> getVideoRecommended(String token,Integer page);
+
+    List<Video> getRandomVideos();
 }

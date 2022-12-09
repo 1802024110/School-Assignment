@@ -44,4 +44,12 @@ public class VideoController {
         Map<String,Object> videos = videoService.getVideoRecommended(token,page);
         return R.success(videos);
     }
+
+    @GET
+    @Path("randomVideos")
+    @AuthCheck
+    public R<List<Video>> getRandomVideos() {
+        List<Video> videos = videoService.getRandomVideos();
+        return R.success(videos);
+    }
 }
