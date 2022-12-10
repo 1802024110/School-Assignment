@@ -12,4 +12,6 @@ public interface CommentService {
     Boolean deleteComment(String token, String id);
 
     Boolean likeComment(String token, String id);
+
+    Boolean removeLikeComment(String token, String id);
 }

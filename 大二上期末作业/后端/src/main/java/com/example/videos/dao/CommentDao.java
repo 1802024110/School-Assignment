@@ -7,4 +7,6 @@ public interface CommentDao {
     Integer deleteComment(String commentId, Integer userId);
 
     Integer likeComment(Integer userId, String id);
+
+    Integer removeLikeComment(Integer userId, String id);
 }

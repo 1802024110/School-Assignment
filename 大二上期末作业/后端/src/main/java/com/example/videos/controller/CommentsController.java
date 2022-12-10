@@ -50,4 +50,13 @@ public class CommentsController {
         Boolean result = commentService.likeComment(token,id);
         return result?R.success("点赞成功"):R.error("点赞失败");
     }
+
+    @DELETE
+    @Path("removeLike/{id}")
+    @AuthCheck
+    public R<String> removeLike(@Context HttpServletRequest request,@PathParam("id") String id){
+        String token = request.getHeader("Authorization");
+        Boolean result = commentService.removeLikeComment(token,id);
+        return result?R.success("取消点赞成功"):R.error("取消点赞失败");
+    }
 }
