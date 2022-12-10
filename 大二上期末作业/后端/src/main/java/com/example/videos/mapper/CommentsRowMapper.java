@@ -25,6 +25,7 @@ public class CommentsRowMapper implements RowMapper<Comment> {
         comment.setLikes(rs.getLong("likes"));
         comment.setParentId(rs.getLong("parent_id"));
         comment.setTargetCommentId(rs.getLong("target_comment_id"));
+        comment.setIp(rs.getString("ip"));
         return comment;
     }
 }

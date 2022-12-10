@@ -15,4 +15,5 @@ public class Comment {
   private long likes;
   private long parentId;
   private long targetCommentId;
+  private String ip;
 }

@@ -7,7 +7,9 @@ import com.example.videos.dao.imp.CommentDaoImp;
 import com.example.videos.dao.imp.UserDaoImp;
 import com.example.videos.entity.Comment;
 import com.example.videos.service.CommentService;
+import com.example.videos.utils.RequestUtil;
 import com.example.videos.utils.TokenUtils;
+import jakarta.servlet.http.HttpServletRequest;
 
 public class CommentServiceImp implements CommentService {
     private final UserDao userDao = new UserDaoImp();
@@ -21,11 +23,12 @@ public class CommentServiceImp implements CommentService {
      * @param parentId
      */
     @Override
-    public Boolean sendComment(String token, String commentText, String videoId, long parentId) {
+    public Boolean sendComment(String token, String commentText, String videoId, long parentId,String ip) {
         DecodedJWT tokenJwt = TokenUtils.convert_token(token);
         String email = tokenJwt.getClaim("email").asString();
         // 获得当前用户的id
         Integer userId = userDao.getUserIdByEmail(email);
+
         // 创建一个新的评论对象
         Comment comment = new Comment();
         comment.setUserId(userId);
@@ -34,7 +37,23 @@ public class CommentServiceImp implements CommentService {
         comment.setVideoId(videoId);
         comment.setLikes(0);
         comment.setParentId(parentId);
+        comment.setIp(ip);
         Integer row = commentDao.insetComment(comment);
+        return row != 0 ? true : false;
+    }
+
+    /**
+     * @param token
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean deleteComment(String token, String id) {
+        DecodedJWT tokenJwt = TokenUtils.convert_token(token);
+        String email = tokenJwt.getClaim("email").asString();
+        // 获得当前用户的id
+        Integer userId = userDao.getUserIdByEmail(email);
+        Integer row = commentDao.deleteComment(id, userId);
         return row != 0 ? true : false;
     }
 }
