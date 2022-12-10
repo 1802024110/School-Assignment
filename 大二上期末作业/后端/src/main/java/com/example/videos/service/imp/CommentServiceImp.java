@@ -6,10 +6,16 @@ import com.example.videos.dao.UserDao;
 import com.example.videos.dao.imp.CommentDaoImp;
 import com.example.videos.dao.imp.UserDaoImp;
 import com.example.videos.entity.Comment;
+import com.example.videos.mapper.CommentsRowMapper;
 import com.example.videos.service.CommentService;
 import com.example.videos.utils.RequestUtil;
 import com.example.videos.utils.TokenUtils;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CommentServiceImp implements CommentService {
     private final UserDao userDao = new UserDaoImp();
@@ -85,5 +91,21 @@ public class CommentServiceImp implements CommentService {
         Integer userId = userDao.getUserIdByEmail(email);
         Integer row = commentDao.removeLikeComment(userId,id);
         return row!=0? true : false;
+    }
+
+    /**
+     * @param videoId
+     * @return
+     */
+    @Override
+    public Map<String, Object> queryVideoComments(Integer videoId, Integer page) {
+        List<Comment> comments = commentDao.queryVideoComments(videoId,page);
+        Integer count = commentDao.getVideoCommentsCount(videoId);
+        Map<String, Object> params = new HashMap();
+        params.put("videoId", videoId);
+        params.put("total", count);
+        params.put("limit", count!=0?count/10-1:0);
+        params.put("comments", comments);
+        return params;
     }
 }

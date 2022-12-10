@@ -1,6 +1,10 @@
 package com.example.videos.service;
 
+import com.example.videos.mapper.CommentsRowMapper;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
+import java.util.Map;
 
 public interface CommentService {
     /**
@@ -14,4 +18,6 @@ public interface CommentService {
     Boolean likeComment(String token, String id);
 
     Boolean removeLikeComment(String token, String id);
+
+    Map<String, Object> queryVideoComments(Integer videoId,Integer page);
 }

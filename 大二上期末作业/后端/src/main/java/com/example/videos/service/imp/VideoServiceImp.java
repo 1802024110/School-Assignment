@@ -60,7 +60,7 @@ public class VideoServiceImp implements VideoService {
         Integer count = videoDao.getVideoCountByStyles(styles);
         Map<String,Object> reusetMap =new HashMap<>();
         reusetMap.put("total", count);
-        reusetMap.put("limit", count!=0?count/10:0);
+        reusetMap.put("limit", count!=0?count/10-1:0);
         reusetMap.put("data", videos);
         return reusetMap;
     }

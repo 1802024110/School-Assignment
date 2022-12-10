@@ -81,7 +81,7 @@ public class UserDaoImp implements UserDao {
     public User findByEmailAndPassword(String email, String password) {
         log.info("邮箱是："+email);
         log.info("密码是："+password);
-        String  sql = "select * from user where email = ? and password = ?";
+        String  sql = "select * from user where email = ? and password = ? where silence=0";
         try{
             User user = jdbc.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class),email,password);
             return user;

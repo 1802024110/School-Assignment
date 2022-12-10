@@ -1,6 +1,7 @@
 package com.example.videos.controller;
 
 import com.example.videos.common.R;
+import com.example.videos.mapper.CommentsRowMapper;
 import com.example.videos.note.AuthCheck;
 import com.example.videos.service.CommentService;
 import com.example.videos.service.imp.CommentServiceImp;
@@ -10,6 +11,9 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
+import java.util.Map;
 
 @Path("comments")
 @Slf4j
@@ -58,5 +62,13 @@ public class CommentsController {
         String token = request.getHeader("Authorization");
         Boolean result = commentService.removeLikeComment(token,id);
         return result?R.success("取消点赞成功"):R.error("取消点赞失败");
+    }
+
+    @GET
+    @Path("query/{videoId}/{page}")
+    @AuthCheck
+    public R<Map<String, Object>> queryVideoComments(@PathParam("videoId") Integer videoId,@PathParam("page") Integer page){
+        Map<String, Object> result = commentService.queryVideoComments(videoId,page);
+        return result!=null?R.success(result):R.error("获取失败");
     }
 }

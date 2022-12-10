@@ -2,10 +2,13 @@ package com.example.videos.dao.imp;
 
 import com.example.videos.dao.CommentDao;
 import com.example.videos.entity.Comment;
+import com.example.videos.mapper.CommentsRowMapper;
 import com.example.videos.utils.JDBCUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import java.util.List;
 
 public class CommentDaoImp implements CommentDao {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(new JdbcTemplate(JDBCUtils.getDataSource()));
@@ -91,5 +94,32 @@ public class CommentDaoImp implements CommentDao {
         String sql2 = "DELETE FROM comments_likes WHERE  user_id =:userId AND comment_id = :commentId";
         Integer row2 = namedParameterJdbcTemplate.update(sql2,parameterSource);
         return row2;
+    }
+
+    /**
+     * @param videoId
+     * @return
+     */
+    @Override
+    public List<Comment> queryVideoComments(Integer videoId, Integer page) {
+        String sql = "SELECT * FROM comments WHERE video_id=:videoId AND is_deleted=0 limit 10 offset :page";
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("videoId",videoId);
+        parameterSource.addValue("page",page*10);
+        List<Comment> comments = namedParameterJdbcTemplate.query(sql,parameterSource,new CommentsRowMapper());
+        return comments;
+    }
+
+    /**
+     * @param videoId
+     * @return
+     */
+    @Override
+    public Integer getVideoCommentsCount(Integer videoId) {
+        String sql = "SELECT COUNT(id) FROM comments WHERE video_id=:videoId";
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("videoId",videoId);
+        Integer count = namedParameterJdbcTemplate.queryForObject(sql,parameterSource,Integer.class);
+        return count;
     }
 }
