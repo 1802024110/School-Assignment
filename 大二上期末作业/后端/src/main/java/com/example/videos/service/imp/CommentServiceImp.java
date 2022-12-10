@@ -56,4 +56,19 @@ public class CommentServiceImp implements CommentService {
         Integer row = commentDao.deleteComment(id, userId);
         return row != 0 ? true : false;
     }
+
+    /**
+     * @param token
+     * @param id
+     * @return
+     */
+    @Override
+    public Boolean likeComment(String token, String id) {
+        DecodedJWT tokenJwt = TokenUtils.convert_token(token);
+        String email = tokenJwt.getClaim("email").asString();
+        // 获得当前用户的id
+        Integer userId = userDao.getUserIdByEmail(email);
+        Integer row = commentDao.likeComment(userId,id);
+        return row != 0? true : false;
+    }
 }

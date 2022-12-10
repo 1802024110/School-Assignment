@@ -10,4 +10,6 @@ public interface CommentService {
     Boolean sendComment(String token, String commentText, String videoId, long parentId,String ip);
 
     Boolean deleteComment(String token, String id);
+
+    Boolean likeComment(String token, String id);
 }

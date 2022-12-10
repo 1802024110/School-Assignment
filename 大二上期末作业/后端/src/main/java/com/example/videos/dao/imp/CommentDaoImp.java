@@ -44,4 +44,38 @@ public class CommentDaoImp implements CommentDao {
         Integer row = namedParameterJdbcTemplate.update(sql,parameterSource);
         return row;
     }
+
+    /**
+     * 同步评论表和评论点赞表
+     * */
+    private Boolean syncComment(Integer userId,String commentId){
+        String sql = "INSERT INTO comments_likes (comment_id, user_id, ip)\n" +
+                "SELECT comments.id, comments.user_id,  comments.ip\n" +
+                "FROM comments\n" +
+                "LEFT JOIN comments_likes ON comments.id = comments_likes.comment_id\n" +
+                "WHERE comments_likes.comment_id IS NULL AND comments.user_id = :userId AND comments.id= :commentId";
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("userId",userId);
+        parameterSource.addValue("commentId",commentId);
+        Integer row = namedParameterJdbcTemplate.update(sql,parameterSource);
+        return row != 0?true : false;
+    }
+
+    /**
+     * @param userId
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer likeComment(Integer userId, String id) {
+        String sql = "UPDATE comments\n" +
+                "SET likes = likes + 1\n" +
+                "WHERE id NOT IN (SELECT comment_id FROM comments_likes) and user_id=:userId and id = :commentId";
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue("userId",userId);
+        parameterSource.addValue("commentId",id);
+        Integer row = namedParameterJdbcTemplate.update(sql,parameterSource);
+        this.syncComment(userId,id);
+        return row;
+    }
 }

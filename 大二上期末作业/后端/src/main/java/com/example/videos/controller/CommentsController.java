@@ -42,5 +42,12 @@ public class CommentsController {
         return result?R.success("删除成功"):R.error("删除失败");
     }
 
-
+    @POST
+    @Path("like/{id}")
+    @AuthCheck
+    public R<String> like(@Context HttpServletRequest request,@PathParam("id") String id){
+        String token = request.getHeader("Authorization");
+        Boolean result = commentService.likeComment(token,id);
+        return result?R.success("点赞成功"):R.error("点赞失败");
+    }
 }
