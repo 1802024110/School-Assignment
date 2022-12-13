@@ -49,30 +49,47 @@ android {
     }
 }
 
+// 禁用掉烦人的警告
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        // 忽略md3实验性api警告
+        freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+    }
+}
+
 dependencies {
-    // AndroidX
+    // AndroidX安卓官方工具包
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.activity:activity-compose:1.4.0'
 
-    // Compose Lib
+    // Compose Lib Compose的库
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation "androidx.compose.ui:ui-util:$compose_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
-    // material design
+    // material design md3的主题
     implementation "androidx.compose.material3:material3:$md3_version"
-    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    implementation "androidx.compose.material:material-icons-extended:1.3.1"
     implementation "androidx.compose.material3:material3-window-size-class:$md3_version"
 
-    // Hilt
+    // Hilt 依赖注入工具
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
-    // Test
+    // xLog 日志工具
+    implementation 'com.elvishew:xlog:1.11.0'
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // xCrash
+    implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.1.0'
+
+    // Test 测试工具
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
