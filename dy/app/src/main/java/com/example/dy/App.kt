@@ -3,6 +3,7 @@ package com.example.dy
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.elvishew.xlog.BuildConfig
 import com.elvishew.xlog.LogConfiguration
 import com.elvishew.xlog.XLog
@@ -22,8 +23,10 @@ import kotlin.time.Duration.Companion.days
 // 它标注一个Android应用程序的上下文类
 @HiltAndroidApp
 class App : Application() {
+    private var TAG = "Application"
     override fun onCreate() {
         super.onCreate()
+        Log.i(TAG, "onCreate: Start")
 
         // 初始化 XLog，关闭线程信息，并使用 AndroidPrinter 和 FilePrinter
         XLog.init(
@@ -46,11 +49,15 @@ class App : Application() {
                 }
                 .build()
         )
+
+        Log.i(TAG, "onCreate: End")
     }
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
 
+        Log.i(TAG, "attachBaseContext: Start")
+        
         // xCrash Handler。程序崩溃运行此高阶函数
         val handler = ICrashCallback { logPath, _ ->
             val file = File(logPath)
@@ -77,5 +84,6 @@ class App : Application() {
                     // Java 异常时要执行的回调
                 .setJavaCallback(handler)
         )
+        Log.i(TAG, "attachBaseContext: End")
     }
 }

@@ -54,6 +54,9 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {
         // 忽略md3实验性api警告
         freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+        // 忽略使用过渡的accompanist库的警告
+        freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
+
     }
 }
 
@@ -78,20 +81,26 @@ dependencies {
     // Hilt 依赖注入工具
     implementation "com.google.dagger:hilt-android:$hilt_version"
     implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.compose.material:material:1.1.1'
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
     // xLog 日志工具
     implementation 'com.elvishew:xlog:1.11.0'
 
-    // Retrofit
+    // Retrofit 库
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
-    // xCrash
+    // xCrash 爱奇艺的崩溃库
     implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.1.0'
 
     // Splash screen
     implementation "androidx.core:core-splashscreen:1.0.0"
+
+    // accompanist 为compose提供动画和导航的库
+    implementation "com.google.accompanist:accompanist-navigation-animation:$acc_version"
+
 
     // Test 测试工具
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
