@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.Dy" parent="Theme.AppCompat.NoActionBar" />
 
-    <style name="Theme.Dy" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Dy.NoActionBar.Splash" parent="Theme.SplashScreen">
+        <item name="postSplashScreenTheme">@style/Theme.Dy</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/startup_logo</item>
+        <item name="windowSplashScreenBackground">@color/white</item>
+    </style>
 </resources>
