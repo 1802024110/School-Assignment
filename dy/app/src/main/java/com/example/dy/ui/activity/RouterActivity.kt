@@ -14,12 +14,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavBackStackEntry
 import com.example.dy.ui.local.LocalNavController
-
 import com.example.dy.ui.model.RouterViewModel
 import com.example.dy.ui.screen.index.IndexScreen
 import com.example.dy.ui.ui.theme.DyTheme
@@ -37,13 +37,17 @@ class RouterActivity : AppCompatActivity(){
 
         super.onCreate(savedInstanceState)
 
-        // 启动图初始化
+        // 启动图初始化.
+        // 参考文章: https://developer.android.google.cn/guide/topics/ui/splash-screen?hl=zh-cn
+        // https://juejin.cn/post/7026188311198695432
         installSplashScreen()
 
         setContent{
             // 导航控制器
             val navController = rememberAnimatedNavController()
 
+            // Compose的 变量作用域限定工具
+            // 参考文章: https://developer.android.google.cn/jetpack/compose/compositionlocal?hl=zh-cn
             CompositionLocalProvider(
                 LocalNavController provides navController
             ){

@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">dy</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="screen_index_bottom_home">首页</string>
+    <string name="screen_index_bottom_upload">上传</string>
+    <string name="screen_index_bottom_user">我的信息</string>
+
+    <string name="screen_index_bottom_text_like">喜欢</string>
+    <string name="screen_index_bottom_text_recommend">推荐</string>
+    <string name="screen_index_bottom_search">搜索</string>
+
 </resources>
