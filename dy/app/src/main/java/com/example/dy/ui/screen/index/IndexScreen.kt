@@ -1,8 +1,11 @@
 package com.example.dy.ui.screen.index
 
 import android.graphics.fonts.FontStyle
+import android.text.BoringLayout.make
+import android.util.Log
 import android.view.Window
-import android.view.WindowManager
+import android.widget.Toast
+import com.google.accompanist.pager.HorizontalPager
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -12,6 +15,7 @@ import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -22,77 +26,45 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.dy.R
 import com.example.dy.ui.local.LocalNavController
+import com.example.dy.ui.screen.index.page.RecommendPage
+import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.launch
 
 @Composable
 fun IndexScreen(navController: NavHostController) {
+    // 页码状态
+    val pagerState = rememberPagerState()
+    // 协程作用域，确保在协程被取消时，任何已经在该作用域中启动的协程也会被取消
+    val coroutineScope = rememberCoroutineScope()
+
     Scaffold(
-        topBar = {
-            TopBar()
-        },
+        topBar = {},
         bottomBar = {
-            navBar(0){}
+            navBar(pagerState.currentPage){
+                coroutineScope.launch {
+                    pagerState.scrollToPage(it)
+                }
+            }
         }
     ){innerPadding ->
         Column(
             modifier = Modifier.padding(innerPadding)
+                .fillMaxSize()
         ){
-
-        }
-    }
-}
-
-@Composable
-fun TopBar(){
-    val navController = LocalNavController.current
-    // md3的顶部导航
-    TopAppBar(
-        // 设置背景色透明
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = Color.Transparent.copy(0f)
-        ),
-        // 固定高度，因为它不会自己算
-        modifier = Modifier.height(40.dp),
-        title = {},
-        actions = {
-            Row(
-                modifier = Modifier
-                    .height(IntrinsicSize.Min)
-                    .fillMaxWidth(),
-            ){
-                Row(
-                    modifier = Modifier
-                        .weight(5f)
-                        .offset(35.dp),
-                    horizontalArrangement = Arrangement.Center
-                ){
-                    TextButton(onClick = { /*TODO*/ }) {
-                        Text(
-                            fontSize = 20.sp,
-                            text = stringResource(R.string.screen_index_bottom_text_like),
-                        )
-                    }
-
-                    Divider(modifier = Modifier
-                        .padding(top = 13.dp, bottom = 9.dp)
-                        .fillMaxHeight()
-                        .width(1.dp))
-
-                    TextButton(onClick = { /*TODO*/ }) {
-                        Text(
-                            fontSize = 20.sp,
-                            text = stringResource(R.string.screen_index_bottom_text_recommend)
-                        )
-                    }
-                }
-                IconButton(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Icon(Icons.Outlined.Search, contentDescription = stringResource(R.string.screen_index_bottom_search))
+            // 水平滚动布局
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize(),
+                count = 3,
+                userScrollEnabled = true
+            ) {page->
+                when(page){
+                    0 -> RecommendPage()
+                    else -> Text("当前 $page 还没有视图")
                 }
             }
         }
-    )
+    }
 }
 
 /**
@@ -101,7 +73,7 @@ fun TopBar(){
  * @param scrollToPage 点击的回调会返回当前点击的页码
  * */
 @Composable
-fun navBar(currentPage: Int=0,scrollToPage: (Int)->Unit){
+fun navBar(currentPage: Int,scrollToPage: (Int)->Unit){
     // NavigationBar
     // 参考文章： https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary#navigationbar
     NavigationBar(
@@ -112,21 +84,24 @@ fun navBar(currentPage: Int=0,scrollToPage: (Int)->Unit){
             selected = currentPage == 0,
             onClick = {
                 scrollToPage(0)
-            }
+            },
+            alwaysShowLabel = false
         )
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Upload, contentDescription = stringResource(R.string.screen_index_bottom_upload)) },
             selected = currentPage == 1,
             onClick = {
                 scrollToPage(1)
-            }
+            },
+            alwaysShowLabel = false
         )
         NavigationBarItem(
             icon = { Icon(Icons.Filled.Person, contentDescription = stringResource(R.string.screen_index_bottom_user)) },
             selected = currentPage == 2,
             onClick = {
                 scrollToPage(2)
-            }
+            },
+            alwaysShowLabel = false
         )
     }
 }

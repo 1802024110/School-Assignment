@@ -1,4 +1,4 @@
-package com.example.dy.ui.model
+package com.example.dy.ui.screen.index
 
 import android.app.Application
 import androidx.compose.runtime.getValue

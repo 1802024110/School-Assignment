@@ -23,6 +23,9 @@ import com.example.dy.ui.local.LocalNavController
 @Preview()
 @Composable
 fun `预览`(){
-
+    video()
 }
 
+@Composable
+fun video(){
+}
