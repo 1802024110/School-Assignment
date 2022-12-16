@@ -8,5 +8,7 @@
         <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
 <!--        App原来的主题-->
         <item name="postSplashScreenTheme">@style/Theme.Dy</item>
+<!--        状态栏-->
+<!--        <item name="android:statusBarColor">@color/purple_700</item>-->
     </style>
 </resources>

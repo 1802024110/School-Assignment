@@ -20,8 +20,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavBackStackEntry
 import com.example.dy.ui.local.LocalNavController
-import com.example.dy.ui.model.RouterViewModel
 import com.example.dy.ui.screen.index.IndexScreen
+import com.example.dy.ui.screen.index.RouterViewModel
 import com.example.dy.ui.ui.theme.DyTheme
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable

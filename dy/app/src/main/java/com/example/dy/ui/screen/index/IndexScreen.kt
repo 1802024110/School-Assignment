@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import com.example.dy.R
 import com.example.dy.ui.local.LocalNavController
 import com.example.dy.ui.screen.index.page.RecommendPage
+import com.example.dy.ui.screen.index.page.Upload
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
@@ -38,7 +39,6 @@ fun IndexScreen(navController: NavHostController) {
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
-        topBar = {},
         bottomBar = {
             navBar(pagerState.currentPage){
                 coroutineScope.launch {
@@ -60,6 +60,7 @@ fun IndexScreen(navController: NavHostController) {
             ) {page->
                 when(page){
                     0 -> RecommendPage()
+                    1 -> Upload()
                     else -> Text("当前 $page 还没有视图")
                 }
             }
