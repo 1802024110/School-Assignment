@@ -31,13 +31,12 @@ import com.example.dy.ui.theme.PurpleGrey80
 
 
 @Composable
-fun LoginScreen(navController: NavController, loginViewMode: LoginViewMode = hiltViewModel()){
+fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = hiltViewModel()){
     val context = LocalContext.current
     // 登录进度对话框
     var progressDialog by remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
-
     if(progressDialog){
         AlertDialog(
             onDismissRequest = { progressDialog = false },
@@ -53,6 +52,30 @@ fun LoginScreen(navController: NavController, loginViewMode: LoginViewMode = hil
             confirmButton = {}
         )
     }
+
+    // 登录失败
+    var failedDialog by remember {
+        mutableStateOf(false)
+    }
+    if(failedDialog) {
+        AlertDialog(
+            onDismissRequest = { failedDialog = false},
+            title = {
+                Text("登录错误")
+            },
+            text = {
+                Text(loginViewModel.errorContent)
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = { failedDialog = false }
+                ) {
+                    Text("好的")
+                }
+            }
+        )
+    }
+
 
     var switchPage by remember { mutableStateOf(false) }
     var privacyPolicyState by remember { mutableStateOf(false) }
@@ -148,7 +171,7 @@ fun LoginScreen(navController: NavController, loginViewMode: LoginViewMode = hil
             ){
                 FloatingActionButton(
                     onClick = {
-                        if(loginViewMode.userName.isBlank()||loginViewMode.password.isBlank()) {
+                        if(loginViewModel.userName.isBlank()||loginViewModel.password.isBlank()) {
                             Toast.makeText(
                                 context,
                                 "用户名或密码不能为空",
@@ -156,7 +179,8 @@ fun LoginScreen(navController: NavController, loginViewMode: LoginViewMode = hil
                             ).show()
                             return@FloatingActionButton
                         }
-                        dialogState = true
+                        progressDialog = true
+                        //loginViewModel.login
                               },
                     modifier = Modifier.padding(end = 12.dp, bottom = 32.dp)
                 ) {
