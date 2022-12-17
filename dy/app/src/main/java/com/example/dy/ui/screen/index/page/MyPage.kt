@@ -1,9 +1,14 @@
 package com.example.dy.ui.screen.index.page
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -11,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.*
@@ -26,11 +32,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dy.R
+import com.example.dy.ui.ui.theme.Shapes
+import com.example.dy.ui.util.adaptiveGridCell
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.CoroutineScope
 
 @Preview
 @Composable
 fun MyPage(){
-    var selectedTabIndex by remember { mutableStateOf(0) }
+    var selectedTabIndex = rememberPagerState()
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -59,13 +70,21 @@ fun MyPage(){
                     modifier = Modifier.padding( start = 25.dp,top=6.dp)
                 )
 
-                TabRow(selectedTabIndex = selectedTabIndex) {
-                    Tab(selected = selectedTabIndex == 0, onClick = { selectedTabIndex = 0}) {
+                TabRow(selectedTabIndex = selectedTabIndex.currentPage) {
+                    val scope: CoroutineScope = rememberCoroutineScope()
+                    Tab(selected = selectedTabIndex.currentPage == 0, onClick = { }) {
                         Text("投稿")
                     }
-                    Tab(selected = selectedTabIndex == 1, onClick = { selectedTabIndex = 1}) {
+                    Tab(selected = selectedTabIndex.currentPage == 1, onClick = { }) {
                         Text("喜欢的视频")
                     }
+                }
+                HorizontalPager(
+                    count = 2,
+                    state = selectedTabIndex,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    OrenoList()
                 }
             }
             Row(
@@ -134,29 +153,51 @@ fun MyPage(){
         }
     }
 }
-@Preview
+
 @Composable
-fun videoCardView(){
-    Box(
-        modifier = Modifier.size(80.dp,100.dp)
+fun OrenoList() {
+    val listState = rememberLazyGridState()
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        state = listState,
+        modifier = Modifier.fillMaxHeight()
+    ){
+        items(
+            count =  7
+        ){
+            videoCardView(imageResource = R.drawable.user_background, likesCount = "2323k")
+        }
+    }
+}
+
+@Composable
+fun videoCardView(@DrawableRes imageResource: Int,likesCount:String,description:String="这个人很懒，没有描述"){
+    ElevatedCard(
+        // 覆盖掉自带的圆角
+        shape = RoundedCornerShape(0.dp),
+        onClick = {
+                  TODO("跳转到对于页码")
+        },
+        modifier = Modifier.size(80.dp,180.dp).padding(1.dp)
     ) {
         Image(
-            painter = painterResource(id = R.drawable.user_background),
-            contentDescription = "视频描述",
+            painter = painterResource(id = imageResource),
+            contentDescription = description,
             contentScale = ContentScale.Crop
         )
         Row(
             verticalAlignment = Alignment.Bottom,
-            modifier = Modifier.padding(top=90.dp)
+            modifier = Modifier.padding(top=160.dp, start = 2.dp)
         ) {
             Icon(
-                Icons.Filled.Favorite,
+                Icons.Outlined.Favorite,
                 contentDescription = "点赞数",
-                modifier = Modifier.size(10.dp)
+                modifier = Modifier.size(14.dp)
             )
             Text(
-                text = "452k",
-                fontSize = 7.sp
+                text = likesCount,
+                fontSize = 11.sp,
+                modifier = Modifier.padding(start=2.dp)
             )
         }
     }    

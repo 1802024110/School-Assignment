@@ -52,14 +52,13 @@ android {
 // 禁用掉烦人的警告
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {
-        // 忽略md3实验性api警告
         freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
-        // 忽略使用过渡的accompanist库的警告
+        freeCompilerArgs += "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
         freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
-        // 忽略实验性api
+        freeCompilerArgs += "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
         freeCompilerArgs += "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi"
         freeCompilerArgs += "-opt-in=coil.annotation.ExperimentalCoilApi"
-
+        freeCompilerArgs += "-opt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi"
     }
 }
 
