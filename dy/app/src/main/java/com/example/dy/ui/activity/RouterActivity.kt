@@ -28,6 +28,7 @@ import androidx.navigation.NavBackStackEntry
 import com.example.dy.ui.local.LocalNavController
 import com.example.dy.ui.screen.index.IndexScreen
 import com.example.dy.ui.screen.index.RouterViewModel
+import com.example.dy.ui.screen.login.LoginScreen
 import com.example.dy.ui.ui.theme.DyTheme
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -73,7 +74,7 @@ class RouterActivity : AppCompatActivity(){
                         ,
                         navController = navController,
                         // 默认路由
-                        startDestination = "index",
+                        startDestination = "login",
                         enterTransition = Transition.defaultEnterTransition,
                         exitTransition = Transition.defaultExitTransition,
                         popEnterTransition = Transition.defaultPopEnterTransition,
@@ -81,6 +82,10 @@ class RouterActivity : AppCompatActivity(){
                     ){
                         composable("index"){
                             IndexScreen(navController)
+                        }
+
+                        composable("login") {
+                            LoginScreen(navController)
                         }
                     }
                 }
@@ -115,12 +120,6 @@ private fun hideSystemUI(window:Window) {
 private fun showSystemUI(window:Window) {
     WindowCompat.setDecorFitsSystemWindows(window, true)
     WindowInsetsControllerCompat(window, window.decorView).show(WindowInsetsCompat.Type.systemBars())
-}
-
-@Preview
-@Composable
-fun `预览`(){
-
 }
 
 internal object Transition {
