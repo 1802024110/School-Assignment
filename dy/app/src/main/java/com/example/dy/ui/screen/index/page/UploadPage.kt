@@ -7,25 +7,31 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.example.dy.R
 
-@Preview
 @Composable
 fun Upload(){
     var switchState  by remember {mutableStateOf(true)}
     var videoTitle by rememberSaveable { mutableStateOf("") }
     var videoDescription by rememberSaveable { mutableStateOf("") }
-    var videoStatus by rememberSaveable { mutableStateOf("") }
-    var videoStyle by rememberSaveable { mutableStateOf("") }
+    var videoUrl by rememberSaveable { mutableStateOf("") }
+
+    var dialogState by rememberSaveable { mutableStateOf(false) }
     Scaffold(
                 topBar = {
                  TopAppBar(
@@ -44,7 +50,24 @@ fun Upload(){
                  )
         },
         content = {innerPadding ->
-                 if(switchState){
+                    if(dialogState){
+                        Dialog(
+                            onDismissRequest = {},
+                            properties = DialogProperties(false,false)
+                        ) {
+                            Box(
+                                modifier = Modifier.size(300.dp,100.dp)
+                                    .background(Color.Black.copy(0.6f),shape = RoundedCornerShape(20.dp))
+                            ){
+                                Text(
+                                    "正在保存..",
+                                    color = Color.White,
+                                    modifier = Modifier.padding(10.dp)
+                                    )
+                            }
+
+                        }
+                    }
                      Column(modifier = Modifier
                          .padding(innerPadding)
                          .fillMaxSize()) {
@@ -69,35 +92,61 @@ fun Upload(){
                                  .padding(start = 10.dp, top = 10.dp, end = 10.dp)
                          )
 
-                         IconButton(
-                             onClick = { /*TODO*/ },
-                             modifier = Modifier
-                                 .fillMaxWidth()
-                                 .size(220.dp)
-                         ) {
-                             Icon(
-                                 painter = painterResource(id = R.drawable.file_upload),
-                                 contentDescription = "文件上传",
+                         if(switchState){
+                             IconButton(
+                                 onClick = { /*TODO*/ },
                                  modifier = Modifier
-                                     .padding(start = 20.dp, end = 20.dp)
                                      .fillMaxWidth()
-                                     .size(200.dp)
-                                     .border(
-                                         2.dp,
-                                         Color.DarkGray,
-                                         shape = RoundedCornerShape(20.dp)
-                                     )
+                                     .size(220.dp)
+                             ) {
+                                 Icon(
+                                     painter = painterResource(id = R.drawable.file_upload),
+                                     contentDescription = "文件上传",
+                                     modifier = Modifier
+                                         .padding(start = 20.dp, end = 20.dp)
+                                         .fillMaxWidth()
+                                         .size(200.dp)
+                                         .border(
+                                             2.dp,
+                                             Color.DarkGray,
+                                             shape = RoundedCornerShape(20.dp)
+                                         )
+                                 )
+                             }
+                         }else{
+                             TextField(
+                                 value = videoUrl,
+                                 onValueChange = { videoUrl = it },
+                                 label ={ Text(text = "视频播放链接")},
+                                 placeholder={ Text(text = "给我看看!")},
+                                 maxLines = 3,
+                                 modifier = Modifier
+                                     .fillMaxWidth()
+                                     .padding(start = 10.dp, top = 10.dp, end = 10.dp)
                              )
                          }
+
+                         Box(
+                             modifier = Modifier.fillMaxSize(),
+                             contentAlignment = Alignment.BottomEnd
+                         ){
+                             FloatingActionButton(
+                                 onClick = { dialogState = true },
+                                 modifier = Modifier.padding(end = 8.dp, bottom = 8.dp)
+                             ) {
+                                 Icon(Icons.Filled.Save, "提交上传")
+                             }
+                         }
                      }
-                 }else{
-                     Column(modifier = Modifier
-                         .padding(innerPadding)
-                         .fillMaxSize()) {
-                         Text(text = "B")
-                     }
-                 }
         },
     )
 }
 
+@Composable
+fun styleButton(style:String,callback:(style:String)->Unit) {
+    TextButton({callback(style)},
+        modifier = Modifier.border(2.dp, Color.Gray.copy(0.8f),shape= RoundedCornerShape(20.dp))
+    ) {
+        Text(text = style)
+    }
+}

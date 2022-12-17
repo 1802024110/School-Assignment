@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.dy.R
 import com.example.dy.ui.local.LocalNavController
+import com.example.dy.ui.screen.index.page.MyPage
 import com.example.dy.ui.screen.index.page.RecommendPage
 import com.example.dy.ui.screen.index.page.Upload
 import com.google.accompanist.pager.rememberPagerState
@@ -61,6 +62,7 @@ fun IndexScreen(navController: NavHostController) {
                 when(page){
                     0 -> RecommendPage()
                     1 -> Upload()
+                    2 -> MyPage()
                     else -> Text("当前 $page 还没有视图")
                 }
             }

@@ -107,6 +107,8 @@ dependencies {
     implementation "com.google.accompanist:accompanist-navigation-animation:$acc_version"
         // pager
     implementation "com.google.accompanist:accompanist-pager-indicators:$acc_version"
+        // 状态栏
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$acc_version"
 
 
 
