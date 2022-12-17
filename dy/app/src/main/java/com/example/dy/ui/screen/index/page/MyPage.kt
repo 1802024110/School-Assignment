@@ -32,8 +32,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dy.R
-import com.example.dy.ui.ui.theme.Shapes
-import com.example.dy.ui.util.adaptiveGridCell
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.CoroutineScope
@@ -176,29 +174,33 @@ fun videoCardView(@DrawableRes imageResource: Int,likesCount:String,description:
         // 覆盖掉自带的圆角
         shape = RoundedCornerShape(0.dp),
         onClick = {
-                  TODO("跳转到对于页码")
+                  TODO("")
         },
-        modifier = Modifier.size(80.dp,180.dp).padding(1.dp)
+        modifier = Modifier
+            .size(80.dp, 180.dp)
+            .padding(1.dp)
     ) {
-        Image(
-            painter = painterResource(id = imageResource),
-            contentDescription = description,
-            contentScale = ContentScale.Crop
-        )
-        Row(
-            verticalAlignment = Alignment.Bottom,
-            modifier = Modifier.padding(top=160.dp, start = 2.dp)
-        ) {
-            Icon(
-                Icons.Outlined.Favorite,
-                contentDescription = "点赞数",
-                modifier = Modifier.size(14.dp)
+        Box {
+            Image(
+                painter = painterResource(id = imageResource),
+                contentDescription = description,
+                contentScale = ContentScale.Crop
             )
-            Text(
-                text = likesCount,
-                fontSize = 11.sp,
-                modifier = Modifier.padding(start=2.dp)
-            )
+            Row(
+                verticalAlignment = Alignment.Bottom,
+                modifier = Modifier.padding(top=160.dp, start = 2.dp)
+            ) {
+                Icon(
+                    Icons.Outlined.Favorite,
+                    contentDescription = "点赞数",
+                    modifier = Modifier.size(14.dp)
+                )
+                Text(
+                    text = likesCount,
+                    fontSize = 11.sp,
+                    modifier = Modifier.padding(start=2.dp)
+                )
+            }
         }
     }    
 }
