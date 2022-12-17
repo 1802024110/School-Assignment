@@ -1,37 +1,59 @@
 package com.example.dy.ui.screen.login
 
+import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.outlined.Code
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.Password
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.dy.R
 import com.example.dy.ui.theme.Pink80
 import com.example.dy.ui.theme.Purple80
 import com.example.dy.ui.theme.PurpleGrey80
 
+
 @Composable
-fun LoginScreen(navController: NavController){
+fun LoginScreen(navController: NavController, loginViewMode: LoginViewMode = hiltViewModel()){
+    val context = LocalContext.current
+    // 登录进度对话框
+    var progressDialog by remember {
+        mutableStateOf(true)
+    }
+
+    if(progressDialog){
+        AlertDialog(
+            onDismissRequest = { progressDialog = false },
+            title = {
+               Text(text = "登录中...")
+            },
+            icon = {
+                CircularProgressIndicator(Modifier.size(30.dp))
+            },
+            text = {
+                Text("请等待一会")
+            },
+            confirmButton = {}
+        )
+    }
+
     var switchPage by remember { mutableStateOf(false) }
     var privacyPolicyState by remember { mutableStateOf(false) }
     var dialogState by remember { mutableStateOf(false)}
@@ -60,8 +82,8 @@ fun LoginScreen(navController: NavController){
                 Column(
                     modifier = Modifier.padding(top =60.dp)
                 ) {
-                    inputText("Email",Icons.Outlined.Email)
-                    inputText("Password",Icons.Outlined.Password)
+                    inputText("Email", Icons.Outlined.Email)
+                    inputText("Password", Icons.Outlined.Password)
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -95,7 +117,8 @@ fun LoginScreen(navController: NavController){
                         modifier = Modifier.weight(1f)
                     ) {
                         Button(
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .height(50.dp),
                             onClick = { /*TODO*/ }
                         ) {
@@ -104,7 +127,7 @@ fun LoginScreen(navController: NavController){
                     }
                 }
                 inputText("Name",Icons.Outlined.Person)
-                inputText("Password",Icons.Outlined.Password)
+                inputText("Password", Icons.Outlined.Password)
                 inputText("Code",Icons.Outlined.Code)
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -124,7 +147,17 @@ fun LoginScreen(navController: NavController){
                 contentAlignment = Alignment.BottomEnd
             ){
                 FloatingActionButton(
-                    onClick = { dialogState = true },
+                    onClick = {
+                        if(loginViewMode.userName.isBlank()||loginViewMode.password.isBlank()) {
+                            Toast.makeText(
+                                context,
+                                "用户名或密码不能为空",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@FloatingActionButton
+                        }
+                        dialogState = true
+                              },
                     modifier = Modifier.padding(end = 12.dp, bottom = 32.dp)
                 ) {
                     Icon(Icons.Filled.Done, "确认")
