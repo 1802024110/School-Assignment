@@ -11,6 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
@@ -53,6 +54,26 @@ public class UserDaoImp implements UserDao {
            // 为空就返回null
            return null;
        }
+    }
+
+    /**
+     * @param id
+     * @return
+     */
+    @Override
+    public User getUserById(String id) {
+        String  sql = "select * from user where id = :id";
+        try{
+            // 创建一个 MapSqlParameterSource 来保存查询参数值
+            MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+            parameterSource.addValue("id",id);
+            User user = namedParameterJdbcTemplate.queryForObject(sql,parameterSource, new BeanPropertyRowMapper<User>(User.class));
+            return user;
+            // 捕获为空的异常
+        }catch (EmptyResultDataAccessException e){
+            // 为空就返回null
+            return null;
+        }
     }
 
     /**

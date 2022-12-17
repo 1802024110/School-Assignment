@@ -109,17 +109,17 @@ dependencies {
         // 状态栏
     implementation "com.google.accompanist:accompanist-systemuicontroller:$acc_version"
 
-
-
     // DKVideoPlayer 视频播放器
     implementation 'xyz.doikki.android.dkplayer:dkplayer-java:3.3.7'
         // 如需要缓存或者抖音预加载功能请引入此库
     implementation 'xyz.doikki.android.dkplayer:videocache:3.3.7'
 
-
     // pager
     implementation "com.google.accompanist:accompanist-pager:0.28.0"
-    // 工具类
+
+    //room sqlite操作
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
 
     // Test 测试工具
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"

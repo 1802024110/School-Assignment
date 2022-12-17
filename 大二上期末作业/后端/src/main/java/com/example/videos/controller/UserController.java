@@ -118,15 +118,22 @@ public class UserController {
         return R.error("刷新失败");
     }
 
+    @GET
+    @Path("info")
+    @AuthCheck
+    public R<Map> getMyInfo(@Context HttpServletRequest request){
+        return getUserInfo(request,"");
+    }
+
     /**
      * 获得用户的所有基本信息
      * */
     @GET
-    @Path("info")
+    @Path("info/{id}")
     @AuthCheck
-    public R<Map> getUserInfo(@Context HttpServletRequest request){
+    public R<Map> getUserInfo(@Context HttpServletRequest request,@PathParam("id") String id){
         String token = request.getHeader("Authorization");
-        User user = userService.getUserByToken(token);
+        User user = userService.getUserByToken(token,id);
         if (user != null){
             return R.success(user.getPublicInfo(),"用户信息获取成功");
         }

@@ -43,4 +43,6 @@ public interface UserDao {
      * 根据用户id获取用户喜欢的视频id列表
      * */
     List<Integer> getLikeVideosByUserId(Integer userId);
+
+    User getUserById(String id);
 }

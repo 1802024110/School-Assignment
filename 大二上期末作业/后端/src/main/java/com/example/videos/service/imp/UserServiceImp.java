@@ -127,13 +127,18 @@ public class UserServiceImp implements UserService {
      * @param token
      */
     @Override
-    public User getUserByToken(String token) {
+    public User getUserByToken(String token,String id) {
         // 冗余的验证一遍，以防不测
         Boolean result = TokenUtils.verify(token);
         if (result){
             DecodedJWT tokenJwt = TokenUtils.convert_token(token);
             String email = tokenJwt.getClaim("email").asString();
-            User user = userDao.getUserByEmail(email);
+            User user = null;
+            if(id.equals("")){
+                user = userDao.getUserByEmail(email);
+            }else {
+                user = userDao.getUserById(id);
+            }
             return user;
         }
         return null;

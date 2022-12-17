@@ -98,10 +98,7 @@ public class User {
   public Map<String, Object> getPublicInfo() {
     Map<String, Object> info = OtherUtil.objectToMap(this);
     // 移除掉敏感信息
-    info.remove("token");
-    info.remove("refresh_token");
     info.remove("password");
-    info.remove("id");
     return info;
   }
 }

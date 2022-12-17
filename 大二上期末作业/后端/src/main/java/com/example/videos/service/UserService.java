@@ -26,7 +26,7 @@ public interface UserService {
     /**
      * 根据token获取用户信息
      * */
-    User getUserByToken(String token);
+    User getUserByToken(String token,String id);
 
     List<Video> getUserSubmitVideos(String token);
 
