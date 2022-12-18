@@ -94,6 +94,7 @@ dependencies {
 
     // Retrofit 库
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
 
     // xCrash 爱奇艺的崩溃库
     implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.1.0'
