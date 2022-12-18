@@ -77,9 +77,8 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
     }
 
 
-    var switchPage by remember { mutableStateOf(false) }
+    var switchPage by remember { mutableStateOf(true) }
     var privacyPolicyState by remember { mutableStateOf(false) }
-    var dialogState by remember { mutableStateOf(false)}
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -105,8 +104,8 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                 Column(
                     modifier = Modifier.padding(top =60.dp)
                 ) {
-                    inputText("Email", Icons.Outlined.Email)
-                    inputText("Password", Icons.Outlined.Password)
+                    inputText(loginViewModel.email,"Email", Icons.Outlined.Email){loginViewModel.email=it}
+                    inputText(loginViewModel.password,"Password", Icons.Outlined.Password){loginViewModel.password=it}
                 }
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -134,7 +133,7 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                     Box(
                         modifier = Modifier.weight(2f)
                     ) {
-                        inputText("Email",Icons.Outlined.Email)
+                        inputText(loginViewModel.email,"Email", Icons.Outlined.Email){loginViewModel.email=it}
                     }
                     Box(
                         modifier = Modifier.weight(1f)
@@ -149,9 +148,9 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                         }
                     }
                 }
-                inputText("Name",Icons.Outlined.Person)
-                inputText("Password", Icons.Outlined.Password)
-                inputText("Code",Icons.Outlined.Code)
+                inputText(loginViewModel.userName,"Name",Icons.Outlined.Person){loginViewModel.userName=it}
+                inputText(loginViewModel.password,"Password", Icons.Outlined.Password){loginViewModel.password=it}
+                inputText(loginViewModel.code,"Code",Icons.Outlined.Code){loginViewModel.code=it}
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -171,7 +170,7 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
             ){
                 FloatingActionButton(
                     onClick = {
-                        if(loginViewModel.userName.isBlank()||loginViewModel.password.isBlank()) {
+                        if(loginViewModel.email.isBlank()||loginViewModel.password.isBlank()) {
                             Toast.makeText(
                                 context,
                                 "用户名或密码不能为空",
@@ -179,9 +178,15 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
                             ).show()
                             return@FloatingActionButton
                         }
-                        progressDialog = true
-                        //loginViewModel.login
-                              },
+                        //progressDialog = true
+                        loginViewModel.login(){
+                            if(it){
+                                navController.navigate("index")
+                            }else{
+                                failedDialog = true
+                            }
+                        }
+                          },
                     modifier = Modifier.padding(end = 12.dp, bottom = 32.dp)
                 ) {
                     Icon(Icons.Filled.Done, "确认")
@@ -192,9 +197,7 @@ fun LoginScreen(navController: NavController, loginViewModel: LoginViewModel = h
 }
 
 @Composable
-fun inputText(title: String,image: ImageVector){
-    var text by remember { mutableStateOf("")}
-
+fun inputText(text: String,title: String,image: ImageVector,callback:(newValue:String)->Unit) {
     Column(
         Modifier
             .padding(top = 20.dp)
@@ -202,7 +205,7 @@ fun inputText(title: String,image: ImageVector){
             .fillMaxWidth()) {
         TextField(
             value = text,
-            onValueChange = { text = it },
+            onValueChange = { callback(it) },
             label = { Text(title) },
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = Color.Transparent,
