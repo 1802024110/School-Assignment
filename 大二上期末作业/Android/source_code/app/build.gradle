@@ -1,0 +1,130 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
+
+}
+
+android {
+    namespace 'com.example.dy'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.dy"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.1.1'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+// 禁用掉烦人的警告
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api"
+        freeCompilerArgs += "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
+        freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
+        freeCompilerArgs += "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+        freeCompilerArgs += "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi"
+        freeCompilerArgs += "-opt-in=coil.annotation.ExperimentalCoilApi"
+        freeCompilerArgs += "-opt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi"
+    }
+}
+
+dependencies {
+    // AndroidX安卓官方工具包
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
+    implementation 'androidx.activity:activity-compose:1.6.1'
+
+    // Compose Lib Compose的库
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation "androidx.compose.ui:ui-util:$compose_version"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
+
+    // material design
+    implementation "androidx.compose.material3:material3:$md3_version"
+    implementation "androidx.compose.material:material-icons-extended:1.3.1"
+    implementation "androidx.compose.material3:material3-window-size-class:$md3_version"
+
+    // Hilt 依赖注入工具
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'androidx.compose.material:material:1.3.0'
+    implementation 'com.google.android.gms:play-services-analytics:18.0.1'
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
+
+    // xLog 日志工具
+    implementation 'com.elvishew:xlog:1.11.0'
+
+    // Retrofit 库
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+
+    // xCrash 爱奇艺的崩溃库
+    implementation 'com.iqiyi.xcrash:xcrash-android-lib:3.1.0'
+
+    // Splash screen 启动图
+    implementation "androidx.core:core-splashscreen:1.0.0"
+
+    // accompanist
+        // 为compose提供动画和导航的库
+    implementation "com.google.accompanist:accompanist-navigation-animation:$acc_version"
+        // pager
+    implementation "com.google.accompanist:accompanist-pager-indicators:$acc_version"
+        // 状态栏
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$acc_version"
+    // pager
+    implementation "com.google.accompanist:accompanist-pager:0.28.0"
+
+    // DKVideoPlayer 视频播放器
+    implementation 'xyz.doikki.android.dkplayer:dkplayer-java:3.3.7'
+        // 如需要缓存或者抖音预加载功能请引入此库
+    implementation 'xyz.doikki.android.dkplayer:videocache:3.3.7'
+
+
+    //room sqlite操作
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    // Test 测试工具
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}
