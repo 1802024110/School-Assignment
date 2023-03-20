@@ -61,7 +61,7 @@ onMounted(() => {
     }
     // 设置立方体的 scaleY
     for (let i = 0; i < cubes?.value.length; i++) {
-      cubes._value[i].scale.y = Math.floor(averageFrequencyData[i] * 0.4)
+      cubes.value[i].scale.y = Math.floor(averageFrequencyData[i] * 0.4)
     }
   });
 })
