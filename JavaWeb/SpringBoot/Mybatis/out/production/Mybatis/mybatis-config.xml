@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Mybatis配置标签要求顺序正确-->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--    加载jdbc配置-->
+    <properties resource="db.properties"/>
+    <settings>
+        <!--        自动生成主键-->
+        <setting name="useGeneratedKeys" value="true"/>
+        <setting name="mapUnderscoreTOCamelCase" value="true"/>
+    </settings>
+    <!--      起别名-->
+    <typeAliases>
+        <package name="xyz._007666.mybatis.entity"/>
+    </typeAliases>
+    <!--    启用配置为development-->
+    <environments default="development">
+        <!--    创建一个开发环境配置-->
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"></property>
+                <property name="url" value="${jdbc.url}"></property>
+                <property name="username" value="${jdbc.username}"></property>
+                <property name="password" value="${jdbc.password}"></property>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--加载映射文件-->
+    <mappers>
+        <package name="xyz._007666.mybatis.mapper"/>
+    </mappers>
+
+</configuration>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz._007666.mybatis.mapper.CurdMapper">
+    <insert id="insertUser" keyProperty="id">
+        insert into test.user
+        values (null, #{username}, #{password}, #{gender}, #{phone});
+    </insert>
+
+    <select id="getUserById" resultType="xyz._007666.mybatis.entity.User">
+        select *
+        from test.user
+        where id = #{id};
+    </select>
+
+</mapper>

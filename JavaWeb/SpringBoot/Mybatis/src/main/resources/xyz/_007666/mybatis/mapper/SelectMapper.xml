@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz._007666.mybatis.mapper.SelectMapper">
+    <resultMap id="UserAllInfo" type="User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <association property="address" select="getUserAddress" column="id"/>
+        <collection property="comments" select="xyz._007666.mybatis.mapper.CommentMapper.getCommentByUserId" column="id">
+        </collection>
+    </resultMap>
+
+    <sql id="selectId"> ${alias}.id</sql>
+
+    <select id="getUserAddress" resultType="address">
+        select * from address where user_id=#{userId}
+    </select>
+
+    <insert id="insertUser" keyProperty="id">
+        insert into test.user
+        values (null, #{username}, #{password}, #{gender}, #{phone});
+    </insert>
+
+    <select id="getUserById" resultType="User">
+        select *
+        from test.user
+        limit 3,1
+    </select>
+    <select id="getUserComments" resultMap="UserAllInfo">
+        select * from user where id=#{id};
+    </select>
+
+</mapper>
