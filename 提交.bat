@@ -1,3 +1,3 @@
 git add .
-git commit -m "更新"
+git commit -m "update"
 git push origin main
