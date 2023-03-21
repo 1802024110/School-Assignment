@@ -4,7 +4,7 @@
     <Scene ref="scene" :background="0xffcc66">
       <PointLight :position="{x:0,y:300,z:40}" color="#ffffff"/>
       <Group :position="{x:-(10+10*CUBE_NUM )}">
-        <Box v-for="i in CUBE_NUM" :key="i" ref="cubes" :position="{x:(10+10)*i}" :size="10">
+        <Box v-for="i in CUBE_NUM" :key="i" ref="cubes" :position="{x:(10+10)*i}" :scale="{x: 10, y: 1, z: 10}">
           <PhongMaterial color="#9acd32"/>
         </Box>
       </Group>
@@ -46,6 +46,8 @@ function getData() {
 }
 
 onMounted(() => {
+
+
   renderer.value?.onBeforeRender(() => {
     const frequencyData = new Uint8Array(analyser.frequencyBinCount);
     analyser.getByteFrequencyData(frequencyData);
