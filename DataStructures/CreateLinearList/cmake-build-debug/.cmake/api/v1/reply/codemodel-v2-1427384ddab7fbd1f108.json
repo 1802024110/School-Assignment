@@ -1,0 +1,69 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.24"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "C",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "sm2::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-sm2-Debug-7b084e9f875ace27757a.json",
+					"name" : "sm2",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "sm2lib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-sm2lib-Debug-38de7476a1edda4e6f71.json",
+					"name" : "sm2lib",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/18020/OneDrive - nodream/Desktop/Project/School-Assignment/DataStructures/CreateLinearList/cmake-build-debug",
+		"source" : "C:/Users/18020/OneDrive - nodream/Desktop/Project/School-Assignment/DataStructures/CreateLinearList"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
