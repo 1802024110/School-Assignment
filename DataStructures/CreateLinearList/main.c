@@ -16,7 +16,7 @@ typedef struct SqlList {
 List MakeEmpty() {
     List list;
     list = (List) malloc(sizeof(struct SqlList)); //分配线性表结构体空间
-    list->Length = 1; //将线性表长度初始化为0
+    list->Length = 0; //将线性表长度初始化为0
     return list; //返回线性表指针
 }
 
@@ -49,16 +49,22 @@ int IsEmpty(List list) {
  * @return 0失败，1成功
  */
 int Insert(List list, int index, ElemType data) {
-    if (index < 1 || index > list->Length) return 0; //插入位置不合法，返回0
+    if (index < 1 || index > list->Length + 1) return 0; //插入位置不合法，返回0
     if (list->Length == MAXSIZE) return 0; //线性表已满，返回0
-    if (index == 0) { //插入第一个元素
-        list->Data[0] = data; //插入元素
+    if (index == 1) { //插入第一个元素
+        for (int i = list->Length; i > 0; i--) { //从后向前遍历
+            list->Data[i] = list->Data[i - 1]; //将后面元素后移
+        }
+        list->Length++; //线性表长度增1
+        list->Data[1] = data; //插入元素
+    } else if (index == list->Length + 1) { //插入最后一个元素
+        list->Data[index - 1] = data; //插入元素
         list->Length++; //线性表长度增1
     } else {
-        for (int i = list->Length - 1; i >= index; i--) { //从后向前遍历
+        for (int i = list->Length - 1; i >= index - 1; i--) { //从后向前遍历
             list->Data[i + 1] = list->Data[i]; //将后面元素后移
         }
-        list->Data[index] = data; //插入元素
+        list->Data[index - 1] = data; //插入元素
         list->Length++; //线性表长度增1
     }
     return 1; //返回1
@@ -73,9 +79,9 @@ void DispList(List list) {
         printf("线性表为空\n");
     } else {
         for (int i = 1; i <= list->Length; i++) {
-            printf("%c ", list->Data[i]);
+            printf("%c, ", list->Data[i]);
         }
-        printf("\n线性表的长度：%d\n", list->Length);
+        printf("线性表的长度：%d\n", list->Length);
     }
 }
 
@@ -143,12 +149,13 @@ int Locate(List list, ElemType data) {
 
 int main(void) {
     SetConsoleOutputCP(65001); // 设置控制台输出编码为 UTF-8，避免中文乱码
+    system("cls"); //清屏
     // 初始化线性表
     List list = MakeEmpty();
-
     char choose = ' ';
 
-    while (choose != '0') {
+    while (1) {
+
         printf("=============================================\n");
         printf("1.显示当前顺序表\n"
                "2.为顺序表添加元素\n"
@@ -159,66 +166,87 @@ int main(void) {
                "0.退出\n");
         printf("=============================================\n");
         printf("请输入你的选择：");
-        choose = getchar();
+        scanf("%c", &choose);
         getchar(); // 捕获缓冲区指针，防止按键阻塞
         int index = 0;
-        char value = 0;
+        char value = ' ';
         int succeed = 0;
         switch (choose) {
             case '1':
                 // 显示当前线性表的所有值
                 DispList(list);
+                succeed = 2;
                 break;
             case '2':
                 printf("请输入新元素的下标");
                 scanf("%d", &index);
+                getchar(); // 读取缓冲区中的换行符
 
                 printf("请输入新元素的值");
                 scanf("%c", &value);
+                getchar(); // 读取缓冲区中的换行符
 
                 succeed = Insert(list, index, value);
                 break;
             case '3':
                 printf("请输入要删除元素的下标");
                 scanf("%d", &index);
+                getchar(); // 读取缓冲区中的换行符
+
 
                 succeed = Delete(list, index);
                 break;
             case '4':
                 printf("请输入更新元素的下标");
                 scanf("%d", &index);
+                getchar(); // 读取缓冲区中的换行符
+
 
                 printf("请输入更新元素的值");
                 scanf("%c", &value);
+                getchar(); // 读取缓冲区中的换行符
+
 
                 succeed = Update(list, index, value);
                 break;
             case '5':
                 printf("请输入要查找元素的下标");
                 scanf("%d", &index);
+                getchar(); // 读取缓冲区中的换行符
+
 
                 ElemType elemType = getElem(list, index);
-                if (elemType != NULL) {
+                if (elemType == NULL) {
+                    printf("查找失败");
+                } else {
                     succeed = 2;
                     printf("该元素的值为%c\n", elemType);
-                } else {
-                    printf("查找失败");
                 }
                 break;
             case '6':
-                Locate(list,)
-                printf("选择了6");
+                printf("请输入要查找元素的值");
+                scanf("%c", &value);
+                getchar(); // 读取缓冲区中的换行符
+
+                index = Locate(list,value);
+                if (index != NULL){
+                    printf("查找元素的下标是：%d\n", index);
+                    succeed = 2;
+                } else{
+                    succeed = 0;
+                }
                 break;
+            case '0':
+                return 0;
             default:
-                printf("未知选择");
+                printf("未知选择\n");
                 break;
         }
-        if (succeed == 1 || succeed == 2) {
+        if (succeed == 1) {
             printf("操作成功!\n");
-        } else {
+        }else if(succeed == 2){}
+        else {
             printf("操作失败!\n");
         }
     }
-
-    return 0;
 }
