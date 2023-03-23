@@ -1,10 +1,11 @@
 <template>
+  <button @click="play">开始</button>
   <Renderer ref="renderer" :antialias="true" :orbit-ctrl="true" :resize="true">
-    <Camera ref="camera" :position="{z:300}"/>
+    <Camera ref="camera" :position="{z:650}"/>
     <Scene ref="scene" :background="0xffcc66">
       <PointLight :position="{x:0,y:300,z:40}" color="#ffffff"/>
-      <Group :position="{x:-(10+10*CUBE_NUM )}">
-        <Box v-for="i in CUBE_NUM" :key="i" ref="cubes" :position="{x:(10+10)*i}" :scale="{x: 10, y: 1, z: 10}">
+      <Group ref="cubes"  :position="{x:-(10+10.2*CUBE_NUM )}">
+        <Box v-for="i in CUBE_NUM" :key="i" :position="{x:(10+10)*i}" :scale="{x: 10, y: 1, z: 10}">
           <PhongMaterial color="#9acd32"/>
         </Box>
       </Group>
@@ -15,7 +16,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 
-const STEP = 50
+const STEP = 20
 const CUBE_NUM = Math.ceil(1024 / STEP)
 
 const renderer = ref(null)
@@ -38,45 +39,53 @@ function getData() {
     return res.arrayBuffer()
   }).then((arrayBuffer) => {
     audioCtx.decodeAudioData(arrayBuffer, (decodedData) => {
-      source.buffer = decodedData
-      source.connect(analyser)
-      analyser.connect(audioCtx.destination)
+      source.buffer = decodedData;
+      // 创建立体声平衡节点
+      const panner = audioCtx.createStereoPanner();
+      // 连接音频源到平衡节点
+      source.connect(panner);
+      // 连接平衡节点到分析器
+      panner.connect(analyser);
+      // 连接分析器到目的地
+      analyser.connect(audioCtx.destination);
     })
   })
 }
 
 onMounted(() => {
-
-
-  renderer.value?.onBeforeRender(() => {
+  renderer.value.onBeforeRender(() => {
     const frequencyData = new Uint8Array(analyser.frequencyBinCount);
     analyser.getByteFrequencyData(frequencyData);
 
 // 计算每个分组的平均频谱数据
     const averageFrequencyData = [];
     for (let i = 0; i < frequencyData.length; i += STEP) {
-      let sum = 0;
-      for (let j = i; j < i + STEP; j++) {
-        sum += frequencyData[j];
+      // 获取左右声道的音频数据
+      const leftData = new Uint8Array(analyser.frequencyBinCount / 2);
+      const rightData = new Uint8Array(analyser.frequencyBinCount / 2);
+      analyser.getByteFrequencyData(leftData);
+      analyser.getByteFrequencyData(rightData);
+      // 将左右声道的音频数据进行加权平均
+      for (let i = 0; i < leftData.length; i++) {
+        averageFrequencyData[i] = (leftData[i] + rightData[i]) / 2;
       }
-      averageFrequencyData.push(sum / STEP);
     }
     // 设置立方体的 scaleY
-    for (let i = 0; i < cubes?.value.length; i++) {
-      cubes.value[i].scale.y = Math.floor(averageFrequencyData[i] * 0.4)
+    for (let i = 0; i < cubes.value.group.children.length; i++) {
+      cubes.value.group.children[i].scale.y = Math.floor(averageFrequencyData[i] * 0.4)
     }
   });
 })
 
 let count = 1
-document.addEventListener("mousedown", () => {
-  if (count == 1) {
+
+function play(){
+  if (audioCtx.state != 'running') {
     getData().then(() => {
       source.start(0)
     })
-    count += 1
   }
-})
+}
 </script>
 
 <style scoped>
