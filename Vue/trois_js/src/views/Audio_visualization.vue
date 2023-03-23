@@ -1,9 +1,11 @@
 <template>
   <button @click="play">开始</button>
   <Renderer ref="renderer" :antialias="true" :orbit-ctrl="true" :resize="true">
-    <Camera ref="camera" :position="{z:650}"/>
+    <Camera ref="camera" :position="{z:650,y:200}"/>
     <Scene ref="scene" :background="0xffcc66">
       <PointLight :position="{x:0,y:300,z:40}" color="#ffffff"/>
+      <PointLight :position="{x:0,y:0,z:800}" color="#ffffff"/>
+      <PointLight :position="{x:0,y:0,z:-800}" color="#ffffff"/>
       <Group ref="cubes"  :position="{x:-(10+10.2*CUBE_NUM )}">
         <Box v-for="i in CUBE_NUM" :key="i" :position="{x:(10+10)*i}" :scale="{x: 10, y: 1, z: 10}">
           <PhongMaterial color="#9acd32"/>
