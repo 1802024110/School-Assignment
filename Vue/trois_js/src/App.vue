@@ -8,6 +8,7 @@ import { RouterLink, RouterView } from 'vue-router'
         <RouterLink to="/birthday_cake">生日蛋糕</RouterLink>
         <RouterLink to="/div_model">导入模型</RouterLink>
         <RouterLink to="/audio_visualization">音频可视化</RouterLink>
+        <RouterLink to="/particle">粒子效果</RouterLink>
       </nav>
   <RouterView />
 </template>

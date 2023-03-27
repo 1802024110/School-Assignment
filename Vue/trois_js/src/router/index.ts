@@ -3,6 +3,7 @@ import hello_troisJs from "@/views/Hello_troisJs.vue";
 import birthday_cake from "@/views/Birthday_cake.vue";
 import div_model from "@/views/Div_model.vue";
 import audio_visualization from "@/views/Audio_visualization.vue";
+import particle from "@/views/particle.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +23,10 @@ const router = createRouter({
         {
             path: "/audio_visualization",
             component: audio_visualization
+        },
+        {
+            path: "/particle",
+            component: particle
         }
     ]
 })
