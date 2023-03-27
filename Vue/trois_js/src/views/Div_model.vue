@@ -16,14 +16,15 @@
 import { ref} from "vue";
 
 function onPointerEvent(event) {
-  console.log(event);
+  // console.log(event);
 }
 
 function onLoad(object){
   object.scene.traverse(function (child) {
-    if (child.isMesh){
+    console.log(child.name);
+    /*if (child.isMesh){
       console.log(child.name)
-    }
+    }*/
   });
 }
 
