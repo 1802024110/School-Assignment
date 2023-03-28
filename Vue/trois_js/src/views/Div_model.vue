@@ -16,7 +16,7 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
-import {DoubleSide, MeshBasicMaterial, TextureLoader} from "three";
+import {DoubleSide, Float32BufferAttribute, MeshBasicMaterial, TextureLoader} from "three";
 
 function onPointerEvent(event) {
   // console.log(event);
@@ -27,8 +27,24 @@ function onLoad(object) {
   object.scene.traverse(function (child) {
     switch (child.name) {
       case "白露1010":
+        const geometry = child.geometry
+        const positions = geometry.attributes.position.array
+        const uvs = geometry.attributes.uv.array
+        // 偏移量
+        const offset = 1.5
+        for (let i = 0; i < uvs.length; i += 2) {
+          const u = uvs[i];
+          const v = uvs[i + 1];
+          // 将uv坐标旋转45度并偏移offset个单位
+          const uNew = (u - offset) * Math.cos(Math.PI / 4) - (v - offset) * Math.sin(Math.PI / 4) + offset;
+          const vNew = (u - offset) * Math.sin(Math.PI / 4) + (v - offset) * Math.cos(Math.PI / 4) + offset;
+          uvs[i] = uNew;
+          uvs[i + 1] = vNew;
+        }
+        geometry.setAttribute('uv', new Float32BufferAttribute(uvs, 2));
+
         // 外套
-        const texture0 = new TextureLoader().load("src/assets/model/naxida_bailu/外套n glow.png")
+        const texture0 = new TextureLoader().load("src/assets/model/naxida_bailu/外套n.png")
         child.material = new MeshBasicMaterial({map: texture0});
         break
       case "白露1010_1":
