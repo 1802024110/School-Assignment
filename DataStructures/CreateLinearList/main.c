@@ -9,6 +9,8 @@ typedef struct SqlList {
     int Length; //线性表长度
 } *List;
 
+int GetLength(List pList);
+
 /**
  * @brief 创建线性表并且赋空值
  * @return 返回线性表指针
@@ -45,29 +47,17 @@ int IsEmpty(List list) {
  * @brief 在指定位置插入元素
  * @param list 需要插入元素的线性表
  * @param index 需要插入元素的位置
- * @param data 需要插入的元素值
+ * @param data ElemType 需要插入的元素值
  * @return 0失败，1成功
  */
-int Insert(List list, int index, ElemType data) {
-    if (index < 1 || index > list->Length + 1) return 0; //插入位置不合法，返回0
-    if (list->Length == MAXSIZE) return 0; //线性表已满，返回0
-    if (index == 1) { //插入第一个元素
-        for (int i = list->Length; i > 0; i--) { //从后向前遍历
-            list->Data[i] = list->Data[i - 1]; //将后面元素后移
-        }
-        list->Length++; //线性表长度增1
-        list->Data[1] = data; //插入元素
-    } else if (index == list->Length + 1) { //插入最后一个元素
-        list->Data[index - 1] = data; //插入元素
-        list->Length++; //线性表长度增1
-    } else {
-        for (int i = list->Length - 1; i >= index - 1; i--) { //从后向前遍历
-            list->Data[i + 1] = list->Data[i]; //将后面元素后移
-        }
-        list->Data[index - 1] = data; //插入元素
-        list->Length++; //线性表长度增1
-    }
-    return 1; //返回1
+int Insert(List list, int pos, ElemType x) {
+    if (pos < 1 || pos > list->Length + 1)
+        return 0;
+    for (int i = list->Length; i >= pos; i--)
+        list->Data[i + 1] = list->Data[i];
+    list->Data[pos] = x;
+    list->Length++;
+    return 1;
 }
 
 /**
@@ -147,7 +137,71 @@ int Locate(List list, ElemType data) {
     return 0; //返回0表示元素不在线性表中
 }
 
-int main(void) {
+/**
+ * 将两个线性表整合为一个线性表
+ * @Param List 线性表A
+ * @Param List 线性表B
+ * @Param List 整合的线性表C
+ * @return void
+ */
+void MargetList(List A, List B, List C) {
+    int i, Alength, Blength;
+    Alength = GetLength(A);
+    Blength = GetLength(B);
+    for (i = 1; i <= Alength; i++)
+        Insert(C, i, A->Data[i]);
+    for (i = 1; i <= Blength; i++)
+        Insert(C, Alength + i, B->Data[i]);
+}
+
+int GetLength(List list) {
+    return list->Length;
+}
+
+ElemType GetElem(List list, int pos) {
+    if (pos < 1 || pos > list->Length)
+        return '\0';
+    return list->Data[pos];
+}
+
+
+/**
+ * 集合求并, A=AUB
+ * @Param List 线性表A
+ * @Param List 线性表B
+ * @return void
+ */
+void Common(List A, List B) {
+    if (IsEmpty(A) == 1 || IsEmpty(B) == 1) {
+        return;
+    }
+    int i, j, Alength, Blength;
+    // x用来保存B中的数据元素
+    ElemType x;
+    Alength = GetLength(A);
+    Blength = GetLength(B);
+    // 对于B中的每一个数据元素
+    for (i = 1, j = 1; i <= Blength; i++) {
+        x = GetElem(B, i);
+        // 在A中查找当前的数据元素，如果没有
+        if (!Locate(A, x)) { // 传入参数1表示数组是从1开始
+            Insert(A, Alength + j, x);
+            j++;
+        }
+    }
+}
+
+/**
+ * 升序集合求并, A=AUB
+ * @Param List 线性表A
+ * @Param List 线性表B
+ * @return void
+ */
+void Asc_Common(List A, List B, List C) {
+
+}
+
+/*int main(void) {
     SetConsoleOutputCP(65001); // 设置控制台输出编码为 UTF-8，避免中文乱码
     system("cls"); //清屏
     // 初始化线性表
@@ -228,11 +282,11 @@ int main(void) {
                 scanf("%c", &value);
                 getchar(); // 读取缓冲区中的换行符
 
-                index = Locate(list,value);
-                if (index != NULL){
+                index = Locate(list, value);
+                if (index != NULL) {
                     printf("查找元素的下标是：%d\n", index);
                     succeed = 2;
-                } else{
+                } else {
                     succeed = 0;
                 }
                 break;
@@ -244,9 +298,32 @@ int main(void) {
         }
         if (succeed == 1) {
             printf("操作成功!\n");
-        }else if(succeed == 2){}
+        } else if (succeed == 2) {}
         else {
             printf("操作失败!\n");
         }
     }
+}*/
+
+
+int main() {
+    SetConsoleOutputCP(65001); // 设置控制台输出编码为 UTF-8，避免中文乱码
+    system("cls"); //清屏
+
+    List A = MakeEmpty();
+    List B = MakeEmpty();
+    List C = MakeEmpty();
+    Insert(A, 1, '2'); // 假设您有一个名为 Insert 的函数，用于在线性表中的指定位置插入一个元素
+    Insert(A, 2, '4');
+    Insert(A, 3, '6');
+    Insert(A, 4, '8');
+    Insert(B, 1, '1');
+    Insert(B, 2, '3');
+    Insert(B, 3, '5');
+    Insert(B, 4, '7');
+    Common(A, B); // 调用您的 Common 函数
+    printf("A: ");
+    DispList(A); // 假设您有一个名为 PrintList 的函数，用于打印线性表中的元素
+    return 0;
 }
+

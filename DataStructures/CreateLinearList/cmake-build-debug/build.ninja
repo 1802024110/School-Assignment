@@ -41,74 +41,37 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = C$:/Users/18020/OneDrive$ -$ nodream/Desktop/Project/School-Assignment/DataStructures/CreateLinearList/cmake-build-debug/
 # =============================================================================
-# Object build statements for STATIC_LIBRARY target sm2lib
+# Object build statements for EXECUTABLE target main
 
 
 #############################################
-# Order-only phony target for sm2lib
+# Order-only phony target for main
 
-build cmake_object_order_depends_target_sm2lib: phony || CMakeFiles/sm2lib.dir
+build cmake_object_order_depends_target_main: phony || CMakeFiles/main.dir
 
-build CMakeFiles/sm2lib.dir/Add.c.obj: C_COMPILER__sm2lib_Debug C$:/Users/18020/OneDrive$ -$ nodream/Desktop/Project/School-Assignment/DataStructures/CreateLinearList/Add.c || cmake_object_order_depends_target_sm2lib
-  DEP_FILE = CMakeFiles\sm2lib.dir\Add.c.obj.d
+build CMakeFiles/main.dir/main.c.obj: C_COMPILER__main_Debug C$:/Users/18020/OneDrive$ -$ nodream/Desktop/Project/School-Assignment/DataStructures/CreateLinearList/main.c || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles\main.dir\main.c.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu11
-  OBJECT_DIR = CMakeFiles\sm2lib.dir
-  OBJECT_FILE_DIR = CMakeFiles\sm2lib.dir
+  OBJECT_DIR = CMakeFiles\main.dir
+  OBJECT_FILE_DIR = CMakeFiles\main.dir
 
 
 # =============================================================================
-# Link build statements for STATIC_LIBRARY target sm2lib
+# Link build statements for EXECUTABLE target main
 
 
 #############################################
-# Link the static library libsm2lib.a
+# Link the executable main.exe
 
-build libsm2lib.a: C_STATIC_LIBRARY_LINKER__sm2lib_Debug CMakeFiles/sm2lib.dir/Add.c.obj
-  LANGUAGE_COMPILE_FLAGS = -g
-  OBJECT_DIR = CMakeFiles\sm2lib.dir
-  POST_BUILD = cd .
-  PRE_LINK = cd .
-  TARGET_FILE = libsm2lib.a
-  TARGET_PDB = sm2lib.a.dbg
-
-# =============================================================================
-# Object build statements for EXECUTABLE target sm2
-
-
-#############################################
-# Order-only phony target for sm2
-
-build cmake_object_order_depends_target_sm2: phony || cmake_object_order_depends_target_sm2lib
-
-build CMakeFiles/sm2.dir/main.c.obj: C_COMPILER__sm2_Debug C$:/Users/18020/OneDrive$ -$ nodream/Desktop/Project/School-Assignment/DataStructures/CreateLinearList/main.c || cmake_object_order_depends_target_sm2
-  DEP_FILE = CMakeFiles\sm2.dir\main.c.obj.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu11
-  OBJECT_DIR = CMakeFiles\sm2.dir
-  OBJECT_FILE_DIR = CMakeFiles\sm2.dir
-
-build CMakeFiles/sm2.dir/Add.c.obj: C_COMPILER__sm2_Debug C$:/Users/18020/OneDrive$ -$ nodream/Desktop/Project/School-Assignment/DataStructures/CreateLinearList/Add.c || cmake_object_order_depends_target_sm2
-  DEP_FILE = CMakeFiles\sm2.dir\Add.c.obj.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu11
-  OBJECT_DIR = CMakeFiles\sm2.dir
-  OBJECT_FILE_DIR = CMakeFiles\sm2.dir
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target sm2
-
-
-#############################################
-# Link the executable sm2.exe
-
-build sm2.exe: C_EXECUTABLE_LINKER__sm2_Debug CMakeFiles/sm2.dir/main.c.obj CMakeFiles/sm2.dir/Add.c.obj | libsm2lib.a || libsm2lib.a
+build main.exe: C_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/main.c.obj
   FLAGS = -g
-  LINK_LIBRARIES = libsm2lib.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  OBJECT_DIR = CMakeFiles\sm2.dir
+  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\main.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_FILE = sm2.exe
-  TARGET_IMPLIB = libsm2.dll.a
-  TARGET_PDB = sm2.exe.dbg
+  TARGET_FILE = main.exe
+  TARGET_IMPLIB = libmain.dll.a
+  TARGET_PDB = main.exe.dbg
 
 
 #############################################
@@ -136,9 +99,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build sm2: phony sm2.exe
-
-build sm2lib: phony libsm2lib.a
+build main: phony main.exe
 
 # =============================================================================
 # Folder targets.
@@ -148,7 +109,7 @@ build sm2lib: phony libsm2lib.a
 #############################################
 # Folder: C:/Users/18020/OneDrive - nodream/Desktop/Project/School-Assignment/DataStructures/CreateLinearList/cmake-build-debug
 
-build all: phony libsm2lib.a sm2.exe
+build all: phony main.exe
 
 # =============================================================================
 # Built-in targets

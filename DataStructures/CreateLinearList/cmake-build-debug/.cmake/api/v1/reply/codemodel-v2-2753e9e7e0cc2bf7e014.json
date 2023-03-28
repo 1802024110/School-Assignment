@@ -15,8 +15,7 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						0,
-						1
+						0
 					]
 				}
 			],
@@ -31,8 +30,7 @@
 					"name" : "C",
 					"targetIndexes" : 
 					[
-						0,
-						1
+						0
 					]
 				}
 			],
@@ -40,16 +38,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "sm2::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-sm2-Debug-7b084e9f875ace27757a.json",
-					"name" : "sm2",
-					"projectIndex" : 0
-				},
-				{
-					"directoryIndex" : 0,
-					"id" : "sm2lib::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-sm2lib-Debug-38de7476a1edda4e6f71.json",
-					"name" : "sm2lib",
+					"id" : "main::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-main-Debug-2efb687cdc2dee90aef8.json",
+					"name" : "main",
 					"projectIndex" : 0
 				}
 			]
