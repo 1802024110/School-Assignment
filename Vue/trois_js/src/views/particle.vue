@@ -17,14 +17,32 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
-import {BufferGeometryUtils} from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import {mergeBufferGeometries} from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import {BufferGeometry, Mesh, Points, PointsMaterial} from "three";
 
 const scene = ref(null)
 
 function onLoad(object) {
-  const geometry = object.scene.children
-  const bufferGeometry = BufferGeometryUtils.fromGeometry(geometry)
-  console.log(geometry)
+  const bufferGeometries = [];
+  object.scene.traverse((child) => {
+    if (child instanceof Mesh) {
+      // 将Mesh的Geometry 转换为BufferGeometry
+      const bufferGeometry = new BufferGeometry().setFromPoints(child.geometry)
+      bufferGeometries.push(bufferGeometry)
+    }
+  })
+  // 合并所有 BufferGeometry
+  const mergeBufferGeometry = mergeBufferGeometries(bufferGeometries)
+
+  // 创建PointsMaterial 材质
+  const pointsMaterial = new PointsMaterial({
+    color: 0xffffff,
+    size: 0.1,
+  });
+
+  // 使用合并后的 BufferGeometry 和 PointsMaterial 创建一个 Points 对象
+  const particleSystem = new Points(mergeBufferGeometry, pointsMaterial);
+  // object.scene = particleSystem
 }
 
 onMounted(() => {

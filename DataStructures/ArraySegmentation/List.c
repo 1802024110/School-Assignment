@@ -1,4 +1,3 @@
-#include <windows.h>
 #include <stdio.h>
 #include <malloc.h>
 
@@ -230,129 +229,37 @@ void Asc_Common(List A, List B, List C) {
     }
 }
 
-/*int main(void) {
-    SetConsoleOutputCP(65001); // 设置控制台输出编码为 UTF-8，避免中文乱码
-    system("cls"); //清屏
-    // 初始化线性表
-    List list = MakeEmpty();
-    char choose = ' ';
 
-    while (1) {
-
-        printf("=============================================\n");
-        printf("1.显示当前顺序表\n"
-               "2.为顺序表添加元素\n"
-               "3.删除顺序表中的元素\n"
-               "4.修改顺序表中的元素\n"
-               "5.查找顺序表中指定位置的元素\n"
-               "6.查找顺序表中等于的元素\n"
-               "0.退出\n");
-        printf("=============================================\n");
-        printf("请输入你的选择：");
-        scanf("%c", &choose);
-        getchar(); // 捕获缓冲区指针，防止按键阻塞
-        int index = 0;
-        char value = ' ';
-        int succeed = 0;
-        switch (choose) {
-            case '1':
-                // 显示当前线性表的所有值
-                DispList(list);
-                succeed = 2;
-                break;
-            case '2':
-                printf("请输入新元素的下标");
-                scanf("%d", &index);
-                getchar(); // 读取缓冲区中的换行符
-
-                printf("请输入新元素的值");
-                scanf("%c", &value);
-                getchar(); // 读取缓冲区中的换行符
-
-                succeed = Insert(list, index, value);
-                break;
-            case '3':
-                printf("请输入要删除元素的下标");
-                scanf("%d", &index);
-                getchar(); // 读取缓冲区中的换行符
-
-
-                succeed = Delete(list, index);
-                break;
-            case '4':
-                printf("请输入更新元素的下标");
-                scanf("%d", &index);
-                getchar(); // 读取缓冲区中的换行符
-
-
-                printf("请输入更新元素的值");
-                scanf("%c", &value);
-                getchar(); // 读取缓冲区中的换行符
-
-
-                succeed = Update(list, index, value);
-                break;
-            case '5':
-                printf("请输入要查找元素的下标");
-                scanf("%d", &index);
-                getchar(); // 读取缓冲区中的换行符
-
-
-                ElemType elemType = getElem(list, index);
-                if (elemType == NULL) {
-                    printf("查找失败");
-                } else {
-                    succeed = 2;
-                    printf("该元素的值为%c\n", elemType);
-                }
-                break;
-            case '6':
-                printf("请输入要查找元素的值");
-                scanf("%c", &value);
-                getchar(); // 读取缓冲区中的换行符
-
-                index = Locate(list, value);
-                if (index != NULL) {
-                    printf("查找元素的下标是：%d\n", index);
-                    succeed = 2;
-                } else {
-                    succeed = 0;
-                }
-                break;
-            case '0':
-                return 0;
-            default:
-                printf("未知选择\n");
-                break;
-        }
-        if (succeed == 1) {
-            printf("操作成功!\n");
-        } else if (succeed == 2) {}
-        else {
-            printf("操作失败!\n");
-        }
-    }
-}*/
-
-
-int main() {
-    SetConsoleOutputCP(65001); // 设置控制台输出编码为 UTF-8，避免中文乱码
-    system("cls"); //清屏
-
-    List A = MakeEmpty();
-    List B = MakeEmpty();
-    List C = MakeEmpty();
-    Insert(A, 1, '2'); // 假设您有一个名为 Insert 的函数，用于在线性表中的指定位置插入一个元素
-    Insert(A, 2, '4');
-    Insert(A, 3, '6');
-    Insert(A, 4, '8');
-    Insert(B, 1, '1');
-    Insert(B, 2, '3');
-    Insert(B, 3, '5');
-    Insert(B, 4, '7');
-    Asc_Common(A, B, C); // 调用您的 Common 函数
-    printf("C: ");
-    DispList(C); // 假设您有一个名为 PrintList 的函数，用于打印线性表中的元素
-    return 0;
+/**
+ * 销毁线性表并释放空间
+ * @param list 需要销毁的线性表
+ */
+void DestroyList(List list) {
+    free(list); //释放线性表结构体空间
+    list = NULL; //将指针置为空，防止野指针
 }
 
+/**
+ *  对数组进行升序，结果保存在b数组
+ *  @Param List A 需要被升序的数组
+ *  @Param List B 升序后的数组
+ *  @Return void
+ * */
+void Asc_List(List A, List B) {
+    // 复制输入数组到输出数组
+    B->Length = A->Length;
+    for (int i = 1; i <= A->Length; i++) {
+        B->Data[i] = A->Data[i];
+    }
+
+    // 对输出数组进行升序排序
+    for (int i = 1; i <= B->Length; i++) {
+        for (int j = 1; j <= B->Length - 1; j++) {
+            if (B->Data[j] > B->Data[j+1]) {
+                int temp = B->Data[j];
+                B->Data[j] = B->Data[j+1];
+                B->Data[j+1] = temp;
+            }
+        }
+    }
+}
