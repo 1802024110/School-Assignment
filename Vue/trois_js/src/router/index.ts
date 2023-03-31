@@ -4,6 +4,7 @@ import birthday_cake from "@/views/Birthday_cake.vue";
 import div_model from "@/views/Div_model.vue";
 import audio_visualization from "@/views/Audio_visualization.vue";
 import particle from "@/views/particle.vue";
+import particle2 from "@/views/particle2.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,10 @@ const router = createRouter({
         {
             path: "/particle",
             component: particle
+        },
+        {
+            path: "/particle2",
+            component: particle2
         }
     ]
 })

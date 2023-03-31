@@ -11,46 +11,34 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
-import { Points, PointsMaterial, RawShaderMaterial, SphereGeometry} from "three";
-import Stats from "three/examples/jsm/libs/stats.module";
-import {FBXLoader} from "three/examples/jsm/loaders/FBXLoader";
-import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
-import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader";
+import {
+    Particle,
+    ParticleBasicMaterial,
+    Points,
+    PointsMaterial,
+    RawShaderMaterial,
+    SphereGeometry,
+    Sprite
+} from "three";
 
 const scene = ref(null)
-
-function createShaderMaterial() {
-  const vertexShader = `
-      void main() {
-        gl_PointSize = 4.;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `;
-  const fragmentShader = `
-      uniform vec3 color;
-      void main() {
-        gl_FragColor = vec4(color, 1.0);
-      }
-    `;
-  return new RawShaderMaterial({
-    vertexShader,
-    fragmentShader,
-    uniforms: {
-      color: { value: new Color(0xffffff) },
-    },
-    transparent: true,
-  });
-}
-
-function init(){
-  const stats = new Stats()
-  stats.domElement.style.position = 'absolute'
-  stats.domElement.style.bottom = '0px'
-  stats.domElement.style.zIndex = 100
-  document.getElementsByTagName('canvas')[0].appendChild(stats.domElement)
-}
+const renderer = ref(null)
 
 onMounted(()=>{
+    const material = new PointsMaterial()
+
+    for (let i = -5 ; i < 5; i++){
+        for (let j = -5 ; j < 5; j++){
+            const particle = new Sprite(material)
+            particle.position.set(i*10,j*10,0)
+            scene?.value.add(particle)
+        }
+    }
+
+    renderer?.value.onBeforeRender(() => {
+
+        }
+    )
 })
 </script>
 
