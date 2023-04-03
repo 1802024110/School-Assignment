@@ -36,21 +36,17 @@ function dumpObject(obj, lines = [], isLast = true, prefix = '') {
 const cars = []
 
 function onLoad(object){
-  // console.log(dumpObject(object.scene.children[0].children[0].children[0].children[2]).join('\n'));
-  object.scene.children[0].children[0].children[0].children[2].children.forEach((car)=>{
-    // console.log(car.name)
-  })
-
   const loadedCars  = object.scene.getObjectByName('Cars')
-  console.log(loadedCars.children.length)
   const fixes = [
     { prefix: 'Car_08', rot: [Math.PI * .5, 0, Math.PI * .5], },
     { prefix: 'CAR_03', rot: [0, Math.PI, 0], },
     { prefix: 'Car_04', rot: [0, Math.PI, 0], },
   ]
   object.scene.updateMatrixWorld()
-  // console.log(loadedCars);
-  loadedCars.children.forEach((car)=>{
+
+
+  loadedCars.children.slice().forEach((car)=>{
+    console.log(car.name)
     const fix = fixes.find(fix => car.name.startsWith(fix.prefix))
     const obj = new THREE.Object3D()
     car.getWorldPosition(obj.position)
