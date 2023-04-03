@@ -46,7 +46,6 @@ function onLoad(object){
 
 
   loadedCars.children.slice().forEach((car)=>{
-    console.log(car.name)
     const fix = fixes.find(fix => car.name.startsWith(fix.prefix))
     const obj = new THREE.Object3D()
     car.getWorldPosition(obj.position)
