@@ -1,8 +1,8 @@
 <template>
   <Renderer ref="renderer" :antialias="true" :orbit-ctrl="true" :pointer="{ intersectRecursive: true }" :resize="true">
     <Camera :position="{z:800}" :far="20000"/>
-    <Scene :background="0x000000">
-      <HemisphereLight color="#B1E1FF" :intensity="0.6"/>
+    <Scene ref="scene" :background="0x000000">
+      <HemisphereLight color="#B1E1FF" :intensity="0.7"/>
       <DirectionalLight  color="#FFFFFF" :intensity="0.8" :position="{x:5,y:10,z:2}"/>
       <GltfModel
           ref="model"
@@ -15,7 +15,12 @@
 
 <script setup>
 import {onMounted, ref} from "vue";
-import {DoubleSide, Float32BufferAttribute, MeshBasicMaterial, TextureLoader} from "three";
+import * as THREE from "three";
+
+
+const model = ref(null)
+const scene = ref(null)
+const renderer = ref(null)
 
 function dumpObject(obj, lines = [], isLast = true, prefix = '') {
   const localPrefix = isLast ? '└─' : '├─';
@@ -28,19 +33,39 @@ function dumpObject(obj, lines = [], isLast = true, prefix = '') {
   });
   return lines;
 }
+const cars = []
 
 function onLoad(object){
-  const cars = object.scene.getObjectByName('Cars')
-  // console.log(cars)
+  // console.log(dumpObject(object.scene.children[0].children[0].children[0].children[2]).join('\n'));
+  object.scene.children[0].children[0].children[0].children[2].children.forEach((car)=>{
+    // console.log(car.name)
+  })
+
+  const loadedCars  = object.scene.getObjectByName('Cars')
+  console.log(loadedCars.children.length)
+  const fixes = [
+    { prefix: 'Car_08', rot: [Math.PI * .5, 0, Math.PI * .5], },
+    { prefix: 'CAR_03', rot: [0, Math.PI, 0], },
+    { prefix: 'Car_04', rot: [0, Math.PI, 0], },
+  ]
+  object.scene.updateMatrixWorld()
+  // console.log(loadedCars);
+  loadedCars.children.forEach((car)=>{
+    const fix = fixes.find(fix => car.name.startsWith(fix.prefix))
+    const obj = new THREE.Object3D()
+    car.getWorldPosition(obj.position)
+    car.position.set(0,0,0)
+    car.rotation.set(...fix.rot)
+    obj.add(car)
+    scene?.value.add(obj)
+    cars.push(obj)
+  })
 }
 
-const model = ref(null)
-const renderer = ref(null)
 onMounted(() => {
   renderer?.value.onBeforeRender(()=>{
-    const cars = model.value.scene.getObjectByName('Cars')
-    if (cars){
-      cars.children.forEach((car)=>{
+    if (cars.length!=0){
+      cars.forEach((car)=>{
         car.rotation.y += 0.01
       })
     }
