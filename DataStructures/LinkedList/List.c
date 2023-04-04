@@ -14,21 +14,39 @@ typedef struct node{
 }LNode,*LinkList;
 
 LinkList Create_Head(){
-    LinkList  L,s;
-    ElemType x,flag = 0;
-    printf("输入:");
-    scanf("%d",&x);
-    while (x!=flag){
-        s = (LinkList) malloc(sizeof(LNode));
-        s->data = x;
-        s->next = L;
-        L = s;
-        scanf("%d",&x);
+    LinkList headNode, currentNode;
+    //声明头节点和当前节点
+    ElemType data, flag = 0;
+    //声明数据和结束标志
+    printf("请输入数据，以 %d 结束:", flag);
+    //提示用户输入数据
+    scanf("%d", &data);
+    //读取用户输入的数据
+    headNode = (LinkList) malloc(sizeof(LNode));
+    //创建头节点
+    headNode->next = NULL;
+    //将头节点的指针域设为 NULL
+    while (data != flag) {
+        //循环读取用户输入的数据，直到遇到结束标志
+        currentNode = (LinkList) malloc(sizeof(LNode));
+        //创建当前节点
+        currentNode->data = data;
+        //将当前节点的数据域设为用户输入的数据
+        currentNode->next = headNode->next;
+        //将当前节点的指针域指向头节点的下一个节点
+        headNode->next = currentNode;
+        //将头节点的指针域指向当前节点
+        scanf("%d", &data);
+        //读取用户输入的数据
     }
-    s = (LinkList) malloc(sizeof(LNode));
-    s->next = L;
-    L = s;
-    return L;
+    currentNode = (LinkList) malloc(sizeof(LNode));
+    //创建一个新的节点
+    currentNode->next = headNode->next;
+    //将新节点的指针域指向头节点的下一个节点
+    headNode->next = currentNode;
+    //将头节点的指针域指向新节点
+    return headNode;
+    //返回头节点
 };
 
 void DispList(LinkList L){

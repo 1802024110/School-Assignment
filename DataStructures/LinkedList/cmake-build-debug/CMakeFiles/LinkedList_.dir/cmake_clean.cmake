@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/LinkedList_.dir/List.c.obj"
   "CMakeFiles/LinkedList_.dir/List.c.obj.d"
+  "CMakeFiles/LinkedList_.dir/f.c.obj"
+  "CMakeFiles/LinkedList_.dir/f.c.obj.d"
   "CMakeFiles/LinkedList_.dir/main.c.obj"
   "CMakeFiles/LinkedList_.dir/main.c.obj.d"
   "LinkedList_.exe"

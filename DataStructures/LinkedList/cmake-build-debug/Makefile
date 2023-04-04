@@ -152,6 +152,30 @@ List.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\LinkedList_.dir\build.make CMakeFiles/LinkedList_.dir/List.c.s
 .PHONY : List.c.s
 
+f.obj: f.c.obj
+.PHONY : f.obj
+
+# target to build an object file
+f.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LinkedList_.dir\build.make CMakeFiles/LinkedList_.dir/f.c.obj
+.PHONY : f.c.obj
+
+f.i: f.c.i
+.PHONY : f.i
+
+# target to preprocess a source file
+f.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LinkedList_.dir\build.make CMakeFiles/LinkedList_.dir/f.c.i
+.PHONY : f.c.i
+
+f.s: f.c.s
+.PHONY : f.s
+
+# target to generate assembly for a file
+f.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LinkedList_.dir\build.make CMakeFiles/LinkedList_.dir/f.c.s
+.PHONY : f.c.s
+
 main.obj: main.c.obj
 .PHONY : main.obj
 
@@ -188,6 +212,9 @@ help:
 	@echo ... List.obj
 	@echo ... List.i
 	@echo ... List.s
+	@echo ... f.obj
+	@echo ... f.i
+	@echo ... f.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
