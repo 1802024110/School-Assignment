@@ -39,12 +39,12 @@ LinkList Create_Head(){
         scanf("%d", &data);
         //读取用户输入的数据
     }
-    currentNode = (LinkList) malloc(sizeof(LNode));
-    //创建一个新的节点
-    currentNode->next = headNode->next;
-    //将新节点的指针域指向头节点的下一个节点
-    headNode->next = currentNode;
-    //将头节点的指针域指向新节点
+//    currentNode = (LinkList) malloc(sizeof(LNode));
+//    //创建一个新的节点
+//    currentNode->next = headNode->next;
+//    //将新节点的指针域指向头节点的下一个节点
+//    headNode->next = NULL;
+//    //将头节点的指针域指向新节点
     return headNode;
     //返回头节点
 };
@@ -61,3 +61,29 @@ void DispList(LinkList L){
         p = p->next;
     }
 };
+
+LNode *GetElem(LinkList L,int i){
+    if(L == NULL || i<1){
+        printf("参数错误!\n");
+    } else{
+        LNode *p = L;
+        int j = 0;
+        while(p != NULL&& j < i){
+            p = p->next;
+            j++;
+        }
+        return p;
+    }
+}
+
+LNode *LocateElem(LinkList L,ElemType e){
+    if(L == NULL || e==NULL){
+        printf("参数错误!\n");
+    } else{
+        LNode *p = L->next;
+        while (p!= NULL && p->data!=e){
+            p = p->next;
+        }
+        return p;
+    }
+}
