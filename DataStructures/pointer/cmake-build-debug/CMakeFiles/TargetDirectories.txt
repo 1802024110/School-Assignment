@@ -1,3 +1,0 @@
-C:/Users/18020/OneDrive - nodream/Desktop/Project/DataStructures/pointer/cmake-build-debug/CMakeFiles/pointer.dir
-C:/Users/18020/OneDrive - nodream/Desktop/Project/DataStructures/pointer/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/18020/OneDrive - nodream/Desktop/Project/DataStructures/pointer/cmake-build-debug/CMakeFiles/rebuild_cache.dir
