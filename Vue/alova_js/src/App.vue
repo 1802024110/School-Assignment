@@ -24,11 +24,14 @@
 
       // 直接将Method对象传入即可发送请求
   } = useRequest(todoHitokotoGetter)
-  onSuccess((event,method) =>{
-      data.value.json().then((data)=>{
-          console.log(data)
-      })
-  })
+  console.log(data);
+
+  // onSuccess((event,method) =>{
+  //     console.log(data);
+  //     data.value.json().then((data)=>{
+  //         console.log(data)
+  //     })
+  // })
 </script>
 
 <template>
@@ -40,7 +43,12 @@
         {{ error.message }}
     </div>
     <template v-else>
-            <div class="todo-title">{{ data }}</div>
+        <div
+            v-for="item in data"
+            :key="item"
+        >
+            {{ item }}
+        </div>
     </template>
 </template>
 
