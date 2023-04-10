@@ -1,55 +1,27 @@
 <script setup>
-  import {todoHitokotoGetter} from "@/alova/apis";
-  import {useRequest} from "alova";
+import Send_Auto from "@/components/Send_Auto.vue";
+import Send_Manually from "@/components/Send_Manually.vue";
+import {shallowRef} from "vue";
 
-  const {
-      // loading是加载状态值，当加载时它的值为true，结束后自动更新为false
-      // 它是一个Ref类型的值，你可以通过loading.value访问它，或直接绑定到界面中
-      loading,
+const tabs = [
+    Send_Auto,
+    Send_Manually
+]
 
-      // 响应数据
-      data,
+let currentTab = shallowRef(Send_Auto)
 
-      // 请求错误对象，请求错误时有值，否则为undefined
-      error,
-
-      // 成功回调绑定
-      onSuccess,
-
-      // 失败回调绑定
-      onError,
-
-      // 完成回调绑定
-      onComplete,
-
-      // 直接将Method对象传入即可发送请求
-  } = useRequest(todoHitokotoGetter)
-  console.log(data);
-
-  // onSuccess((event,method) =>{
-  //     console.log(data);
-  //     data.value.json().then((data)=>{
-  //         console.log(data)
-  //     })
-  // })
 </script>
 
 <template>
-    <!-- 你可以直接使用 data 来渲染 todo 列表 -->
-    <div v-if="loading">Loading...</div>
-    <div
-        v-else-if="error"
-        class="error">
-        {{ error.message }}
-    </div>
-    <template v-else>
-        <div
-            v-for="item in data"
-            :key="item"
-        >
-            {{ item }}
-        </div>
-    </template>
+  <button
+          v-for="(tab,index) in tabs"
+          :key="index"
+          @click="currentTab = tab"
+  >
+      {{tab.__name}}
+  </button>
+    <br>
+  <component :is="currentTab"/>
 </template>
 
 <style scoped>
