@@ -76,6 +76,10 @@ public class MyAspect {
     <artifactId>spring-boot-starter-aop</artifactId>
 </dependency>
 ```
-
+# 参考文献
+1. HowToDolnJava: https://www.kancloud.cn/apachecn/howtodoinjava-zh/1952634
 # 哔哩哔哩视频
 【史上最完整的AOP底层原理】 https://www.bilibili.com/video/BV1SY41117zq/?share_source=copy_web&vd_source=f77963ff79cbf1a96a127bb3743d6734
+
+# 可能会遇到的坑
+1. 空指针异常: https://www.liaoxuefeng.com/wiki/1252599548343744/1339039378571298
