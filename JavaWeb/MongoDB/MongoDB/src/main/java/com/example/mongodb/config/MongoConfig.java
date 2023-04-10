@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class MongoConfig {
+
     @Bean
     public MongoClientSettings mongoSettings() {
         return MongoClientSettings.builder().
