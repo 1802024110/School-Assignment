@@ -31,20 +31,10 @@ AOP 提供了一种使用简单的可插拔配置在实际逻辑之前，之后�
 是与连接点匹配的谓词或`表达式`。
 
 # Maven 依赖
-因为在spring boot中已经管理了这三个依赖，所以不需要写版本号
+因为在spring boot中已经管理了这个依赖，所以不需要写版本号
 ```pom.xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-aop</artifactId>
-</dependency>
-
-<dependency>
-    <groupId>org.aspectj</groupId>
-    <artifactId>aspectjrt</artifactId>
-</dependency>
-
-<dependency>
-    <groupId>org.aspectj</groupId>
-    <artifactId>aspectjweaver</artifactId>
 </dependency>
 ```

@@ -1,0 +1,20 @@
+# ninja log v5
+8	119	7023184402325576	CMakeFiles/LinkedList_.dir/List.c.obj	b7d39368eccbf13e
+0	663	7023184407766699	CMakeFiles/LinkedList_.dir/main.c.obj	35a24fbea67b0450
+665	935	7023184410452713	LinkedList_.exe	9f9fc87bff0a96ea
+2	88	7023189203375445	CMakeFiles/LinkedList_.dir/List.c.obj	b7d39368eccbf13e
+90	190	7023189204351986	LinkedList_.exe	9f9fc87bff0a96ea
+3	92	7023190260238168	CMakeFiles/LinkedList_.dir/List.c.obj	b7d39368eccbf13e
+93	186	7023190261154787	LinkedList_.exe	9f9fc87bff0a96ea
+2	100	7023199744904708	CMakeFiles/LinkedList_.dir/List.c.obj	b7d39368eccbf13e
+8	670	7023199750595300	CMakeFiles/LinkedList_.dir/main.c.obj	35a24fbea67b0450
+671	767	7023199751516139	LinkedList_.exe	9f9fc87bff0a96ea
+2	696	7023638368361423	CMakeFiles/LinkedList_.dir/main.c.obj	35a24fbea67b0450
+697	1069	7023638372057103	LinkedList_.exe	9f9fc87bff0a96ea
+2	651	7023640229985931	CMakeFiles/LinkedList_.dir/main.c.obj	35a24fbea67b0450
+652	745	7023640230896762	LinkedList_.exe	9f9fc87bff0a96ea
+2	464	7023645252159455	CMakeFiles/LinkedList_.dir/List.c.obj	b7d39368eccbf13e
+9	1015	7023645257657335	CMakeFiles/LinkedList_.dir/main.c.obj	35a24fbea67b0450
+1015	1174	7023645259234587	LinkedList_.exe	9f9fc87bff0a96ea
+2	667	7023645601581357	CMakeFiles/LinkedList_.dir/main.c.obj	35a24fbea67b0450
+668	766	7023645602502197	LinkedList_.exe	9f9fc87bff0a96ea

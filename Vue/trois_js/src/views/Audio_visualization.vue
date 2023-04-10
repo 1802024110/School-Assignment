@@ -3,9 +3,8 @@
   <Renderer ref="renderer" :antialias="true" :orbit-ctrl="true" :resize="true">
     <Camera ref="camera" :position="{z:650,y:200}"/>
     <Scene ref="scene" :background="0xffcc66">
-      <PointLight :position="{x:0,y:300,z:40}" color="#ffffff"/>
-      <PointLight :position="{x:0,y:0,z:800}" color="#ffffff"/>
-      <PointLight :position="{x:0,y:0,z:-800}" color="#ffffff"/>
+      <HemisphereLight color="#B1E1FF" :intensity="0.7"/>
+      <DirectionalLight  color="#FFFFFF" :intensity="0.8" :position="{x:5,y:10,z:2}"/>
       <Group ref="cubes"  :position="{x:-(10+10.2*CUBE_NUM )}">
         <Box v-for="i in CUBE_NUM" :key="i" :position="{x:(10+10)*i}" :scale="{x: 10, y: 1, z: 10}">
           <PhongMaterial color="#9acd32"/>
@@ -34,7 +33,7 @@ const scene = ref(null)
 function getData() {
   source = audioCtx.createBufferSource()
 
-  return fetch('src/assets/music/一路生花.mp3').then((res) => {
+  return fetch('src/assets/music/乌梅子酱.mp3').then((res) => {
     if (!res.ok) {
       throw new Error("解析音乐错误，错误代码：" + res.status)
     }
