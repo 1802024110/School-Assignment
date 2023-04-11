@@ -13,8 +13,9 @@ int main() {
     system("cls"); //清屏
 
     LinkList H = Create_Head();
-    DispList(H);
-    insertBeforeByVal(H,'b','d');
+//    DispList(H);
+//    insertBeforeByVal(H,'b','d');
+    insertAfterByVal(H,'b','d');
     DispList(H);
     return 0;
 }

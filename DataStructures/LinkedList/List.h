@@ -42,6 +42,31 @@ LinkList LocateElem(LinkList L,ElemType e);
  * */
 void insertBeforeByVal(LinkList L,ElemType x,ElemType y);
 
+/**
+ * 在链表L中插入节点，在x前插入y
+ * @Param LinkList L 需要被修改的链
+ * @Param ElemType x 需要在链表什么值前面插入
+ * @Param ElemType y 需要插入的值
+ * */
+void insertAfterByVal(LinkList L,ElemType x,ElemType y);
+
+/**
+ * 在链表L中第pos个位置插入元素y
+ * */
+void insertById(LinkList L,int pos ,ElemType y);
+
+/**
+ * 删除指定值的节点
+ * @Param LinkList L 需要被操作的链表
+ * @Param ElemType x 需要被删除节点的值
+ * */
+void deleteByVal(LinkList L,ElemType x);
+/**
+ * 删除指定位置的节点
+ * @Param LinkList L 需要被操作的链表
+ * @Param int pos 需要被删除节点的索引
+ * */
+void deleteByPos(LinkList L,int pos);
 
 // 单向非循环链表
 // 单向循环链表

@@ -102,3 +102,43 @@ void insertBeforeByVal(LinkList L,ElemType x,ElemType y){
         p->next=s;
     }
 }
+
+void insertAfterByVal(LinkList L, ElemType x, ElemType y) {
+    // 从链表的第一个节点开始遍历
+    LinkList p = L->next;
+    while (p != NULL) {
+        // 如果找到了值为 x 的节点
+        if (p->data == x) {
+            // 创建一个新节点并插入到链表中
+            LinkList q = (LinkList) malloc(sizeof(LNode));
+            // 设置新节点数据域的值
+            q->data = y;
+            // 将新节点的指针域指向原节点的后继节点
+            q->next = p->next;
+            // 将原节点的指针域指向新节点
+            p->next = q;
+            return;
+        }
+        // 更改指针，遍历链表
+        p = p->next;
+    }
+    // 如果没有找到值为 x 的节点，则输出提示信息
+    printf("链表中没有找到值为 %c 的节点！", x);
+}
+
+void deleteByVal(LinkList L, ElemType x) {
+    LinkList pre = L;  // 定义前驱节点
+    LinkList p = L->next;  // 定义当前节点
+    while (p != NULL) {  // 遍历链表
+        if (p->data == x) {  // 如果找到了值为 x 的节点
+            pre->next = p->next;  // 修改前驱节点的指向
+            free(p);  // 释放被删除节点的内存
+            return;
+        }
+        pre = p;  // 更新前驱节点
+        p = p->next;  // 更新当前节点
+    }
+    // 如果没有找到值为 x 的节点，则输出提示信息
+    printf("链表中没有找到值为 %c 的节点！", x);
+}
+void deleteByPos(LinkList L,int pos);
