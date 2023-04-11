@@ -4,7 +4,7 @@
 
 #ifndef LINKEDLIST_LIST_H
 #define LINKEDLIST_LIST_H
-typedef int ElemType;
+typedef char ElemType;
 typedef struct node LNode,*LinkList;
 /**
  * 创建带头节点的链表
@@ -21,27 +21,27 @@ void DispList(LinkList L);
 // 尾插入 尾指针
 /**
  * 按位查找元素
- * @Parem L 要查找的链表
- * @Parem i  要查找的元素的位置
+ * @Param L 要查找的链表
+ * @Param i  要查找的元素的位置
  * @Return 被查找元素的指针
  * */
-LNode *GetElem(LinkList L,int i);
+LinkList GetElem(LinkList L,int i);
 
 /**
  * 按值查找元素
- *  @Parem L 要查找的链表
- *  @Parem e 要查找的元素
- *  @Return 被查找元素的指针
+ *  @Param L 要查找的链表
+ *  @Param e 要查找的元素
+ *  @Return 被查找元素的指针,若没有找到返回NULL
  * */
-LNode *LocateElem(LinkList L,ElemType e);
+LinkList LocateElem(LinkList L,ElemType e);
+/**
+ * 在链表L中插入节点，在x后插入y
+ * @Param LinkList L 需要被修改的链
+ * @Param ElemType x 需要在链表什么值后面插入
+ * @Param ElemType y 需要插入的值
+ * */
+void insertBeforeByVal(LinkList L,ElemType x,ElemType y);
 
-/* 查找
-按位置查找第i个
-等于i
-按值查找
-返回指针
-找到，返回指向我到结点的指销
-没有找到，返回空指针*/
 
 // 单向非循环链表
 // 单向循环链表

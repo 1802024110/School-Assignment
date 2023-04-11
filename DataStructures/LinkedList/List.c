@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <malloc.h>
 
-typedef int ElemType;
+typedef char ElemType;
 typedef struct node{
     // 数据
     ElemType data;
@@ -16,11 +16,11 @@ typedef struct node{
 LinkList Create_Head(){
     LinkList headNode, currentNode;
     //声明头节点和当前节点
-    ElemType data, flag = 0;
+    ElemType data, flag = '0';
     //声明数据和结束标志
-    printf("请输入数据，以 %d 结束:", flag);
+    printf("请输入数据，以 %c 结束:", flag);
     //提示用户输入数据
-    scanf("%d", &data);
+    scanf("%c", &data);
     //读取用户输入的数据
     headNode = (LinkList) malloc(sizeof(LNode));
     //创建头节点
@@ -36,16 +36,16 @@ LinkList Create_Head(){
         //将当前节点的指针域指向头节点的下一个节点
         headNode->next = currentNode;
         //将头节点的指针域指向当前节点
-        scanf("%d", &data);
+        scanf("%c", &data);
         //读取用户输入的数据
     }
-//    currentNode = (LinkList) malloc(sizeof(LNode));
-//    //创建一个新的节点
-//    currentNode->next = headNode->next;
-//    //将新节点的指针域指向头节点的下一个节点
-//    headNode->next = NULL;
-//    //将头节点的指针域指向新节点
-    return headNode;
+    currentNode = (LinkList) malloc(sizeof(LNode));
+    //创建一个新的节点
+    currentNode->next = headNode->next;
+    //将新节点的指针域指向头节点的下一个节点
+    headNode->next = NULL;
+    //将头节点的指针域指向新节点
+    return currentNode;
     //返回头节点
 };
 
@@ -57,12 +57,12 @@ void DispList(LinkList L){
     LinkList p;
     p = L->next;
     while (p!=NULL){
-        printf("%d,",p->data);
+        printf("%c,",p->data);
         p = p->next;
     }
 };
 
-LNode *GetElem(LinkList L,int i){
+LinkList GetElem(LinkList L,int i){
     if(L == NULL || i<1){
         printf("参数错误!\n");
     } else{
@@ -76,7 +76,7 @@ LNode *GetElem(LinkList L,int i){
     }
 }
 
-LNode *LocateElem(LinkList L,ElemType e){
+LinkList LocateElem(LinkList L,ElemType e){
     if(L == NULL || e==NULL){
         printf("参数错误!\n");
     } else{
@@ -85,5 +85,20 @@ LNode *LocateElem(LinkList L,ElemType e){
             p = p->next;
         }
         return p;
+    }
+}
+
+void insertBeforeByVal(LinkList L,ElemType x,ElemType y){
+    // 找到x节点
+    LinkList  p,s;
+    p = LocateElem(L,x);
+    if(p==NULL){
+        printf("参数错误，p为NULL");
+    } else{
+        // 为新节点申请空间
+        s = (LinkList) malloc(sizeof(LNode));
+        s->data = y;
+        s->next = p->next;
+        p->next=s;
     }
 }
