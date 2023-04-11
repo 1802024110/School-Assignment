@@ -15,7 +15,9 @@ int main() {
     LinkList H = Create_Head();
 //    DispList(H);
 //    insertBeforeByVal(H,'b','d');
-    insertAfterByVal(H,'b','d');
+//    insertAfterByVal(H,'b','d');
+//    deleteByVal(H,'b');
+    deleteByPos(H,1);
     DispList(H);
     return 0;
 }

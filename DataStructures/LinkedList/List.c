@@ -141,4 +141,21 @@ void deleteByVal(LinkList L, ElemType x) {
     // 如果没有找到值为 x 的节点，则输出提示信息
     printf("链表中没有找到值为 %c 的节点！", x);
 }
-void deleteByPos(LinkList L,int pos);
+void deleteByPos(LinkList L, int pos) {
+    int index = 1;
+    LinkList pre = L;  // 定义前驱节点
+    LinkList p = L->next;  // 定义当前节点
+    while (1){
+        if(index == pos){
+            pre->next = p->next;  // 修改前驱节点的指向
+            free(p);  // 释放被删除节点的内存
+            return;
+        } else{
+            index += 1;
+        }
+        pre = p;  // 更新前驱节点
+        p = p->next;  // 更新当前节点
+    }
+    // 如果没有找到值为 x 的节点，则输出提示信息
+    printf("链表中没有找到pos为 %d 的节点！", pos);
+}
