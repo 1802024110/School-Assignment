@@ -46,7 +46,7 @@ PolyNode *Init() {
     for (n = 1; n <= m; n++) {
         // 用循环读入每一项的系数和指数
         p = (PolyNode *) malloc(sizeof(PolyNode));
-        // 创建一个新的节点,重新开辟空间，防止把正常的元素修改了
+        // 创建一个新的节点,重新开辟空间，防止读取的是以前的旧数据
         printf("请输入第 %d 项的系数和指数（用逗号分隔）：", n);
         // 提示用户输入第n项的系数和指数
         scanf("%d,%d", &p->coefficient, &p->exponent);
