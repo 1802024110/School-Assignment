@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "main.c.exe"
+			"path" : "fc.exe"
 		},
 		{
-			"path" : "main.c.pdb"
+			"path" : "fc.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -59,7 +59,7 @@
 			]
 		}
 	],
-	"id" : "main.c::@6890427a1f51a3e7e1df",
+	"id" : "fc::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -79,8 +79,8 @@
 		],
 		"language" : "C"
 	},
-	"name" : "main.c",
-	"nameOnDisk" : "main.c.exe",
+	"name" : "fc",
+	"nameOnDisk" : "fc.exe",
 	"paths" : 
 	{
 		"build" : ".",
@@ -94,13 +94,6 @@
 			[
 				0
 			]
-		},
-		{
-			"name" : "Header Files",
-			"sourceIndexes" : 
-			[
-				1
-			]
 		}
 	],
 	"sources" : 
@@ -108,13 +101,8 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "List.c",
+			"path" : "main.c",
 			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "List.h",
-			"sourceGroupIndex" : 1
 		}
 	],
 	"type" : "EXECUTABLE"
