@@ -15,8 +15,16 @@ typedef struct node {
  * 创建链表保存一元多项式
  * */
 PolyNode *Init() {
-    PolyNode *head, *end, *p, *p1, *p2;
-    // 定义链表头指针、尾指针和临时指针
+    PolyNode *head;
+    // 头指针
+    PolyNode *end;
+    // 尾指针
+    PolyNode *p;
+    // 临时指针
+    PolyNode *p1;
+    // 临时指针
+    PolyNode *p2;
+    // 临时指针
     int m, n;
     // 定义变量存储多项式的项数和循环计数器
     p = (PolyNode *) malloc(sizeof(PolyNode));
