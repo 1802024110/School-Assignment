@@ -1,4 +1,5 @@
-from enum import Enum,unique
+from enum import Enum, unique
+
 
 # 成员值唯一
 @unique
@@ -7,7 +8,4 @@ class Urls(Enum):
     """
     搜索链接
     """
-    GetSearchResult_URL = BASE_URL+ "/commonAjax/AjaxHandler/GetSearchResult"
-
-print(Urls.GetSearchResult_URL.value)
-    
+    GetSearchResult_URL = BASE_URL + "/commonAjax/AjaxHandler/GetSearchResult"
