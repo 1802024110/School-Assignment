@@ -1,6 +1,10 @@
+import io
 import logging
+import traceback
+
 import colorlog
 
+import inspect
 
 class LoggerHandler(logging.Logger):
     # 设置不同日志级别的颜色
@@ -34,10 +38,10 @@ class LoggerHandler(logging.Logger):
         stream_handler.setFormatter(formatter)
         self.addHandler(stream_handler)
 
-    def __getattr__(self, attr):
-        if attr in ['debug', 'info', 'warning', 'error', 'critical']:
-            def log(msg, *args, **kwargs):
-                return getattr(super(), attr)(msg, *args, **kwargs)
+    def error(self, msg, *args, filename=None, lineno=None, **kwargs):
+        print("Error调用了")
+        extra = {'filename': filename, 'lineno': lineno} if filename and lineno else None
+        super().error("12313", *args, extra=extra, **kwargs)
 
-            return log
-        raise AttributeError(f"{self.__class__.__name__} object has no attribute '{attr}'")
+# LoggerHandler().error("手动日志")
+# LoggerHandler().info("手动日志")
