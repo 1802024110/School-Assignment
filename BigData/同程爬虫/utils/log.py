@@ -10,7 +10,7 @@ class LoggerHandler(logging.Logger):
     colorlog.default_log_colors['ERROR'] = 'red'
     colorlog.default_log_colors['CRITICAL'] = 'bold_red'
 
-    def __init__(self, name='root', logger_level='DEBUG', file="../日志.log",
+    def __init__(self, name='root', logger_level='DEBUG', file="日志.log",
                  logger_format="[%(asctime)s] :%(log_color) s%("
                                "levelname)s %(filename)s [ "
                                "line:%(lineno)d ] %(message)s%("
@@ -41,10 +41,3 @@ class LoggerHandler(logging.Logger):
 
             return log
         raise AttributeError(f"{self.__class__.__name__} object has no attribute '{attr}'")
-
-
-LoggerHandler().debug('debug message')
-LoggerHandler().info('debug message')
-LoggerHandler().warning('debug message')
-LoggerHandler().error('debug message')
-LoggerHandler().critical('debug message')
