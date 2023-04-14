@@ -9,12 +9,9 @@ my_logger = MyLogger()
 
 
 def handle_exception(type, value, _traceback):
-    tb = traceback.extract_tb(_traceback)
-    filename, line, _, _ = tb[-1]
+    tb_formatted = traceback.format_tb(_traceback)
 
     if type == requests.exceptions.SSLError:
-        pass
-        my_logger.error(f"Error occurred in {filename} at line {line}: SSLError请检查网络")
+        my_logger.error(f"发生错误: {value}\n报错栈追踪信息:\n{''.join(tb_formatted)}\n请检查网络.")
     else:
-        pass
-        my_logger.error(f"Error occurred in {filename} at line {line}: {value}")
+        my_logger.error(f"发生错误: {value}\n报错追踪信息:\n{''.join(tb_formatted)}")
