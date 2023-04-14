@@ -1,7 +1,11 @@
+import inspect
+
 import requests
 import traceback
 
-from utils.log import LoggerHandler
+from utils.log import MyLogger
+
+my_logger = MyLogger()
 
 
 def handle_exception(type, value, _traceback):
@@ -10,8 +14,7 @@ def handle_exception(type, value, _traceback):
 
     if type == requests.exceptions.SSLError:
         pass
-        # LoggerHandler().error("错误类型:" + str(exc_type) + ",网络错误，具体错误消息:" + str(exc_value))
+        my_logger.error(f"Error occurred in {filename} at line {line}: SSLError请检查网络")
     else:
         pass
-        # LoggerHandler().error("ErrorType:" + str(type) + ",ErrorMeg:" + str(exc_value))
-LoggerHandler().error("dsfsd",filename="dfsd",lineno=12)
+        my_logger.error(f"Error occurred in {filename} at line {line}: {value}")
