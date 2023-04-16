@@ -117,7 +117,7 @@ void PrintList(PolyNode *head) {
         // 输出节点的系数和指数
         if (p->next) {
             // 如果还有下一个节点
-            printf("\n");
+            printf("+");
             // 换行
         }
         p = p->next;
