@@ -4,6 +4,7 @@ from functools import wraps
 # 创建一个全局的Session对象
 session = requests.Session()
 
+
 # 定义装饰器函数，接受一个被装饰的函数作为参数
 def my_request(func):
     """
@@ -15,6 +16,7 @@ def my_request(func):
     Returns:
         被装饰的函数的返回值
     """
+
     # 使用functools.wraps装饰器，保留原函数的元信息
     @wraps(func)
     def wrapper(*args, **kwargs):

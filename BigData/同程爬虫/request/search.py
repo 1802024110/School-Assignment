@@ -26,3 +26,5 @@ def get_search_json(session):
     }
     search_req = session.get(Urls.GetSearchResult_URL.value, params=data)
     return search_req.json()
+
+print(get_search_json())
