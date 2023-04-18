@@ -3,6 +3,11 @@ from typing import List, Dict, Any
 from decorators.param_check import search_code_check
 from request.search import get_search_json
 
+def add_https(url: str) -> str:
+    """传入url，返回带http的url"""
+    if url.startswith('//'):
+        url = 'https:' + url
+    return url
 
 @search_code_check
 def get_attractions_list(json: dict) -> list[dict[str | Any, Any]]:
@@ -18,8 +23,8 @@ def get_attractions_list(json: dict) -> list[dict[str | Any, Any]]:
             '标题': attraction['Title'],
             '副标题': attraction['SubTitle'],
             '描述': attraction['Describe'],
-            '图片链接': attraction['Picture'],
-            '产品链接': attraction['ProductUrl'],
+            '图片链接': add_https(attraction['ImgUrl']),
+            '产品链接': add_https(attraction['ProductUrl']),
             '等级': attraction['GradeId'],
             '开放时间': attraction['OpenTime'],
             '景区地址': attraction['Address'],
