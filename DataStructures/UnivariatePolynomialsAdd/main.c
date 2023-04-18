@@ -126,6 +126,48 @@ void PrintList(PolyNode *head) {
     printf("\n");
     // 输出一个换行符
 }
+/**
+ * 连个多项式链表相加，不反回新链表，直接将结果保存在第1个链表中
+ * */
+void AddNoReturn(PolyNode* head1, PolyNode* head2) {
+    PolyNode* p1 = head1->next;  // 第1个多项式指针
+    PolyNode* p2 = head2->next;  // 第2个多项式指针
+    PolyNode* p3 = head1;        // 缓冲指针，用于存储第一个多项式的当前节点的前一个节点
+
+    while (p1 && p2) {
+        if (p1->exponent == p2->exponent) {
+            // 如果两个多项式的指数相等，将两个多项式的系数相加
+            p1->coefficient = p1->coefficient + p2->coefficient;
+            if (p1->coefficient == 0) {
+                // 如果相加后的系数为0,将该节点从链表中删除
+                p3->next = p1->next;
+                free(p1);
+                p1 = p3->next;
+                p2 = p2->next;
+            } else {
+                // 如果相加后的系数不为0,继续遍历下一个节点
+                p3 = p1;
+                p1 = p1->next;
+                p2 = p2->next;
+            }
+        } else if (p2->exponent < p1->exponent) {
+            // 如果第2个多项式的指数小于第1个多项式的指数
+            p3->next = p2;
+            p2 = p2->next;
+            p3->next->next = p1;
+            p3 = p3->next;
+        } else {
+            // 如果第2个多项式的指数大于第1个多项式的指数，且小于p3的指数
+            p3 = p1;
+            p1 = p1->next;
+        }
+    }
+
+    // 特殊情况处理：如果还有未遍历完的多项式
+    if (p2) {
+        p3->next = p2;
+    }
+}
 
 int main() {
     SetConsoleOutputCP(65001);
@@ -133,9 +175,11 @@ int main() {
     system("cls");
     // 清屏
 
-    PolyNode *list = Init();
+    PolyNode *list1 = Init();
+    PolyNode *list2 = Init();
+    AddNoReturn(list1, list2);
     // 创建一个链表并初始化
-    PrintList(list);
+    PrintList(list1);
     // 打印链表
     return 0;
 }

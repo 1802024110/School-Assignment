@@ -1,3 +1,0 @@
-C:/Users/zy/OneDrive/桌面/Project/School-Assignment/DataStructures/UnivariatePolynomialsAdd/cmake-build-debug/CMakeFiles/fc.dir
-C:/Users/zy/OneDrive/桌面/Project/School-Assignment/DataStructures/UnivariatePolynomialsAdd/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/zy/OneDrive/桌面/Project/School-Assignment/DataStructures/UnivariatePolynomialsAdd/cmake-build-debug/CMakeFiles/rebuild_cache.dir
