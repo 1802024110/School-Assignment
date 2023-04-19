@@ -3,6 +3,7 @@ from functools import wraps
 
 from bs4 import BeautifulSoup
 
+
 class MySession(requests.Session):
     def get(self, url, **kwargs):
         try:

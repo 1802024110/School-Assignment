@@ -11,3 +11,9 @@ class Urls(Enum):
 
     GetSearchResult_URL = BASE_URL + "/commonAjax/AjaxHandler/GetSearchResult"
     """搜索链接 """
+
+    SceneryPriceFrame_URL = BASE_URL + "/scenery/AjaxHelper/SceneryPriceFrame.aspx?"
+    """景点价格链接 """
+
+    SceneryDianPing_URL = BASE_URL + "/scenery/AjaxHelper/DianPingAjax.aspx?"
+    """景点点评链接 """
