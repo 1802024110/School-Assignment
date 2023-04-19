@@ -13,6 +13,8 @@ typedef struct node {
 
 /**
  * 创建链表保存一元多项式
+ * @Param void
+ * @Return PolyNode* 返回链表的头指针
  * */
 PolyNode *Init() {
     PolyNode *head;
@@ -105,8 +107,9 @@ PolyNode *Init() {
 }
 
 /**
-
-打印链表
+ * 打印链表
+ * @Param PolyNode* head 链表的头指针
+ * @Return void
 */
 void PrintList(PolyNode *head) {
     PolyNode *p = head->next;
@@ -126,13 +129,17 @@ void PrintList(PolyNode *head) {
     printf("\n");
     // 输出一个换行符
 }
+
 /**
  * 连个多项式链表相加，不反回新链表，直接将结果保存在第1个链表中
+ * @Param PolyNode* head1 第1个多项式链表的头指针
+ * @Param PolyNode* head2 第2个多项式链表的头指针
+ * @Return void
  * */
-void AddNoReturn(PolyNode* head1, PolyNode* head2) {
-    PolyNode* p1 = head1->next;  // 第1个多项式指针
-    PolyNode* p2 = head2->next;  // 第2个多项式指针
-    PolyNode* p3 = head1;        // 缓冲指针，用于存储第一个多项式的当前节点的前一个节点
+void Add(PolyNode *head1, PolyNode *head2) {
+    PolyNode *p1 = head1->next;  // 第1个多项式指针
+    PolyNode *p2 = head2->next;  // 第2个多项式指针
+    PolyNode *p3 = head1;        // 缓冲指针，用于存储第一个多项式的当前节点的前一个节点
 
     while (p1 && p2) {
         if (p1->exponent == p2->exponent) {
@@ -177,7 +184,7 @@ int main() {
 
     PolyNode *list1 = Init();
     PolyNode *list2 = Init();
-    AddNoReturn(list1, list2);
+    Add(list1, list2);
     // 创建一个链表并初始化
     PrintList(list1);
     // 打印链表

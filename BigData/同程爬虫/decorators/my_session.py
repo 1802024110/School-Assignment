@@ -1,8 +1,19 @@
 import requests
 from functools import wraps
 
-# 创建一个全局的Session对象
-session = requests.Session()
+from bs4 import BeautifulSoup
+
+class MySession(requests.Session):
+    def get(self, url, **kwargs):
+        try:
+            response = super().get(url, **kwargs)
+            response.soup = BeautifulSoup(response.text, 'lxml')
+            return response
+        except Exception as e:
+            return super().get(url, **kwargs)
+
+
+session = MySession()
 
 
 # 定义装饰器函数，接受一个被装饰的函数作为参数

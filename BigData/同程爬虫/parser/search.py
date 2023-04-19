@@ -1,18 +1,17 @@
-from typing import List, Dict, Any
-
 from decorators.param_check import search_code_check
-from request.search import get_search_json
 
-def add_https(url: str) -> str:
+
+def add_https(url):
     """传入url，返回带http的url"""
     if url.startswith('//'):
         url = 'https:' + url
     return url
 
+
 @search_code_check
-def get_attractions_list(json: dict) -> list[dict[str | Any, Any]]:
+def get_attractions_list(json: dict):
     """传入搜索的json，返回简化的数据"""
-    count = json['ReturnValue']['Total']
+    total = json['ReturnValue']['Total']
     # 搜索结果的总数
     attractions_list = json['ReturnValue']['Records']
     # 搜索结果的列表
@@ -23,7 +22,7 @@ def get_attractions_list(json: dict) -> list[dict[str | Any, Any]]:
             '标题': attraction['Title'],
             '副标题': attraction['SubTitle'],
             '描述': attraction['Describe'],
-            '图片链接': add_https(attraction['ImgUrl']),
+            '图片链接': add_https(attraction['Picture']),
             '产品链接': add_https(attraction['ProductUrl']),
             '等级': attraction['GradeId'],
             '开放时间': attraction['OpenTime'],
@@ -57,8 +56,6 @@ def get_attractions_list(json: dict) -> list[dict[str | Any, Any]]:
             '积分内容': attraction['IntegralContent']
         }
         new_attractions_list.append(new_attraction)
+    # 将total添加到列表中
+    new_attractions_list.append({'total': total})
     return new_attractions_list
-
-
-a = get_attractions_list(get_search_json())
-print(a)
