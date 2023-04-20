@@ -73,7 +73,7 @@ def get_scenery_dian_ping(session, id, page=1, page_size=10, lab_id=1):
 
 @my_request
 def get_scenery_traffic(session, id):
-    """传入景点id，返回景点交通"""
+    """传入景点id，返回景点交通信息"""
     index_url = Urls.BASE_URL.value + f'/scenery/BookSceneryTicket_{id}.html'
     request = session.get(index_url)
     soup = request.soup
