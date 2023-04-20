@@ -78,9 +78,11 @@ def get_scenery_traffic(session, id):
     request = session.get(index_url)
     soup = request.soup
     traffic_box = soup.select('#traffic_route_con > div.b_i_m.clearfix > div.tra_line > ul')[0]
-    print(traffic_box.select('li')[1])
     traffic = {
-        '公共交通': traffic_box
+        '公共交通': traffic_box.select('li')[0].text.replace(' ', '').replace('\n', ''),
+        '周边停车场': traffic_box.select('li')[1].text.replace(' ', '').replace('\n', '').replace('\xa0', ''),
     }
+    print(traffic)
+
 
 print(get_scenery_traffic(1239))
