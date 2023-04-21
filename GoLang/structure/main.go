@@ -30,4 +30,8 @@ func main() {
 	Book2.subject = "Python Programming Tutorial"
 	Book2.bookId = 6495407
 	printBook(Book2)
+
+	// 结构体指针
+	var structPointer *Books = &Book1
+	println(structPointer.title)
 }
