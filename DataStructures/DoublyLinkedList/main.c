@@ -83,6 +83,12 @@ void DisplayReverse(PNODE head){
         p = p->prev;
     }
 }
+
+/** 插入节点
+ * @param head 头节点
+ * @param pos 插入位置
+ * @param val 插入值
+ * */
 void insertById(PNODE head,int pos,ElementType val){
     PNODE p = head;
     int i = 0;
@@ -103,6 +109,11 @@ void insertById(PNODE head,int pos,ElementType val){
     p->next = q;
     q->prev = p;
 }
+/** 删除节点
+ * @param head 头节点
+ * @param pos 删除位置
+ * @param e 删除值
+ * */
 void deleteById(PNODE head,int pos,ElementType *e){
     PNODE p = head;
     int i = 0;
@@ -122,6 +133,7 @@ void deleteById(PNODE head,int pos,ElementType *e){
     *e = q->data;
     free(q);
 }
+
 int main() {
     ElementType a[] = {1,2,3,4,5};
 //    PNODE head = createList(a,5);
