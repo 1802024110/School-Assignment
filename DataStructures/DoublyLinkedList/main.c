@@ -139,6 +139,9 @@ int main() {
 //    PNODE head = createList(a,5);
 //    Display(head);
     PNODE head = createListInEnd(a,5);
-    DisplayReverse(head);
+    insertById(head,2,10);
+    Display(head);
+    deleteById(head,2,&a[0]);
+    Display(head);
     return 0;
 }
