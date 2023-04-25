@@ -2,8 +2,6 @@
 # //www.ly.com/scenery/BookSceneryTicket_1239.html
 import random
 
-from bs4 import BeautifulSoup
-
 from decorators.my_session import my_request
 from utils.Urls import Urls
 
@@ -82,7 +80,4 @@ def get_scenery_traffic(session, id):
         '公共交通': traffic_box.select('li')[0].text.replace(' ', '').replace('\n', ''),
         '周边停车场': traffic_box.select('li')[1].text.replace(' ', '').replace('\n', '').replace('\xa0', ''),
     }
-    print(traffic)
-
-
-print(get_scenery_traffic(1239))
+    return traffic
