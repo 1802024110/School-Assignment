@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "main.exe"
+			"path" : "circularLinkedList.exe"
 		},
 		{
-			"path" : "main.pdb"
+			"path" : "circularLinkedList.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -55,12 +55,11 @@
 			},
 			"sourceIndexes" : 
 			[
-				0,
-				1
+				0
 			]
 		}
 	],
-	"id" : "main::@6890427a1f51a3e7e1df",
+	"id" : "circularLinkedList::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -80,8 +79,8 @@
 		],
 		"language" : "C"
 	},
-	"name" : "main",
-	"nameOnDisk" : "main.exe",
+	"name" : "circularLinkedList",
+	"nameOnDisk" : "circularLinkedList.exe",
 	"paths" : 
 	{
 		"build" : ".",
@@ -93,15 +92,7 @@
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				0,
-				1
-			]
-		},
-		{
-			"name" : "Header Files",
-			"sourceIndexes" : 
-			[
-				2
+				0
 			]
 		}
 	],
@@ -112,17 +103,6 @@
 			"compileGroupIndex" : 0,
 			"path" : "main.c",
 			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "List.c",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"path" : "List.h",
-			"sourceGroupIndex" : 1
 		}
 	],
 	"type" : "EXECUTABLE"
