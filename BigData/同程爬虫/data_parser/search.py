@@ -21,6 +21,7 @@ def get_attractions_list(json: dict):
         new_attraction = {
             '标题': attraction['Title'],
             '副标题': attraction['SubTitle'],
+            '景点ID': attraction['ProductId'],
             '描述': attraction['Describe'],
             '图片链接': add_https(attraction['Picture']),
             '产品链接': add_https(attraction['ProductUrl']),
@@ -37,7 +38,6 @@ def get_attractions_list(json: dict):
             '是否为同城线路': attraction['TCLine'],
             '标签列表': attraction['Labels'],
             '季节': attraction['Season'],
-            '产品ID': attraction['ProductId'],
             '价格': attraction['Price'],
             '城市ID': attraction['CityId'],
             '城市名称': attraction['CityName'],
@@ -59,3 +59,4 @@ def get_attractions_list(json: dict):
     # 将total添加到列表中
     new_attractions_list.append({'total': total})
     return new_attractions_list
+
