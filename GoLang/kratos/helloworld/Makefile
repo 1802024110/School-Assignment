@@ -63,6 +63,11 @@ all:
 	make config;
 	make generate;
 
+.PHONY: wire
+# wire
+wire:
+	cd cmd/kratos-realworld && wire
+
 # show help
 help:
 	@echo ''

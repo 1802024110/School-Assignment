@@ -8,30 +8,9 @@ option go_package = "kratos-realworld/api/realworld/v1;v1";
 
 // The greeting service definition.
 service RealWorld {
-  // Sends a greeting
-  rpc SayHello (HelloRequest) returns (HelloReply) {
-    option (google.api.http) = {
-      get: "/realworld/{name}"
-    };
-  }
 
-  rpc MyRpc (NullRequest) returns (NullReply) {
-    option (google.api.http) = {
-      get: "/realworld/myrpc"
-    };
-  }
 }
 
 message NullRequest {}
 
 message NullReply {}
-
-// The request message containing the user's name.
-message HelloRequest {
-  string name = 1;
-}
-
-// The response message containing the greetings
-message HelloReply {
-  string message = 1;
-}
