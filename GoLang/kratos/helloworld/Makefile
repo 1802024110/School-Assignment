@@ -69,6 +69,11 @@ all:
 wire:
 	cd cmd/kratos-realworld && wire
 
+.PHONY: run
+# run
+run:
+	clear && kratos run
+
 # show help
 help:
 	@echo ''
