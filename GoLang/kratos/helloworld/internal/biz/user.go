@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"github.com/go-kratos/kratos/v2/errors"
 	"github.com/go-kratos/kratos/v2/log"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -78,6 +79,19 @@ type UserLogin struct {
 	Password string
 }
 
-func (uc *UserUsecase) Login(ctx context.Context, email string, password string) (*User, error) {
-	return nil, nil
+func (uc *UserUsecase) Login(ctx context.Context, email string, password string) (*UserLogin, error) {
+	u, err := uc.ur.GetUserByEmail(ctx, email)
+	if err != nil {
+		return nil, err
+	}
+	if !verifyPassword(u.PasswordHash, password) {
+		return nil, errors.Unauthorized("user", "login failed")
+	}
+	return &UserLogin{
+		Username: u.Username,
+		Email:    u.Email,
+		Token:    "123456",
+		Bio:      u.Bio,
+		Image:    u.Image,
+	}, nil
 }
