@@ -12,11 +12,11 @@ import (
 )
 
 // NewHTTPServer new an HTTP server.
-func NewHTTPServer(c *conf.Server, realWorld *service.RealWorldService, logger log.Logger) *http.Server {
+func NewHTTPServer(c *conf.Server, jwtc *conf.JWT, realWorld *service.RealWorldService, logger log.Logger) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
-			auth.JWTAuth(),
+			auth.JWTAuth("123486"),
 		),
 	}
 	if c.Http.Network != "" {
