@@ -92,19 +92,34 @@ void Show(SqStack *s){
     printf("\n");
 }
 
-void Convert(int x){
-    // 短除法
-    // 每一次产生了余数都进栈
-    // 商为0以后, 依次出栈
+// 将十进制数n转换为base进制数
+void Convert(SqStack *s, int n, int base) {
+    int r;
+    while (n != 0) {
+        r = n % base; // 求余数
+        Push(s, r); // 将余数入栈
+        n = n / base; // 更新n的值
+    }
 }
 
+// 读取输入的十进制数和要转换的进制
+void Input(int *n, int *base) {
+    printf("请输入一个十进制数n：");
+    scanf("%d", n);
+    printf("请输入要转换的进制(base)：");
+    scanf("%d", base);
+}
+
+// 输出转换后的进制数
+void Output(SqStack *s, int n, int base) {
+    printf("%d转换为%d进制的结果为：", n, base);
+    while (!Empty_SeqStack(s)) { // 将栈中元素出栈并打印
+        printf("%d", Pop(s));
+    }
+    printf("\n");
+}
+
+
 int main() {
-    SqStack *s = Init();
-    // 初始化栈
-    Push(s, 'a');
-    Push(s, 'b');
-    Push(s, 'c');
-    Push(s, 'd');
-    Show(s);
     return 0;
 }
