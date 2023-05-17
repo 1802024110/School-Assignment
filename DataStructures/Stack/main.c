@@ -44,33 +44,67 @@ int Push(SqStack *s, ElemType e){
     return 1;
 }
 
-/** 出栈
+/** 判断栈是否为空
  * @Param s 栈
- * @Param e 出栈元素
- * @Return 1 成功 0 失败
+ * @Return 1 空 0 非空
  * */
-int Pop(SqStack *s, ElemType *e){
+int Empty_SeqStack(SqStack *s){
     if (s->top == -1){
         // 判断栈是否为空
-        printf("栈空");
-        return 0;
+        return 1;
     }
-    *e = s->data[s->top];
+    return 0;
+}
+
+/** 出栈
+ * @Param s 栈
+ * @Return ElemType 出栈元素
+ * */
+
+ElemType Pop(SqStack *s){
+    if (Empty_SeqStack(s)){
+        // 判断栈是否为空
+        printf("栈空");
+        exit(0);
+    }
+    ElemType e;
+    e = s->data[s->top];
     // 取出栈顶元素
     s->top--;
     // 栈顶指针减 1
-    return 1;
+    return e;
+}
+
+/** 输出栈中元素
+ * @Param s 栈
+ * @Return void
+ * */
+void Show(SqStack *s){
+    if (Empty_SeqStack(s)){
+        // 判断栈是否为空
+        printf("栈空");
+        return;
+    }
+    for (int i = 0; i <= s->top; i++){
+        // 遍历栈中元素, 从栈底到栈顶
+        printf("%c ", s->data[i]);
+    }
+    printf("\n");
+}
+
+void Convert(int x){
+    // 短除法
+    // 每一次产生了余数都进栈
+    // 商为0以后, 依次出栈
 }
 
 int main() {
     SqStack *s = Init();
     // 初始化栈
     Push(s, 'a');
-    // 元素 'a' 入栈
-    char b;
-    Pop(s, &b);
-    // 出栈操作，将出栈元素赋值给变量 b
-    printf("b 是 %c", b);
-    // 输出变量 b 的值
+    Push(s, 'b');
+    Push(s, 'c');
+    Push(s, 'd');
+    Show(s);
     return 0;
 }
