@@ -66,6 +66,20 @@ async function drawSquare(canvas){
 
     // 添加dat.gui
     const gui = new dat.GUI();
+    const geometryInfo = {
+        x: 0,
+        y: 0,
+        z: 0,
+    }
+    gui.add(geometryInfo,"x",-100,100).step(0.1).onChange((value)=>{
+        obj.x = value
+    })
+    gui.add(geometryInfo,"y",-100,100).step(0.1).onChange((value)=>{
+        obj.y = value
+    })
+    gui.add(geometryInfo,"z",-100,100).step(0.1).onChange((value)=>{
+        obj.z = value
+    })
 
     // 渲染场景
     const view = new View3D();
