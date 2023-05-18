@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@orillusion/core": "^0.6.2",
+    "@orillusion/stats": "^0.2.0",
     "vue": "^3.2.47",
     "vue-router": "^4.2.0"
   },
