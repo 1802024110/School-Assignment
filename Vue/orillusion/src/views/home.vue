@@ -14,6 +14,7 @@ import {
 } from "@orillusion/core";
 import { onMounted, ref } from 'vue'
 import dat from "dat.gui/src/dat/index.js";
+import {Stats} from "@orillusion/stats";
 const canvas = ref(null)
 
 async function drawSquare(canvas){
@@ -62,7 +63,7 @@ async function drawSquare(canvas){
     scene3D.addChild(obj);
 
     // 添加性能监控
-    // scene3D.addComponent(Stats)
+    scene3D.addComponent(Stats)
 
     // 添加dat.gui
     const gui = new dat.GUI();
