@@ -15,6 +15,7 @@ import {
 import { onMounted, ref } from 'vue'
 import dat from "dat.gui/src/dat/index.js";
 import {Stats} from "@orillusion/stats";
+import {RotationScript} from './home-script.js'
 const canvas = ref(null)
 
 async function drawSquare(canvas){
@@ -58,6 +59,7 @@ async function drawSquare(canvas){
     // 创建集合物体，且添加材质渲染
     const obj = new Object3D();
     const mesh = obj.addComponent(MeshRenderer);
+    obj.addComponent(RotationScript)
     mesh.geometry = new BoxGeometry(5, 5, 5);
     mesh.material = new LitMaterial();
     scene3D.addChild(obj);
