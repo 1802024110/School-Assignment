@@ -119,6 +119,15 @@ void Output(SqStack *s, int n, int base) {
     printf("\n");
 }
 
+// 读取栈顶元素
+ElemType GetTop(SqStack*s){
+    if (Empty_SeqStack(s)){
+        // 判断栈是否为空
+        printf("栈空");
+        exit(0);
+    }
+    return s->data[s->top];
+}
 
 int main() {
     return 0;
