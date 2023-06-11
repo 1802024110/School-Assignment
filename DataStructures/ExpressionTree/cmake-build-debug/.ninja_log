@@ -1,0 +1,17 @@
+# ninja log v5
+0	152	7077381614522311	CMakeFiles/ExpressionTree.dir/main.c.obj	dd6d27618fca6f35
+154	385	7077381616681882	ExpressionTree.exe	6937b6b502cec041
+2	1616	7077382631365934	CMakeFiles/ExpressionTree.dir/main.c.obj	dd6d27618fca6f35
+1621	1872	7077382633844776	ExpressionTree.exe	6937b6b502cec041
+3	1067	7077386704915112	CMakeFiles/ExpressionTree.dir/main.c.obj	dd6d27618fca6f35
+1068	1221	7077386706383545	ExpressionTree.exe	6937b6b502cec041
+3	131	7077387215131200	CMakeFiles/ExpressionTree.dir/main.c.obj	dd6d27618fca6f35
+132	291	7077387216687033	ExpressionTree.exe	6937b6b502cec041
+4	1008	7077387790496410	CMakeFiles/ExpressionTree.dir/main.c.obj	dd6d27618fca6f35
+1010	1164	7077387792052253	ExpressionTree.exe	6937b6b502cec041
+3	1021	7077389625225672	CMakeFiles/ExpressionTree.dir/main.c.obj	dd6d27618fca6f35
+1022	1171	7077389626666624	ExpressionTree.exe	6937b6b502cec041
+2	1018	7077389858353120	CMakeFiles/ExpressionTree.dir/main.c.obj	dd6d27618fca6f35
+1019	1170	7077389859809119	ExpressionTree.exe	6937b6b502cec041
+3	1134	7077391903878991	CMakeFiles/ExpressionTree.dir/main.c.obj	dd6d27618fca6f35
+1135	1303	7077391905507462	ExpressionTree.exe	6937b6b502cec041

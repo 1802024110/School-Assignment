@@ -1,0 +1,3 @@
+C:/Users/18020/OneDrive - nodream/Desktop/Project/School-Assignment/DataStructures/HuffmanTree/cmake-build-debug/CMakeFiles/HuffmanTree.dir
+C:/Users/18020/OneDrive - nodream/Desktop/Project/School-Assignment/DataStructures/HuffmanTree/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/18020/OneDrive - nodream/Desktop/Project/School-Assignment/DataStructures/HuffmanTree/cmake-build-debug/CMakeFiles/rebuild_cache.dir
