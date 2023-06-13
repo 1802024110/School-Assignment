@@ -1,9 +1,12 @@
 from data_parser.search import get_attractions_list
 from request.scenery import get_scenery_dian_ping
 from request.search import get_search_json
+import os
 
+# 文件保存路径
+path = "../data/comment"
 
-class Search():
+class Search:
     def __init__(self):
         self.search_value = input("请输入要搜索的景点名称：")
         self.scenery_list = get_attractions_list(get_search_json(self.search_value))
@@ -11,6 +14,7 @@ class Search():
         self.page = 1
         self.choose_scenery_info = self.choose_search_result()
         self.scenery_id = self.choose_scenery_info['景点ID']
+        self.scenery_name = self.choose_scenery_info['标题']
 
     def choose_search_result(self):
         """
@@ -55,13 +59,17 @@ class Search():
     def get_search_total(self):
         return self.total
 
-    # 展示评论
-    def show_comment(self):
-        dian_ping = get_scenery_dian_ping(self.scenery_id)
+    # 获得评论
+    def get_comment(self, page=1, page_size=10, lab_id=1):
+        dian_ping = get_scenery_dian_ping(self.scenery_id, page, page_size, lab_id)
         isSuccess = dian_ping['isSuccess']
         if not isSuccess == 1:
             print("获取评论失败")
-            return
+            return []
+
+        # 评论列表
+        comments = {}
+
         page = dian_ping['pageInfo']['page']
         page_size = dian_ping['pageInfo']['pageSize']
         total_page = dian_ping['pageInfo']['totalPage']
@@ -71,12 +79,51 @@ class Search():
         middle_comment = dian_ping['midNum']
         bad_comment = dian_ping['badNum']
         dp_list = dian_ping['dpList']
-        print(f"共{total_count}条评论,当前第{page}页,共{total_page}页")
-        print(f"好评率：{degree_level}%")
-        print(f"好评：{good_comment}条，中评：{middle_comment}条，差评：{bad_comment}条")
-        print("评论内容：")
+
+        # 添加评论长度
+        comments['comment_count'] = total_count
+        # 添加评论页数
+        comments['page_size'] = page_size
+
+        # print(f"共{total_count}条评论,当前第{page}页,共{total_page}页")
+        # print(f"好评率：{degree_level}%")
+        # print(f"好评：{good_comment}条，中评：{middle_comment}条，差评：{bad_comment}条")
+        # print("评论内容：")
         for i in range(len(dp_list)):
-            dp_images =  dian_ping['dpImgUrl']
-            print(f"{i + 1}、{dp_list[i]['dpContent']} {not dp_images == [] if '有'+str(len(dp_images))+'张图片' else ''} - {dp_list[i]['dpTime']}")
-# print(Search().get_search_total())
-Search().show_comment()
+            # 单条评论的列表
+            comment = {}
+            dp_images = dp_list[i]['dpImgUrl']
+            # 添加评论图片{images:[]},这种格式
+            comment['images'] = dp_images
+            # 添加评论内容
+            comment['content'] = dp_list[i]['dpContent']
+            # 添加评论时间
+            comment['date'] = dp_list[i]['dpDate']
+            # 添加到评论列表
+            try:
+                comments['comments'].append(comment)
+            except:
+                comments['comments'] = [comment]
+        return comments
+
+    # 保存评论
+    def save_comment(self):
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        # 检查文件夹是否存在
+        comments = self.get_comment()
+        # 总页数
+        total_page = comments['page_size']
+        # 评论缓存buffer
+        comment_buffer = []
+        for i in range(total_page):
+            comments = self.get_comment(page=i + 1)
+            comments = comments['comments']
+
+            for comment in comments:
+                comment_buffer.append(comment)
+
+            # 保存评论
+        with open(f"../data/comment/{self.scenery_name}.json", 'w', encoding='utf-8') as f:
+            f.write(str(comment_buffer))
