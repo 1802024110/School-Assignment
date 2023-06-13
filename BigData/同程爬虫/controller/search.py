@@ -3,7 +3,7 @@ from request.scenery import get_scenery_dian_ping
 from request.search import get_search_json
 
 
-class Search():
+class Search:
     def __init__(self):
         self.search_value = input("请输入要搜索的景点名称：")
         self.scenery_list = get_attractions_list(get_search_json(self.search_value))
@@ -78,5 +78,6 @@ class Search():
         for i in range(len(dp_list)):
             dp_images =  dian_ping['dpImgUrl']
             print(f"{i + 1}、{dp_list[i]['dpContent']} {not dp_images == [] if '有'+str(len(dp_images))+'张图片' else ''} - {dp_list[i]['dpTime']}")
-# print(Search().get_search_total())
-Search().show_comment()
+
+        # 保存评论
+
