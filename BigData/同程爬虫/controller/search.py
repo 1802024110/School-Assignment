@@ -1,9 +1,10 @@
 from data_parser.search import get_attractions_list
 from request.scenery import get_scenery_dian_ping
 from request.search import get_search_json
+import os
 
 # 文件保存路径
-path = "../data/comment/"
+path = "../data/comment"
 
 class Search:
     def __init__(self):
@@ -13,6 +14,7 @@ class Search:
         self.page = 1
         self.choose_scenery_info = self.choose_search_result()
         self.scenery_id = self.choose_scenery_info['景点ID']
+        self.scenery_name = self.choose_scenery_info['标题']
 
     def choose_search_result(self):
         """
@@ -83,10 +85,10 @@ class Search:
         # 添加评论页数
         comments['page_size'] = page_size
 
-        print(f"共{total_count}条评论,当前第{page}页,共{total_page}页")
-        print(f"好评率：{degree_level}%")
-        print(f"好评：{good_comment}条，中评：{middle_comment}条，差评：{bad_comment}条")
-        print("评论内容：")
+        # print(f"共{total_count}条评论,当前第{page}页,共{total_page}页")
+        # print(f"好评率：{degree_level}%")
+        # print(f"好评：{good_comment}条，中评：{middle_comment}条，差评：{bad_comment}条")
+        # print("评论内容：")
         for i in range(len(dp_list)):
             # 单条评论的列表
             comment = {}
@@ -106,16 +108,22 @@ class Search:
 
     # 保存评论
     def save_comment(self):
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        # 检查文件夹是否存在
         comments = self.get_comment()
         # 总页数
         total_page = comments['page_size']
+        # 评论缓存buffer
+        comment_buffer = []
         for i in range(total_page):
             comments = self.get_comment(page=i + 1)
+            comments = comments['comments']
 
+            for comment in comments:
+                comment_buffer.append(comment)
 
             # 保存评论
-            with open(f"../data/comment/{self.scenery_id}.json", 'w', encoding='utf-8') as f:
-                f.write(str(comments))
-
-
-Search().save_comment()
+        with open(f"../data/comment/{self.scenery_name}.json", 'w', encoding='utf-8') as f:
+            f.write(str(comment_buffer))
