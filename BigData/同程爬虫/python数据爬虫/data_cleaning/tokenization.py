@@ -7,7 +7,7 @@ import nltk
 import jieba
 from collections import Counter
 
-file_path = '../data/comment/青城山.json'
+file_path = '../../data/comment/青城山.json'
 
 # 读取分析文本,返回一段字符串
 def read_file(file_path):
@@ -30,6 +30,9 @@ def read_file_to_list(file_path):
         # 转为列表
         text = eval(text)
     return text
+
+comments_list = read_file_to_list(file_path)
+comments_text = read_file(file_path)
 
 # 分词
 def tokenization(comments):
@@ -90,7 +93,7 @@ def get_word_counts(comments,count=100):
         })
     return json.dumps(result, ensure_ascii=False).encode('utf-8').decode('utf-8')
 
-comments = read_file_to_list(file_path)
+# print(get_word_counts(comments_text))
 
 # 获得评论最多的前三个月
 def get_top_three_month(comments):
@@ -99,9 +102,6 @@ def get_top_three_month(comments):
     for i in comments:
         comments_times.append(i['date'])
 
-    # TODO:统计评论时间，那几个月份的评论最多
-
-    # 统计评论时间，那几个月份的评论最多
     month_counts = {}
     for time_str in comments_times:
         # 将时间字符串转换为时间元组
@@ -121,55 +121,24 @@ def get_top_three_month(comments):
     json_str = json.dumps(top_months, ensure_ascii=False)
     return json_str
 
-# 统计每个月出现词语最多的前10个词语
-def get_top_ten_words(comments):
-    # 将评论按照时间顺序排列
-    comments_sorted = sorted(comments, key=lambda x: x['date'])
 
-    # 将时间窗口设置为每月
-    window_size = '30D'
+# print(get_top_three_month(comments_list))
 
-    # 统计每个时间窗口中出现频率最高的词语及其出现次数
-    word_counts = {}
-    for comment in comments_sorted:
-        # 将时间字符串转换为时间戳
-        timestamp = time.mktime(time.strptime(comment['date'], '%Y-%m-%d'))
-        # 使用 pandas 的 Timestamp 类来转换时间戳
-        ts = pd.Timestamp.fromtimestamp(timestamp)
-        # 获取时间窗口的字符串表示
-        window_str = ts.floor(window_size).strftime('%Y-%m-%d') + '-' + ts.ceil(window_size).strftime('%Y-%m-%d')
-        # 分词
-        words = tokenization(comment['content'])
-        # 去除停用词
-        new_words = remove_stopwords(words)
-        # 统计词频
-        word_counts_window = Counter(new_words)
-        # 取出出现频率最高的词语及其出现次数
-        if word_counts_window:
-            top_word, top_count = word_counts_window.most_common(1)[0]
-            # 将结果存储到字典中
-            if window_str in word_counts:
-                word_counts[window_str][top_word] = top_count
-            else:
-                word_counts[window_str] = {top_word: top_count}
+# 评论长度分析对评论的长度进行统计分析，了解游客对景区的评价和反馈是否充分和详细，以及游客评论的倾向和态度。
+def get_comment_length(comments):
+    # 获得评论长度列表
+    comments_length = []
+    for i in comments:
+        comments_length.append(len(i['content']))
 
-    # 将结果转换为 DataFrame 格式
-    df = pd.DataFrame(word_counts).transpose()
+    # 统计评论长度，统计各个长度的评论数量
+    length_counts = {}
+    for length in comments_length:
+        if length in length_counts:
+            length_counts[length] += 1
+        else:
+            length_counts[length] = 1
 
-    # 使用 resample 函数按照月份分组，并求出每组出现频率最高的前十个词语及其出现次数
-    df_resampled = df.resample(window_size).apply(lambda x: dict(x.most_common(10)))
+    return length_counts
 
-    # 将结果转换为 JSON 格式
-    result = []
-    for window_str, word_count in df_resampled.iterrows():
-        for word, count in word_count[0].items():
-            result.append({
-                'window': window_str.strftime('%Y-%m-%d') + '-' + (window_str + pd.offsets.MonthEnd(1)).strftime('%Y-%m-%d'),
-                'word': word,
-                'count': count
-            })
-
-    json_str = json.dumps(result, ensure_ascii=False)
-    print(json_str)
-
-get_top_ten_words(comments)
+# print(get_comment_length(comments_list))

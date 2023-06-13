@@ -127,3 +127,39 @@ class Search:
             # 保存评论
         with open(f"../data/comment/{self.scenery_name}.json", 'w', encoding='utf-8') as f:
             f.write(str(comment_buffer))
+
+    # 获得节点好评、中评、差评数量
+    def get_comment_count(self):
+        dian_ping = get_scenery_dian_ping(self.scenery_id)
+        isSuccess = dian_ping['isSuccess']
+        if not isSuccess == 1:
+            print("获取评论失败")
+            return []
+
+        good_comment = dian_ping['goodNum']
+        middle_comment = dian_ping['midNum']
+        bad_comment = dian_ping['badNum']
+
+        return [good_comment, middle_comment, bad_comment]
+
+
+    # 保存景点好评、中评、差评数量
+    def save_comment_count(self):
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        dian_ping = get_scenery_dian_ping(self.scenery_id)
+        isSuccess = dian_ping['isSuccess']
+        if not isSuccess == 1:
+            print("获取评论失败")
+            return []
+
+        good_comment = dian_ping['goodNum']
+        middle_comment = dian_ping['midNum']
+        bad_comment = dian_ping['badNum']
+
+        print(f"好评：{good_comment}条，中评：{middle_comment}条，差评：{bad_comment}条")
+
+        with open(f"../data/comment/{self.scenery_name}_count.json", 'w', encoding='utf-8') as f:
+            f.write(str([good_comment, middle_comment, bad_comment]))
+

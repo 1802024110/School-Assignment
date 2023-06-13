@@ -6,4 +6,4 @@ if __name__ == '__main__':
     #  替换自带的异常处理器
     sys.excepthook = handle_exception
     # 运行请求
-    Search()
+    print(Search().get_comment_count())
