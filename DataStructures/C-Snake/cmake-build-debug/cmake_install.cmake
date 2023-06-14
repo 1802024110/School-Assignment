@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/admin/Desktop/Project/School-Assignment/DataStructures/C-Snake
+# Install script for directory: C:/Users/18020/OneDrive - nodream/Desktop/Project/School-Assignment/DataStructures/C-Snake
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "C:/Users/admin/AppData/Local/JetBrains/Toolbox/apps/CLion/ch-0/231.9011.31/bin/mingw/bin/objdump.exe")
+  set(CMAKE_OBJDUMP "D:/JetBrains/Toolbox/apps/CLion/ch-0/231.8109.222/bin/mingw/bin/objdump.exe")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/admin/Desktop/Project/School-Assignment/DataStructures/C-Snake/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/18020/OneDrive - nodream/Desktop/Project/School-Assignment/DataStructures/C-Snake/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
