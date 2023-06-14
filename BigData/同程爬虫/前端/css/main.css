@@ -1,0 +1,88 @@
+:root {
+    --primary-color: #007bff; /* 主色调 */
+    --primary-text-color: #fff; /* 主要文本颜色 */
+    --secondary-color: #6c757d; /* 次色调 */
+    --secondary-text-color: #fff; /* 次要文本颜色 */
+    --success-color: #28a745; /* 成功状态 */
+    --success-text-color: #fff; /* 成功状态文本颜色 */
+    --danger-color: #dc3545; /* 错误状态 */
+    --danger-text-color: #fff; /* 错误状态文本颜色 */
+    --warning-color: #ffc107; /* 警告状态 */
+    --warning-text-color: #212529; /* 警告状态文本颜色 */
+    --info-color: #17a2b8; /* 信息提示 */
+    --info-text-color: #fff; /* 信息提示文本颜色 */
+    --light-color: #f8f9fa; /* 浅色背景 */
+    --light-text-color: #212529; /* 浅色背景文本颜色 */
+    --dark-color: #343a40; /* 深色背景 */
+    --dark-text-color: #fff; /* 深色背景文本颜色 */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+
+.page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 4rem;
+    color: var(--light-text-color);
+    position: sticky;
+    top: 0;
+}
+
+.page1 {
+    background-color: #007bff;
+}
+
+.page1 h1{
+    font-size:12vw;
+    color:var(--light-text-color);
+}
+
+.page1 h2{
+    font-size: 6vw;
+    color:var(--light-text-color);
+}
+
+.page2 {
+    background-color: #e2e230;
+}
+
+.page2 h1{
+    font-size:8vw;
+    color:var(--light-text-color);
+}
+
+
+.page3 {
+    background-color: #30e230;
+}
+
+.page3 h1{
+    font-size:8vw;
+    color:var(--light-text-color);
+}
+
+.page4 {
+    background-color: #30e2e2;
+}
+
+.page4 h1{
+    font-size:8vw;
+    color:var(--light-text-color);
+}
+
+.page5 {
+    background-color: #3030e2;
+}
+
+.page5 h1{
+    font-size:8vw;
+    color:var(--light-text-color);
+}
