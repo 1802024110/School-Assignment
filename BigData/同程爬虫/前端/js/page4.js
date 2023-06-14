@@ -1,5 +1,5 @@
 // 基于准备好的dom，初始化echarts实例
-var myChart = echarts.init(document.getElementById('page4'));
+var page4 = echarts.init(document.getElementById('page4'));
 
 getJson('json/page4.json').then(rawData => {
 
@@ -37,5 +37,5 @@ getJson('json/page4.json').then(rawData => {
   };
 
   // 使用刚指定的配置项和数据显示图表。
-  myChart.setOption(option);
+  page4.setOption(option);
 });

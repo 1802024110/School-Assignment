@@ -3,7 +3,6 @@ import re
 import time
 
 import pandas as pd
-import nltk
 import jieba
 from collections import Counter
 
@@ -131,14 +130,14 @@ def get_comment_length(comments):
     for i in comments:
         comments_length.append(len(i['content']))
 
-    # 统计评论长度，统计各个长度的评论数量
-    length_counts = {}
-    for length in comments_length:
-        if length in length_counts:
-            length_counts[length] += 1
-        else:
-            length_counts[length] = 1
+    # 统计评论长度
+    length_counts = Counter(comments_length)
 
-    return length_counts
+    # 转换成指定格式
+    result = []
+    for length, count in length_counts.items():
+        result.append({"value": length, "count": count})
 
-# print(get_comment_length(comments_list))
+    return result
+
+print(get_comment_length(comments_list))

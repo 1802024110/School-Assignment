@@ -32,7 +32,7 @@ body {
     flex-wrap: wrap;
     font-size: 4rem;
     color: var(--light-text-color);
-    position: sticky;
+    /*position: sticky;*/
     top: 0;
 }
 
