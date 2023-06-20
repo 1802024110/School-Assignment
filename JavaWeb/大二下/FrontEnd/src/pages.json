@@ -1,0 +1,109 @@
+{
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/partition/index",
+			"style": {
+				"navigationBarTitleText": "分区"
+			}
+		},
+		{
+			"path": "pages/post/index",
+			"style": {
+				"navigationBarTitleText": "发布帖子"
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"app-plus": {
+					"titleNView": {
+						"autoBackButton": false
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/register/index",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"app-plus": {
+					"titleNView": {
+						"autoBackButton": false
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/post-detail/index",
+			"style": {
+				"navigationBarTitleText": "文章详情",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/user/personal-data",
+			"style": {
+				"navigationBarTitleText": "个人资料",
+				"app-plus": {
+					"titleNView": {
+						"autoBackButton": false
+					}
+				}
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "custom"
+	},
+	"tabBar": {
+		"color": "",
+		"selectedColor": "",
+		"backgroundColor": "",
+		"position": "bottom",
+		"borderStyle": "black",
+		"list": [
+			{
+				"pagePath": "pages/home/index",
+				"text": "首页",
+				"iconPath": "static/tabbar/home.png",
+				"selectedIconPath": "static/tabbar/home-active.png"
+			},
+			{
+				"pagePath": "pages/partition/index",
+				"text": "分区",
+				"iconPath": "static/tabbar/partition.png",
+				"selectedIconPath": "static/tabbar/partition-active.png"
+			},
+			{
+				"pagePath": "pages/post/index",
+				"text": "发布",
+				"iconPath": "static/tabbar/post.png",
+				"selectedIconPath": "static/tabbar/post-active.png"
+			},
+			{
+				"pagePath": "pages/user/index",
+				"text": "我的",
+				"iconPath": "static/tabbar/user.png",
+				"selectedIconPath": "static/tabbar/user-active.png"
+			}
+		]
+	}
+}
