@@ -24,5 +24,9 @@
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
   "git.autofetch": true,
-  "editor.rename.enablePreview": false
+  "editor.rename.enablePreview": false,
+  "java.compile.nullAnalysis.mode": "automatic",
+  "code-runner.executorMap": {
+    "java": "cd $dir && javac -encoding utf-8 $fileName && java $fileNameWithoutExt",
+  }
 }

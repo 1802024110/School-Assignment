@@ -14,6 +14,10 @@
     "Nash.awesome-flutter-snippets"
     "robert-brunhage.flutter-riverpod-snippets"
     "AMiner.codegeex"
+    "vscjava.vscode-java-pack"
+    "redhat.java"
+    "KylinIdeTeam.java"
+    "formulahendry.code-runner"
   ];
   idx.previews = {
     enable = true;
