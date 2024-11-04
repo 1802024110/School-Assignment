@@ -1,7 +1,8 @@
 { pkgs, ... }: {
   channel = "stable-23.11";
   packages = [
-    pkgs.openjdk11
+
+    pkgs.openjdk21
   ];
   services.docker.enable = true;
   idx.extensions = [
@@ -15,7 +16,6 @@
     "robert-brunhage.flutter-riverpod-snippets"
     "AMiner.codegeex"
     "vscjava.vscode-java-pack"
-    "redhat.java"
     "KylinIdeTeam.java"
     "formulahendry.code-runner"
   ];

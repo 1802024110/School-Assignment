@@ -27,6 +27,6 @@
   "editor.rename.enablePreview": false,
   "java.compile.nullAnalysis.mode": "automatic",
   "code-runner.executorMap": {
-    "java": "cd $dir && javac -encoding utf-8 $fileName && java $fileNameWithoutExt",
+    "java": "cd $dir && rm -rf *.class && javac -encoding utf-8 $fileName && java $fileNameWithoutExt",
   }
 }
